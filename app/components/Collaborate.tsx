@@ -1,12 +1,13 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 
 export default function Collaborate() {
   return (
     <section className="bg-black h-[753px] overflow-hidden relative">
       {/* Background graphic */}
       <div className="absolute left-1/2 size-[1316px] top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Image
+        <CloudinaryImage
           src="/images/collaborate-bg.jpg"
+          cloudinaryId="bobcares/collaborate-bg"
           alt="Collaborate background"
           fill
           className="object-cover opacity-30"

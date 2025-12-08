@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import blogsData from "../../data/blogs.json";
 
 export default function Blogs() {
@@ -25,12 +25,13 @@ export default function Blogs() {
   );
 }
 
-function BlogCard({ post }: { post: typeof blogPosts[0] }) {
+function BlogCard({ post }: { post: { id: number; category: string; title: string; image: string; imageCloudinaryId?: string } }) {
   return (
     <div className="flex flex-col gap-10 items-start w-[493px]">
       <div className="aspect-[4/3] bg-[#ededed] overflow-hidden relative rounded-[16px] w-full">
-        <Image
+        <CloudinaryImage
           src={post.image}
+          cloudinaryId={post.imageCloudinaryId}
           alt={post.title}
           fill
           className="object-cover"

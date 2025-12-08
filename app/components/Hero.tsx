@@ -1,16 +1,17 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import heroData from "../../data/hero.json";
 
 export default function Hero() {
-  const { title, description, ratings, buttons, backgroundImage } = heroData;
+  const { title, description, ratings, buttons, backgroundImage, backgroundImageCloudinaryId } = heroData;
   
   return (
     <section className="relative bg-[#fbfbfb] h-[975px] overflow-hidden">
       {/* Background Image with overlay */}
       <div className="absolute h-[1180px] right-[-171px] top-[-25px] w-[2115px]">
         <div className="absolute inset-0 pointer-events-none">
-          <Image
+          <CloudinaryImage
             src={backgroundImage}
+            cloudinaryId={backgroundImageCloudinaryId}
             alt="Hero background"
             fill
             className="object-cover"

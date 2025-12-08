@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import portfolioData from "../../data/portfolio.json";
 
 export default function Portfolio() {
@@ -26,12 +26,13 @@ export default function Portfolio() {
   );
 }
 
-function ProjectCard({ project, isFirst }: { project: { title: string; category: string; featured: boolean; image: string }; isFirst: boolean }) {
+function ProjectCard({ project, isFirst }: { project: { id: number; title: string; category: string; featured: boolean; image: string; imageCloudinaryId?: string }; isFirst: boolean }) {
   return (
     <div className={`bg-[#ececec] h-[591px] overflow-hidden relative rounded-2xl shrink-0 ${isFirst ? 'w-[992px]' : 'w-[173px]'}`}>
       {isFirst && (
-        <Image
+        <CloudinaryImage
           src={project.image}
+          cloudinaryId={project.imageCloudinaryId}
           alt={project.title}
           fill
           className="object-cover opacity-80"

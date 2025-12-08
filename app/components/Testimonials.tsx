@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import testimonialsData from "../../data/testimonials.json";
 
 export default function Testimonials() {
@@ -25,7 +25,7 @@ export default function Testimonials() {
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: { id: number; category: string; quote: string; author: string; role: string; bgColor: string; image: string } }) {
+function TestimonialCard({ testimonial }: { testimonial: { id: number; category: string; quote: string; author: string; role: string; bgColor: string; image: string; imageCloudinaryId?: string } }) {
   return (
     <div 
       className="flex gap-[52px] items-start px-14 py-16 rounded-3xl shrink-0 w-[840px]"
@@ -45,8 +45,9 @@ function TestimonialCard({ testimonial }: { testimonial: { id: number; category:
         </div>
         <div className="flex gap-4 items-center w-[392px]">
           <div className="relative rounded-full shrink-0 size-14 overflow-hidden">
-            <Image
+            <CloudinaryImage
               src={testimonial.image}
+              cloudinaryId={testimonial.imageCloudinaryId}
               alt={testimonial.author}
               fill
               className="object-cover rounded-full"
@@ -59,8 +60,9 @@ function TestimonialCard({ testimonial }: { testimonial: { id: number; category:
         </div>
       </div>
       <div className="bg-gray-300 overflow-hidden relative rounded-2xl self-stretch shrink-0 w-[284px]">
-        <Image
+        <CloudinaryImage
           src={testimonial.image}
+          cloudinaryId={testimonial.imageCloudinaryId}
           alt={testimonial.author}
           fill
           className="object-cover"

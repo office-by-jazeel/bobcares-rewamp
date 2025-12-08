@@ -1,13 +1,14 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import aboutData from "../../data/about.json";
 
 export default function About() {
-  const { stats, teamImage, backgroundImage } = aboutData;
+  const { stats, teamImage, teamImageCloudinaryId, backgroundImage, backgroundImageCloudinaryId } = aboutData;
   return (
     <section className="bg-black flex flex-col gap-2 items-start overflow-hidden pb-[160px] pt-[192px] px-[180px] relative">
       <div className="absolute inset-0 opacity-20">
-        <Image
+        <CloudinaryImage
           src={backgroundImage}
+          cloudinaryId={backgroundImageCloudinaryId}
           alt="Background"
           fill
           className="object-cover"
@@ -20,8 +21,9 @@ export default function About() {
             <div className="flex flex-row items-center self-stretch">
               <div className="bg-[#181818] h-full overflow-hidden relative rounded-3xl w-[636px]">
                 <div className="absolute h-[660px] left-[-277px] top-0 w-[1172px]">
-                  <Image
+                  <CloudinaryImage
                     src={teamImage}
+                    cloudinaryId={teamImageCloudinaryId}
                     alt="Team collaboration"
                     fill
                     className="object-cover"
