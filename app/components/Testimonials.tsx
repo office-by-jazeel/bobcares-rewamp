@@ -1,33 +1,8 @@
 import Image from "next/image";
-
-const testimonials = [
-  {
-    category: "Amazing support",
-    quote: "I have used Bobcares team for building an MVP at the beginning of 2024 and building out full...",
-    author: "Sai Kalur",
-    role: "CEO, Sanatio Technologies Inc",
-    bgColor: "#fbe9ac",
-    image: "/images/testimonial-sai.jpg"
-  },
-  {
-    category: "NO compliance forms",
-    quote: "We had a quick turnaround support from Ameer from BobCares team to fix a Cname issue we were facing with email delivery. This was rectified by Ameer instantly...",
-    author: "Shamil Abdul Latheef",
-    role: "Sr. Manager - Digital Biz",
-    bgColor: "#fabcb0",
-    image: "/images/testimonial-shamil.jpg"
-  },
-  {
-    category: "NO compliance forms",
-    quote: "Bobcares helped me with the configuration of server side settings that allowed for our development team to use Github with cPanel.",
-    author: "Matthew Owen",
-    role: "Founder, FastTrack CEO",
-    bgColor: "#cfeddf",
-    image: "/images/testimonial-shamil.jpg"
-  }
-];
+import testimonialsData from "../../data/testimonials.json";
 
 export default function Testimonials() {
+  const { testimonials } = testimonialsData;
   return (
     <section className="bg-[#110536] h-[1026px] overflow-hidden relative">
       <div className="absolute flex items-end justify-between left-[180px] top-[140px] w-[1560px]">
@@ -41,8 +16,8 @@ export default function Testimonials() {
       </div>
       <div className="absolute h-[503px] left-1/2 overflow-hidden top-[378px] -translate-x-1/2 w-full">
         <div className="flex gap-6 items-start px-[180px] overflow-x-auto pb-4">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} />
+          {testimonials.map((testimonial) => (
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
         </div>
       </div>
@@ -50,7 +25,7 @@ export default function Testimonials() {
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] }) {
+function TestimonialCard({ testimonial }: { testimonial: { id: number; category: string; quote: string; author: string; role: string; bgColor: string; image: string } }) {
   return (
     <div 
       className="flex gap-[52px] items-start px-14 py-16 rounded-3xl shrink-0 w-[840px]"

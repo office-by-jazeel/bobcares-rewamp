@@ -1,3 +1,13 @@
+import Image from "next/image";
+
+const socialIcons = {
+  Facebook: "/icons/facebook-icon.svg",
+  Twitter: "/icons/twitter-icon.svg",
+  LinkedIn: "/icons/linkedin-icon.svg",
+  Instagram: "/icons/instagram-icon.svg",
+  YouTube: "/icons/youtube-icon.svg"
+};
+
 export default function Footer() {
   return (
     <footer className="bg-[#080808] h-[1554px] overflow-hidden relative">
@@ -18,9 +28,13 @@ export default function Footer() {
             <div className="flex gap-10 items-center justify-end">
               <div className="flex gap-6 items-center w-[328px]">
                 <div className="relative shrink-0 size-16">
-                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="white">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+                  <Image
+                    src="/icons/email-icon.svg"
+                    alt="Email"
+                    width={64}
+                    height={64}
+                    className="w-full h-full"
+                  />
                 </div>
                 <p className="font-normal text-[24px] text-white tracking-[-1px]">sales@bobcares.com</p>
               </div>
@@ -29,9 +43,13 @@ export default function Footer() {
               </div>
               <div className="flex gap-6 items-center">
                 <div className="relative shrink-0 size-16">
-                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="white">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+                  <Image
+                    src="/icons/phone-icon.svg"
+                    alt="Phone"
+                    width={64}
+                    height={64}
+                    className="w-full h-full"
+                  />
                 </div>
                 <p className="font-normal text-[24px] text-white tracking-[-1px]">1-800-383-5193</p>
               </div>
@@ -58,11 +76,15 @@ export default function Footer() {
             </div>
             <div className="flex gap-6 items-center">
               {/* Social Media Icons */}
-              {['Facebook', 'Twitter', 'LinkedIn', 'Instagram', 'YouTube'].map((social, index) => (
-                <a key={index} href="#" className="relative shrink-0 size-6 hover:opacity-70 transition-opacity">
-                  <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                  </svg>
+              {Object.entries(socialIcons).map(([name, iconPath]) => (
+                <a key={name} href="#" className="relative shrink-0 size-6 hover:opacity-70 transition-opacity">
+                  <Image
+                    src={iconPath}
+                    alt={name}
+                    width={24}
+                    height={24}
+                    className="w-full h-full"
+                  />
                 </a>
               ))}
             </div>
@@ -72,7 +94,13 @@ export default function Footer() {
       
       {/* Large logo background */}
       <div className="absolute inset-[40%_6%_40%_9%] opacity-10">
-        <span className="text-[200px] font-bold text-white">bobcares</span>
+        <Image
+          src="/icons/logo-white.svg"
+          alt="Bobcares Logo"
+          width={500}
+          height={200}
+          className="w-full h-full object-contain"
+        />
       </div>
     </footer>
   );

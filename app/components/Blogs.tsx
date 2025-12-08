@@ -1,24 +1,8 @@
 import Image from "next/image";
-
-const blogPosts = [
-  {
-    category: "Robotics",
-    title: "A complete guide to migrate from wordPress to a headless CMS",
-    image: "/images/blog-1.jpg"
-  },
-  {
-    category: "AI Services Team",
-    title: "How to connect Vultr with vCanopy and provision an instance easily",
-    image: "/images/blog-2.jpg"
-  },
-  {
-    category: "Virtual reality",
-    title: "Solving the drupal twig loaderError for missing templates",
-    image: "/images/blog-3.jpg"
-  }
-];
+import blogsData from "../../data/blogs.json";
 
 export default function Blogs() {
+  const { blogs } = blogsData;
   return (
     <section className="bg-white flex flex-col items-start px-[180px] py-[140px] relative">
       <div className="flex flex-col gap-16 items-start w-full">
@@ -32,8 +16,8 @@ export default function Blogs() {
           </button>
         </div>
         <div className="flex gap-10 items-center">
-          {blogPosts.map((post, index) => (
-            <BlogCard key={index} post={post} />
+          {blogs.map((post) => (
+            <BlogCard key={post.id} post={post} />
           ))}
         </div>
       </div>

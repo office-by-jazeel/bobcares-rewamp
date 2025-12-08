@@ -1,28 +1,8 @@
 import Image from "next/image";
+import portfolioData from "../../data/portfolio.json";
 
 export default function Portfolio() {
-  const projects = [
-    {
-      title: "Unifying CI/CD Pipelines for Zero-Downtime Deployments",
-      category: "Web Development",
-      featured: true
-    },
-    {
-      title: "Project 2",
-      category: "Web Development",
-      featured: false
-    },
-    {
-      title: "Project 3",
-      category: "Web Development",
-      featured: false
-    },
-    {
-      title: "Project 4",
-      category: "Web Development",
-      featured: false
-    }
-  ];
+  const { projects } = portfolioData;
 
   return (
     <section className="bg-white h-[1074px] overflow-hidden relative">
@@ -37,8 +17,8 @@ export default function Portfolio() {
           </button>
         </div>
         <div className="flex gap-4 items-start w-[1560px] overflow-x-auto pb-4">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} isFirst={index === 0} />
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} isFirst={project.featured} />
           ))}
         </div>
       </div>
@@ -46,12 +26,12 @@ export default function Portfolio() {
   );
 }
 
-function ProjectCard({ project, isFirst }: { project: { title: string; category: string; featured: boolean }; isFirst: boolean }) {
+function ProjectCard({ project, isFirst }: { project: { title: string; category: string; featured: boolean; image: string }; isFirst: boolean }) {
   return (
     <div className={`bg-[#ececec] h-[591px] overflow-hidden relative rounded-2xl shrink-0 ${isFirst ? 'w-[992px]' : 'w-[173px]'}`}>
       {isFirst && (
         <Image
-          src="/images/portfolio-1.jpg"
+          src={project.image}
           alt={project.title}
           fill
           className="object-cover opacity-80"

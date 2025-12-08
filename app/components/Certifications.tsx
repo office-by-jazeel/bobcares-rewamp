@@ -1,27 +1,8 @@
 import Image from "next/image";
-
-const certifications = [
-  {
-    provider: "Google Cloud Certified",
-    title: "Data Engineer",
-    level: "Professional",
-    icon: "/images/cert-google-icon.jpg"
-  },
-  {
-    provider: "Google Cloud Certified",
-    title: "Cloud Network Engineer",
-    level: "Professional",
-    icon: "/images/cert-google-icon.jpg"
-  },
-  {
-    provider: "AWS Certified",
-    title: "Solution Architect",
-    level: "Associate",
-    icon: "/images/cert-badge.jpg"
-  }
-];
+import certificationsData from "../../data/certifications.json";
 
 export default function Certifications() {
+  const { certifications } = certificationsData;
   return (
     <section className="bg-white flex gap-16 items-center px-[180px] py-[140px] relative">
       <div className="flex flex-col gap-14 items-start text-black w-[703px]">
@@ -38,15 +19,15 @@ export default function Certifications() {
         </p>
       </div>
       <div className="flex gap-[22px] items-center overflow-x-auto overflow-y-clip w-[793px] pb-4">
-        {certifications.map((cert, index) => (
-          <CertCard key={index} cert={cert} />
+        {certifications.map((cert) => (
+          <CertCard key={cert.id} cert={cert} />
         ))}
       </div>
     </section>
   );
 }
 
-function CertCard({ cert }: { cert: typeof certifications[0] }) {
+function CertCard({ cert }: { cert: { id: number; provider: string; title: string; level: string; icon: string } }) {
   return (
     <div className="bg-[#f6f8fc] flex flex-col h-[361px] items-start justify-between p-8 relative rounded-3xl shrink-0 w-[329px]">
       <div className="flex gap-[18px] items-center w-full">

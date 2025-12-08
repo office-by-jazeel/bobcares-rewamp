@@ -1,0 +1,33 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Unifying CI/CD Pipelines for Zero-Downtime Deployments",
+      "category": "Web Development",
+      "featured": true,
+      "image": "/images/portfolio-1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Project 2",
+      "category": "Web Development",
+      "featured": false,
+      "image": "/images/portfolio-1.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Project 3",
+      "category": "Web Development",
+      "featured": false,
+      "image": "/images/portfolio-1.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Project 4",
+      "category": "Web Development",
+      "featured": false,
+      "image": "/images/portfolio-1.jpg"
+    }
+  ]
+}
+

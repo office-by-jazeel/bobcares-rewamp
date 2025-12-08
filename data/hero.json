@@ -1,0 +1,36 @@
+{
+  "title": {
+    "line1": "Get pro level help",
+    "line2": "from certified server experts"
+  },
+  "description": {
+    "line1": "With expertise in Linux, Windows, and cloud-based servers, our engineers ensure",
+    "line2": " your systems are fully optimized and aligned with your business goals"
+  },
+  "ratings": [
+    {
+      "platform": "Google",
+      "rating": 4.8,
+      "icon": "⭐"
+    },
+    {
+      "platform": "Clutch",
+      "rating": 4.5,
+      "icon": "⭐"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "View Our Portfolio",
+      "variant": "primary",
+      "href": "#portfolio"
+    },
+    {
+      "text": "Free Consultation",
+      "variant": "secondary",
+      "href": "#contact"
+    }
+  ],
+  "backgroundImage": "/images/hero-bg.jpg"
+}
+

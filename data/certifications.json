@@ -1,0 +1,26 @@
+{
+  "certifications": [
+    {
+      "id": 1,
+      "provider": "Google Cloud Certified",
+      "title": "Data Engineer",
+      "level": "Professional",
+      "icon": "/images/cert-google-icon.jpg"
+    },
+    {
+      "id": 2,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Network Engineer",
+      "level": "Professional",
+      "icon": "/images/cert-google-icon.jpg"
+    },
+    {
+      "id": 3,
+      "provider": "AWS Certified",
+      "title": "Solution Architect",
+      "level": "Associate",
+      "icon": "/images/cert-badge.jpg"
+    }
+  ]
+}
+

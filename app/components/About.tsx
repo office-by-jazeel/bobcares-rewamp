@@ -1,18 +1,13 @@
 import Image from "next/image";
-
-const stats = [
-  { value: "3.5M", label: "Million Websites" },
-  { value: "350+", label: "Active Employees" },
-  { value: "200+", label: "Trusted Clients" },
-  { value: "25+", label: "Years of Services" }
-];
+import aboutData from "../../data/about.json";
 
 export default function About() {
+  const { stats, teamImage, backgroundImage } = aboutData;
   return (
     <section className="bg-black flex flex-col gap-2 items-start overflow-hidden pb-[160px] pt-[192px] px-[180px] relative">
       <div className="absolute inset-0 opacity-20">
         <Image
-          src="/images/about-tunnel-bg.jpg"
+          src={backgroundImage}
           alt="Background"
           fill
           className="object-cover"
@@ -26,7 +21,7 @@ export default function About() {
               <div className="bg-[#181818] h-full overflow-hidden relative rounded-3xl w-[636px]">
                 <div className="absolute h-[660px] left-[-277px] top-0 w-[1172px]">
                   <Image
-                    src="/images/about-team.jpg"
+                    src={teamImage}
                     alt="Team collaboration"
                     fill
                     className="object-cover"
@@ -45,13 +40,13 @@ export default function About() {
                 </h2>
                 <div className="flex items-center w-full">
                   <div className="flex flex-[1_0_0] flex-col gap-[88px] items-start min-h-0 min-w-0">
-                    {stats.slice(0, 2).map((stat, index) => (
-                      <StatItem key={index} stat={stat} />
+                    {stats.slice(0, 2).map((stat) => (
+                      <StatItem key={stat.id} stat={stat} />
                     ))}
                   </div>
                   <div className="flex flex-[1_0_0] flex-col gap-[88px] items-start min-h-0 min-w-0">
-                    {stats.slice(2, 4).map((stat, index) => (
-                      <StatItem key={index + 2} stat={stat} />
+                    {stats.slice(2, 4).map((stat) => (
+                      <StatItem key={stat.id} stat={stat} />
                     ))}
                   </div>
                 </div>

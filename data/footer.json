@@ -1,0 +1,46 @@
+{
+  "newsletter": {
+    "title": "Register to our newsletter",
+    "placeholder": "Email Address",
+    "buttonText": "Submit"
+  },
+  "contact": {
+    "email": "sales@bobcares.com",
+    "phone": "1-800-383-5193"
+  },
+  "links": {
+    "company": [
+      { "label": "About Us", "href": "#" },
+      { "label": "Our Team", "href": "#" },
+      { "label": "Careers", "href": "#" },
+      { "label": "Contact", "href": "#" }
+    ],
+    "services": [
+      { "label": "Server Management", "href": "#" },
+      { "label": "Cloud Solutions", "href": "#" },
+      { "label": "DevOps Services", "href": "#" },
+      { "label": "Support Services", "href": "#" }
+    ],
+    "resources": [
+      { "label": "Blog", "href": "#" },
+      { "label": "Documentation", "href": "#" },
+      { "label": "Knowledge Base", "href": "#" },
+      { "label": "Case Studies", "href": "#" }
+    ],
+    "legal": [
+      { "label": "Privacy Policy", "href": "#" },
+      { "label": "Terms and Service", "href": "#" },
+      { "label": "GDPR", "href": "#" },
+      { "label": "Acceptable Use Policy", "href": "#" }
+    ]
+  },
+  "social": [
+    { "name": "Facebook", "href": "#", "icon": "facebook" },
+    { "name": "Twitter", "href": "#", "icon": "twitter" },
+    { "name": "LinkedIn", "href": "#", "icon": "linkedin" },
+    { "name": "Instagram", "href": "#", "icon": "instagram" },
+    { "name": "YouTube", "href": "#", "icon": "youtube" }
+  ],
+  "copyright": "© 2025 Bobcares. All Rights Reserved."
+}
+

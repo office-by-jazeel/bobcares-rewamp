@@ -1,49 +1,8 @@
 import Image from "next/image";
-
-const services = [
-  {
-    icon: "📦",
-    title: "End-to-End product Engineering",
-    description: "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
-  },
-  {
-    icon: "🔄",
-    title: "Digital transformation",
-    description: "We modernize your business systems with streamlined processes, upgraded technology, and smarter digital workflows that improve efficiency and performance."
-  },
-  {
-    icon: "🤖",
-    title: "Artificial intelligence services",
-    description: "We develop intelligent AI solutions that improve decision-making, automate operations, and create new opportunities across your organization."
-  },
-  {
-    icon: "⚙️",
-    title: "Infrastructure optimization",
-    description: "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
-  },
-  {
-    icon: "🚀",
-    title: "DevOps & automation services",
-    description: "We accelerate delivery with automated pipelines, improved deployment workflows, and DevOps practices that enhance stability and operational efficiency."
-  },
-  {
-    icon: "🔒",
-    title: "Cybersecurity & compliance services",
-    description: "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
-  },
-  {
-    icon: "🧪",
-    title: "QA and test automation",
-    description: "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
-  },
-  {
-    icon: "💬",
-    title: "Outsourced support services",
-    description: "We provide round-the-clock technical and customer support that keeps your operations running smoothly and ensures a great experience for your users."
-  }
-];
+import servicesData from "../../data/services.json";
 
 export default function Services() {
+  const { services, ctaCard } = servicesData;
   return (
     <section className="bg-white flex flex-col items-center px-[180px] py-[140px]">
       <div className="flex flex-col gap-[96px] items-center w-full max-w-[1560px]">
@@ -83,7 +42,7 @@ export default function Services() {
               {services.slice(6, 8).map((service, index) => (
                 <ServiceCard key={index + 6} service={service} />
               ))}
-              <CTACard />
+              <CTACard ctaCard={ctaCard} />
             </div>
           </div>
         </div>
@@ -92,20 +51,30 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ service }: { service: typeof services[0] }) {
+function ServiceCard({ service }: { service: { id: number; icon: string; title: string; description: string } }) {
   return (
     <div className="h-[381px] overflow-hidden relative w-[395px]">
       <div className="absolute content-stretch flex flex-col gap-10 items-start left-0 top-[45px] w-[395px]">
         <div className="relative shrink-0 size-16">
           <div className="absolute bg-[#f7f7f7] inset-0 rounded-[18px]" />
-          <div className="absolute inset-[14px] flex items-center justify-center text-3xl">
-            {service.icon}
+          <div className="absolute inset-[14px] flex items-center justify-center">
+            {service.icon.startsWith('/') ? (
+              <Image
+                src={service.icon}
+                alt={service.title}
+                width={24}
+                height={24}
+                className="w-6 h-6"
+              />
+            ) : (
+              <span className="text-3xl">{service.icon}</span>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-6 items-start relative text-black w-full">
           <div className="flex flex-col gap-6 items-start w-full">
             <h3 className="font-bold leading-none text-[40px] w-full">
-              {service.title.split(' ').map((word, i, arr) => (
+              {service.title.split(' ').map((word: string, i: number, arr: string[]) => (
                 <span key={i}>
                   {word}
                   {i < arr.length - 1 && ' '}
@@ -126,7 +95,7 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
   );
 }
 
-function CTACard() {
+function CTACard({ ctaCard }: { ctaCard: { title: string; buttonText: string } }) {
   return (
     <div className="bg-[#0073ec] flex flex-col gap-[43px] h-[381px] items-start justify-center overflow-hidden px-14 py-[72px] relative rounded-2xl w-[395px]">
       <div className="absolute inset-0 opacity-20">
@@ -140,14 +109,20 @@ function CTACard() {
       <div className="flex flex-col items-start w-full relative z-10">
         <div className="flex flex-col gap-10 items-start w-full">
           <div className="relative shrink-0 size-10">
-            <span className="text-4xl">🚨</span>
+            <Image
+              src="/icons/siren-icon.svg"
+              alt="Siren"
+              width={40}
+              height={40}
+              className="w-full h-full"
+            />
           </div>
           <div className="flex flex-col gap-10 items-start w-full">
             <h3 className="font-bold leading-none text-[40px] text-white w-full">
-              Get actionable solutions for your business
+              {ctaCard.title}
             </h3>
             <button className="backdrop-blur-md bg-white flex items-center justify-center px-8 py-[18px] rounded-[45px] hover:bg-gray-100 transition-colors">
-              <span className="font-medium text-[#0073ec] text-[20px] tracking-[-1px]">Free Consultation</span>
+              <span className="font-medium text-[#0073ec] text-[20px] tracking-[-1px]">{ctaCard.buttonText}</span>
             </button>
           </div>
         </div>

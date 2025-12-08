@@ -1,0 +1,32 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "category": "Amazing support",
+      "quote": "I have used Bobcares team for building an MVP at the beginning of 2024 and building out full...",
+      "author": "Sai Kalur",
+      "role": "CEO, Sanatio Technologies Inc",
+      "bgColor": "#fbe9ac",
+      "image": "/images/testimonial-sai.jpg"
+    },
+    {
+      "id": 2,
+      "category": "NO compliance forms",
+      "quote": "We had a quick turnaround support from Ameer from BobCares team to fix a Cname issue we were facing with email delivery. This was rectified by Ameer instantly...",
+      "author": "Shamil Abdul Latheef",
+      "role": "Sr. Manager - Digital Biz",
+      "bgColor": "#fabcb0",
+      "image": "/images/testimonial-shamil.jpg"
+    },
+    {
+      "id": 3,
+      "category": "NO compliance forms",
+      "quote": "Bobcares helped me with the configuration of server side settings that allowed for our development team to use Github with cPanel.",
+      "author": "Matthew Owen",
+      "role": "Founder, FastTrack CEO",
+      "bgColor": "#cfeddf",
+      "image": "/images/testimonial-shamil.jpg"
+    }
+  ]
+}
+
