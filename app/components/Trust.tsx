@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 
 export default function Trust() {
   return (
@@ -27,8 +27,9 @@ export default function Trust() {
       {/* World Map Graphic */}
       <div className="absolute left-[841px] top-[253px] w-[983px] h-[622px]">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <Image
+          <CloudinaryImage
             src="/images/world-map.jpg"
+            cloudinaryId="bobcares/world-map"
             alt="World map showing global clients"
             fill
             className="object-cover"

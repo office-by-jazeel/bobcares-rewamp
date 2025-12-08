@@ -31,6 +31,7 @@
       "href": "#contact"
     }
   ],
-  "backgroundImage": "/images/hero-bg.jpg"
+  "backgroundImage": "/images/hero-bg.jpg",
+  "backgroundImageCloudinaryId": "bobcares/hero-bg"
 }
 

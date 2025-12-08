@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CloudinaryImage from "@/components/CloudinaryImage";
 import certificationsData from "../../data/certifications.json";
 
 export default function Certifications() {
@@ -27,13 +27,14 @@ export default function Certifications() {
   );
 }
 
-function CertCard({ cert }: { cert: { id: number; provider: string; title: string; level: string; icon: string } }) {
+function CertCard({ cert }: { cert: { id: number; provider: string; title: string; level: string; icon: string; iconCloudinaryId?: string } }) {
   return (
     <div className="bg-[#f6f8fc] flex flex-col h-[361px] items-start justify-between p-8 relative rounded-3xl shrink-0 w-[329px]">
       <div className="flex gap-[18px] items-center w-full">
         <div className="relative shrink-0 size-16 overflow-hidden rounded-full">
-          <Image
+          <CloudinaryImage
             src={cert.icon}
+            cloudinaryId={cert.iconCloudinaryId}
             alt={cert.provider}
             fill
             className="object-cover"

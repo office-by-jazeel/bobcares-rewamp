@@ -5,21 +5,24 @@
       "provider": "Google Cloud Certified",
       "title": "Data Engineer",
       "level": "Professional",
-      "icon": "/images/cert-google-icon.jpg"
+      "icon": "/images/cert-google-icon.jpg",
+      "iconCloudinaryId": "bobcares/certifications/google-cloud"
     },
     {
       "id": 2,
       "provider": "Google Cloud Certified",
       "title": "Cloud Network Engineer",
       "level": "Professional",
-      "icon": "/images/cert-google-icon.jpg"
+      "icon": "/images/cert-google-icon.jpg",
+      "iconCloudinaryId": "bobcares/certifications/google-cloud"
     },
     {
       "id": 3,
       "provider": "AWS Certified",
       "title": "Solution Architect",
       "level": "Associate",
-      "icon": "/images/cert-badge.jpg"
+      "icon": "/images/cert-badge.jpg",
+      "iconCloudinaryId": "bobcares/certifications/aws"
     }
   ]
 }

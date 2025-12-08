@@ -7,7 +7,8 @@
       "author": "Sai Kalur",
       "role": "CEO, Sanatio Technologies Inc",
       "bgColor": "#fbe9ac",
-      "image": "/images/testimonial-sai.jpg"
+      "image": "/images/testimonial-sai.jpg",
+      "imageCloudinaryId": "bobcares/testimonials/sai"
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
       "author": "Shamil Abdul Latheef",
       "role": "Sr. Manager - Digital Biz",
       "bgColor": "#fabcb0",
-      "image": "/images/testimonial-shamil.jpg"
+      "image": "/images/testimonial-shamil.jpg",
+      "imageCloudinaryId": "bobcares/testimonials/shamil"
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
       "author": "Matthew Owen",
       "role": "Founder, FastTrack CEO",
       "bgColor": "#cfeddf",
-      "image": "/images/testimonial-shamil.jpg"
+      "image": "/images/testimonial-shamil.jpg",
+      "imageCloudinaryId": "bobcares/testimonials/matthew"
     }
   ]
 }
