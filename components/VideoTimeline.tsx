@@ -1,7 +1,7 @@
 'use client';
 
 interface VideoTimelineProps {
-  videos: Array<{ src: string; cloudinaryId?: string | null }>;
+  videos: Array<{ src?: string; cloudinaryId?: string | null }>;
   currentVideoIndex: number;
   currentTime: number;
   videoDurations: number[];

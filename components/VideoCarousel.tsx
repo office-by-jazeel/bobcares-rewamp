@@ -5,7 +5,7 @@ import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
 import CloudinaryImage from './CloudinaryImage';
 
 interface VideoItem {
-  src: string;
+  src?: string; // Optional - can be omitted if cloudinaryId is a full URL
   cloudinaryId?: string | null;
   thumbnail?: string; // Local thumbnail path
   thumbnailCloudinaryId?: string | null; // Cloudinary thumbnail ID or full URL
@@ -64,13 +64,14 @@ export default function VideoCarousel({
         } else if (isCloudinaryConfigured()) {
           // It's a Cloudinary public ID, generate the URL
           try {
-            return getVideoUrl(video.cloudinaryId, video.src);
+            return getVideoUrl(video.cloudinaryId, video.src || '');
           } catch {
-            return video.src;
+            return video.src || '';
           }
         }
       }
-      return video.src;
+      // Fallback to src if available, otherwise empty string
+      return video.src || '';
     });
     setVideoSrcs(sources);
   }, [videos]);
@@ -157,8 +158,9 @@ export default function VideoCarousel({
   const handleVideoError = () => {
     if (videoRef.current) {
       const currentVideo = videos[currentVideoIndex];
-      if (videoRef.current.src !== currentVideo.src) {
-        videoRef.current.src = currentVideo.src;
+      const fallbackSrc = currentVideo.src || '';
+      if (videoRef.current.src !== fallbackSrc && fallbackSrc) {
+        videoRef.current.src = fallbackSrc;
         videoRef.current.load();
       }
     }
@@ -222,7 +224,7 @@ export default function VideoCarousel({
       <video
         ref={videoRef}
         key={currentVideoIndex}
-        src={videoSrcs[currentVideoIndex] || videos[currentVideoIndex].src}
+        src={videoSrcs[currentVideoIndex] || videos[currentVideoIndex].src || ''}
         className={className}
         autoPlay
         muted
