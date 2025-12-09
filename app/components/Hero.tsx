@@ -15,7 +15,7 @@ type VideoItem = {
 
 export default function Hero() {
   const { title, description, ratings, buttons, backgroundVideos } = heroData;
-  
+
   // Ensure backgroundVideos matches the expected type
   const videos: VideoItem[] = backgroundVideos as VideoItem[];
 
@@ -26,10 +26,10 @@ export default function Hero() {
   return (
     <section
       id="hero-section"
-      className="relative h-dvh w-full overflow-hidden bg-black">
+      className="relative h-dvh w-full overflow-hidden bg-black -z-20 flex items-end">
 
       {/* ================= BACKGROUND VIDEO ================= */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full -z-10">
         <VideoCarousel
           videos={videos}
           className="absolute inset-0 w-full h-full object-cover"
@@ -46,29 +46,15 @@ export default function Hero() {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="
-        absolute 
-        z-20 
-        left-6 right-6 
-        top-[200px]
-      ">
-        <div className="container mx-auto flex flex-col gap-8">
-
+      <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-[118px] max-md:gap-8">
+        <div className="flex flex-col gap-8">
           {/* TITLE */}
-          <h1 className="
-          text-white font-bold tracking-[-1.5px] whitespace-pre-wrap
-          text-[42px] leading-[1]
-          sm:text-[56px]
-          md:text-[72px]
-          lg:text-[96px] lg:leading-[0.85]
-        max-w-[900px]
-        ">
+          <h1 className="font-grotesque text-white font-bold tracking-[-2%] whitespace-pre-wrap text-[42px] leading-none sm:text-[56px] md:text-[72px] lg:text-[96px] lg:leading-[0.85] lg:max-w-[900px]">
             {title}
           </h1>
 
           {/* DESCRIPTION */}
-          <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-[1.5] whitespace-pre-wrap
-        max-w-[900px]">
+          <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-normal whitespace-pre-wrap lg:max-w-[900px]">
             {description}
           </p>
 
@@ -90,37 +76,21 @@ export default function Hero() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* ================= BUTTONS + TIMELINE ================= */}
-      <div
-        className="
-          absolute w-full px-6 
-          bottom-[70px]
-          md:bottom-[90px]
-          lg:bottom-[120px]
-          flex flex-col gap-6
-          md:flex-row md:items-center md:justify-between 
-          md:left-[80px]
-          lg:left-[160px] lg:w-[calc(100%-320px)]
-          z-30
-        "
-      >
-        {/* BUTTONS */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          {buttons.map((btn, index) => (
-            <button
-              key={index}
-              className={
-                btn.variant === "primary"
-                  ? "bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
-                  : "border border-white px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
-              }
-            >
-              {btn.text}
-            </button>
-          ))}
+          {/* BUTTONS */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            {buttons.map((btn, index) => (
+              <button
+                key={index}
+                className={
+                  btn.variant === "primary"
+                    ? "bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
+                    : "border border-white px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
+                }
+              >
+                {btn.text}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* TIMELINE — moves under buttons on small screens */}
