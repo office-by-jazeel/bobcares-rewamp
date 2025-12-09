@@ -25,7 +25,7 @@ export default function Header() {
   const isTransparent = heroVisible;
 
   const headerClasses = [
-    "z-50 flex h-[100px] items-center justify-between px-[180px] py-4 transition-colors duration-300",
+    "container mx-auto z-50 flex h-[100px] items-center justify-between py-4 transition-colors duration-300",
     isTransparent ? "relative" : "sticky top-0",
     isTransparent
       ? "bg-transparent border-transparent text-white"
