@@ -49,11 +49,20 @@ export default function VideoCarousel({
   // Initialize video sources
   useEffect(() => {
     const sources = videos.map((video) => {
-      if (isCloudinaryConfigured() && video.cloudinaryId) {
-        try {
-          return getVideoUrl(video.cloudinaryId, video.src);
-        } catch {
-          return video.src;
+      if (video.cloudinaryId) {
+        // Check if cloudinaryId is a full URL (starts with http:// or https://)
+        const isFullUrl = video.cloudinaryId.startsWith('http://') || video.cloudinaryId.startsWith('https://');
+        
+        if (isFullUrl) {
+          // Use the URL directly
+          return video.cloudinaryId;
+        } else if (isCloudinaryConfigured()) {
+          // It's a Cloudinary public ID, generate the URL
+          try {
+            return getVideoUrl(video.cloudinaryId, video.src);
+          } catch {
+            return video.src;
+          }
         }
       }
       return video.src;
