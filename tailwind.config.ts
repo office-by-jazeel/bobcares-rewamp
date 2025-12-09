@@ -6,6 +6,12 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+        grotesque: ["Darker Grotesque", "sans-serif"],
+      },
+    },
     container: {
       center: true,
       padding: "1rem",

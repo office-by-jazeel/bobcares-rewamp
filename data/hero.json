@@ -1,12 +1,6 @@
 {
-  "title": {
-    "line1": "Get pro level help from certified server experts",
-    "line2": "from certified server experts"
-  },
-  "description": {
-    "line1": "With expertise in Linux, Windows, and cloud-based servers, our engineers ensure",
-    "line2": " your systems are fully optimized and aligned with your business goals"
-  },
+  "title": "Get pro level help from certified server experts",
+  "description": "With expertise in Linux, Windows, and cloud-based servers, our engineers ensure your systems are fully optimized and aligned with your business goals",
   "ratings": [
     {
       "platform": "Google",
@@ -45,13 +39,6 @@
       "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/3f1feeb64d2bc242560839b57bc4814e/manifest/video.m3u8",
       "thumbnail": "/images/videothumbnail.png",
       "thumbnailCloudinaryId": null
-    },
-    {
-      "src": "/videos/test3.mp4",
-      "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/3f1feeb64d2bc242560839b57bc4814e/manifest/video.m3u8",
-      "thumbnail": "/images/videothumbnail.png",
-      "thumbnailCloudinaryId": null
     }
   ]
 }
-
