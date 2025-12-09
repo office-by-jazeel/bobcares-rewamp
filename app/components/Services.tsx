@@ -3,131 +3,143 @@ import servicesData from "../../data/services.json";
 
 export default function Services() {
   const { services, ctaCard } = servicesData;
+
   return (
-    <section className="bg-white flex flex-col items-center px-[180px] py-[140px]">
-      <div className="flex flex-col gap-[96px] items-center w-full max-w-[1560px]">
-        <div className="flex flex-col gap-[90px] items-start w-full">
-          <div className="flex items-start justify-between w-full">
-            <div className="flex items-center">
-              <p className="font-medium text-[16px] text-black uppercase">What We Do</p>
-            </div>
-            <div className="flex flex-col gap-10 items-start w-[1031px]">
-              <h2 className="font-semibold leading-[0.9] text-[96px] text-black tracking-[-0.96px] w-[900px]">
-                <span>Choose how you want to make </span>
-                <span className="text-[#0073ec]">an impact</span>
-              </h2>
-              <p className="font-normal leading-[1.6] text-[#4d4d4d] text-[24px] tracking-[-0.24px] w-[803px]">
-                Build powerful, scalable digital products with an engineering approach that takes you from idea to launch—and beyond.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-[104px] items-start w-full">
-            {/* First row - 3 services */}
-            <div className="flex gap-[134px] items-start w-full">
-              {services.slice(0, 3).map((service, index) => (
-                <ServiceCard key={index} service={service} />
-              ))}
-            </div>
-            
-            {/* Second row - 3 services */}
-            <div className="flex gap-[134px] items-start w-full">
-              {services.slice(3, 6).map((service, index) => (
-                <ServiceCard key={index + 3} service={service} />
-              ))}
-            </div>
-            
-            {/* Third row - 2 services + CTA card */}
-            <div className="flex gap-[134px] items-start w-full">
-              {services.slice(6, 8).map((service, index) => (
-                <ServiceCard key={index + 6} service={service} />
-              ))}
-              <CTACard ctaCard={ctaCard} />
-            </div>
+    <section className="bg-white flex flex-col items-center px-6 sm:px-12 lg:px-[180px] py-[80px] lg:py-[140px]">
+      <div className="w-full max-w-[1560px] flex flex-col gap-20">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-12">
+          <p className="font-medium text-[14px] sm:text-[16px] uppercase text-black">
+            What We Do
+          </p>
+
+          <div className="flex flex-col gap-8 max-w-[900px]">
+            <h2 className="font-semibold text-[40px] sm:text-[56px] lg:text-[96px] leading-[1] tracking-[-1px]">
+              Choose how you want to make{" "}
+              <span className="text-[#0073ec]">an impact</span>
+            </h2>
+
+            <p className="text-[#4d4d4d] text-[18px] sm:text-[20px] lg:text-[24px] leading-[1.6] max-w-[750px]">
+              Build powerful, scalable digital products with an engineering
+              approach that takes you from idea to launch—and beyond.
+            </p>
           </div>
         </div>
+
+        {/* Responsive grid */}
+        <div className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          lg:grid-cols-3 
+          gap-16 
+          lg:gap-24
+        ">
+          {services.slice(0, 8).map((service, index) => (
+            <ServiceCard key={index} service={service} />
+          ))}
+
+          {/* CTA card appended last */}
+          <CTACard ctaCard={ctaCard} />
+        </div>
+
       </div>
     </section>
   );
 }
 
-function ServiceCard({ service }: { service: { id: number; icon: string; title: string; description: string } }) {
+
+function ServiceCard({ service }: { service: any }) {
   return (
-    <div className="h-[381px] overflow-hidden relative w-[395px]">
-      <div className="absolute content-stretch flex flex-col gap-10 items-start left-0 top-[45px] w-[395px]">
-        <div className="relative shrink-0 size-16">
-          <div className="absolute bg-[#f7f7f7] inset-0 rounded-[18px]" />
+    <div className="group relative cursor-pointer">
+
+      {/* Animated top line */}
+      <div className="absolute -top-6 left-0 w-full h-[2px] overflow-hidden">
+        <div className="
+          bg-black h-full w-0 
+          group-hover:w-full 
+          transition-[width] duration-500 ease-out
+        "></div>
+      </div>
+
+      <div className="flex flex-col gap-6 pt-10">
+        
+        {/* Icon */}
+        <div className="relative size-16">
+          <div className="absolute inset-0 bg-[#f7f7f7] rounded-[18px]" />
           <div className="absolute inset-[14px] flex items-center justify-center">
-            {service.icon.startsWith('/') ? (
-              <Image
-                src={service.icon}
-                alt={service.title}
-                width={24}
-                height={24}
-                className="w-6 h-6"
-              />
+            {service.icon.startsWith("/") ? (
+              <Image src={service.icon} alt="" width={28} height={28} />
             ) : (
               <span className="text-3xl">{service.icon}</span>
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-6 items-start relative text-black w-full">
-          <div className="flex flex-col gap-6 items-start w-full">
-            <h3 className="font-bold leading-none text-[40px] w-full">
-              {service.title.split(' ').map((word: string, i: number, arr: string[]) => (
-                <span key={i}>
-                  {word}
-                  {i < arr.length - 1 && ' '}
-                  {i === Math.floor(arr.length / 2) - 1 && <br />}
-                </span>
-              ))}
-            </h3>
-            <p className="font-normal leading-[1.5] text-[16px] w-full">
-              {service.description}
-            </p>
-          </div>
-          <a href="#" className="font-medium text-[20px] tracking-[-0.5px] underline w-full hover:text-[#0073ec] transition-colors">
-            Learn More
-          </a>
-        </div>
+
+        {/* Title */}
+        <h3 className="font-bold text-[28px] sm:text-[32px] lg:text-[40px] leading-[1.1]">
+          {service.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-[15px] sm:text-[16px] text-[#4d4d4d] leading-[1.5]">
+          {service.description}
+        </p>
+
+        {/* Link */}
+        <a
+          href="#"
+          className="
+            underline text-[18px] sm:text-[20px] font-medium 
+            hover:text-[#0073ec] transition-colors
+          "
+        >
+          Learn More
+        </a>
       </div>
     </div>
   );
 }
 
-function CTACard({ ctaCard }: { ctaCard: { title: string; buttonText: string } }) {
+function CTACard({ ctaCard }: { ctaCard: any }) {
   return (
-    <div className="bg-[#0073ec] flex flex-col gap-[43px] h-[381px] items-start justify-center overflow-hidden px-14 py-[72px] relative rounded-2xl w-[395px]">
+    <div className="
+      bg-[#0073ec] 
+      relative 
+      rounded-2xl 
+      p-10 sm:p-12 lg:p-16 
+      flex flex-col gap-8 text-white
+    ">
       <div className="absolute inset-0 opacity-20">
-        <Image
-          src="/images/services-cta-bg.jpg"
-          alt="Services CTA background"
-          fill
-          className="object-cover"
-        />
+        <Image src="/images/services-cta-bg.jpg" alt="" fill className="object-cover" />
       </div>
-      <div className="flex flex-col items-start w-full relative z-10">
-        <div className="flex flex-col gap-10 items-start w-full">
-          <div className="relative shrink-0 size-10">
-            <Image
-              src="/icons/siren-icon.svg"
-              alt="Siren"
-              width={40}
-              height={40}
-              className="w-full h-full"
-            />
-          </div>
-          <div className="flex flex-col gap-10 items-start w-full">
-            <h3 className="font-bold leading-none text-[40px] text-white w-full">
-              {ctaCard.title}
-            </h3>
-            <button className="backdrop-blur-md bg-white flex items-center justify-center px-8 py-[18px] rounded-[45px] hover:bg-gray-100 transition-colors">
-              <span className="font-medium text-[#0073ec] text-[20px] tracking-[-1px]">{ctaCard.buttonText}</span>
-            </button>
-          </div>
-        </div>
+
+      <div className="relative z-10 flex flex-col gap-8">
+        <Image
+          src="/icons/siren-icon.svg"
+          alt=""
+          width={40}
+          height={40}
+          className="mb-2"
+        />
+
+        <h3 className="text-[32px] sm:text-[40px] font-bold leading-[1.1]">
+          {ctaCard.title}
+        </h3>
+
+        <button className="
+          bg-white text-[#0073ec] 
+          px-6 py-3 sm:px-8 sm:py-4 
+          rounded-[45px] 
+          text-[18px] sm:text-[20px] 
+          font-medium 
+          hover:bg-gray-100 
+          transition
+        ">
+          {ctaCard.buttonText}
+        </button>
       </div>
     </div>
   );
 }
-
