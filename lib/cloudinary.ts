@@ -89,6 +89,48 @@ export function getCloudinaryUrl(
 }
 
 /**
+ * Generate Cloudinary URL for a video
+ */
+export function getCloudinaryVideoUrl(
+  publicId: string,
+  options: {
+    format?: string;
+    transformation?: string;
+  } = {}
+): string {
+  const config = getCloudinaryConfig();
+  if (!config) {
+    throw new Error('Cloudinary not configured');
+  }
+
+  const {
+    format = 'auto',
+    transformation = '',
+  } = options;
+
+  let url = `https://res.cloudinary.com/${config.cloudName}/video/upload`;
+
+  // Add transformations
+  const transformations: string[] = [];
+  
+  if (format) {
+    transformations.push(`f_${format}`);
+  }
+  
+  if (transformation) {
+    transformations.push(transformation);
+  }
+
+  if (transformations.length > 0) {
+    url += `/${transformations.join(',')}`;
+  }
+
+  url += `/${publicId}`;
+
+  return url;
+}
+
+/**
  * Get asset URL with Cloudinary fallback to local
  * @param cloudinaryId - Cloudinary public ID (e.g., "bobcares/hero-bg")
  * @param localPath - Local path (e.g., "/images/hero-bg.jpg")
@@ -115,6 +157,30 @@ export function getAssetUrl(
     return getCloudinaryUrl(cloudinaryId, options);
   } catch (error) {
     console.warn('Failed to generate Cloudinary URL, using local:', error);
+    return localPath;
+  }
+}
+
+/**
+ * Get video URL with Cloudinary fallback to local
+ */
+export function getVideoUrl(
+  cloudinaryId: string | null | undefined,
+  localPath: string,
+  options: {
+    format?: string;
+    transformation?: string;
+  } = {}
+): string {
+  // If Cloudinary is not configured or no cloudinaryId provided, use local
+  if (!isCloudinaryConfigured() || !cloudinaryId) {
+    return localPath;
+  }
+
+  try {
+    return getCloudinaryVideoUrl(cloudinaryId, options);
+  } catch (error) {
+    console.warn('Failed to generate Cloudinary video URL, using local:', error);
     return localPath;
   }
 }
