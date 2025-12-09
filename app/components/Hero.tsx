@@ -52,13 +52,13 @@ export default function Hero() {
           lg:text-[96px] lg:leading-[0.85]
         max-w-[900px]
         ">
-            {title.line1}
+            {title}
           </h1>
 
           {/* DESCRIPTION */}
           <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-[1.5] whitespace-pre-wrap
         max-w-[900px]">
-            {description.line1} <br /> {description.line2}
+            {description}
           </p>
 
           {/* RATINGS */}
