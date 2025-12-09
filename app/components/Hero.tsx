@@ -5,7 +5,10 @@ export default function Hero() {
   const { title, description, ratings, buttons, backgroundImage, backgroundImageCloudinaryId } = heroData;
   
   return (
-    <section className="relative bg-[#fbfbfb] h-[975px] overflow-hidden">
+    <section
+      id="hero-section"
+      className="relative bg-[#fbfbfb] h-[975px] overflow-hidden"
+    >
       {/* Background Image with overlay */}
       <div className="absolute h-[1180px] right-[-171px] top-[-25px] w-[2115px]">
         <div className="absolute inset-0 pointer-events-none">
