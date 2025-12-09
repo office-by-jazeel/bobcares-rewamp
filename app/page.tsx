@@ -17,14 +17,14 @@ export default function Home() {
       <main className="w-full">
         <Hero />
         <Services />
-        <Trust />
+        {/* <Trust />
         <Portfolio />
         <About />
         <Certifications />
         <Testimonials />
         <Blogs />
         <Collaborate />
-        <Footer />
+        <Footer /> */}
       </main>
     </div>
   );
