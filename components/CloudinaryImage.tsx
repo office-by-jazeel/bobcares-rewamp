@@ -38,25 +38,34 @@ export default function CloudinaryImage({
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    // If Cloudinary is configured and we have a cloudinaryId, try to use it
-    if (isCloudinaryConfigured() && cloudinaryId && !hasError) {
-        console.log('Cloudinary is configured and we have a cloudinaryId', cloudinaryId);
-      try {
-        console.log('Getting Cloudinary URL for', cloudinaryId);
-        const cloudinaryUrl = getAssetUrl(cloudinaryId, src, {
-          width,
-          height,
-          quality,
-          format: 'auto',
-        });
-        setImageSrc(cloudinaryUrl);
-      } catch (error) {
-        console.log('Failed to generate Cloudinary URL, using local:', error);
-        console.warn('Failed to generate Cloudinary URL, using local:', error);
+    // If we have a cloudinaryId, check if it's a full URL or a Cloudinary public ID
+    if (cloudinaryId && !hasError) {
+      // Check if cloudinaryId is a full URL (starts with http:// or https://)
+      const isFullUrl = cloudinaryId.startsWith('http://') || cloudinaryId.startsWith('https://');
+      
+      if (isFullUrl) {
+        // Use the URL directly
+        setImageSrc(cloudinaryId);
+      } else if (isCloudinaryConfigured()) {
+        // It's a Cloudinary public ID, generate the URL
+        try {
+          const cloudinaryUrl = getAssetUrl(cloudinaryId, src, {
+            width,
+            height,
+            quality,
+            format: 'auto',
+          });
+          setImageSrc(cloudinaryUrl);
+        } catch (error) {
+          console.warn('Failed to generate Cloudinary URL, using local:', error);
+          setImageSrc(src);
+        }
+      } else {
+        // Cloudinary not configured, use local
         setImageSrc(src);
       }
     } else {
-        console.log('Cloudinary is not configured or we have no cloudinaryId or we have an error', cloudinaryId, hasError);
+      // No cloudinaryId, use local
       setImageSrc(src);
     }
   }, [cloudinaryId, src, width, height, quality, hasError]);
