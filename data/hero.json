@@ -1,6 +1,6 @@
 {
   "title": {
-    "line1": "Get pro level help",
+    "line1": "Get pro level help from certified server experts",
     "line2": "from certified server experts"
   },
   "description": {
@@ -32,6 +32,20 @@
     }
   ],
   "backgroundImage": "/images/hero-bg.jpg",
-  "backgroundImageCloudinaryId": "bobcares/hero-bg"
+  "backgroundImageCloudinaryId": "bobcares/hero-bg",
+  "backgroundVideos": [
+    {
+      "src": "/videos/test1.mp4",
+      "cloudinaryId": "bobcares/videos/hero-video-1"
+    },
+    {
+      "src": "/videos/test2.mp4",
+      "cloudinaryId": "bobcares/videos/hero-video-2"
+    },
+    {
+      "src": "/videos/test3.mp4",
+      "cloudinaryId": "bobcares/videos/hero-video-3"
+    }
+  ]
 }
 
