@@ -1,0 +1,130 @@
+# Commit Message Conventions
+
+## Commit Message Format
+
+Follow the Conventional Commits specification with emoji icons for all commit messages:
+
+```
+<emoji> <type>(<scope>): <subject>
+
+<body>  <!-- Only for complex commits that need explanation -->
+
+<footer>  <!-- Only for complex commits (issue references, breaking changes) -->
+```
+
+**Keep commit messages short and brief.** The subject line should be self-explanatory. Only add body and footer for large, complex commits that cannot be understood from the subject alone.
+
+## Commit Types
+
+Use one of the following commonly used types with their corresponding emojis:
+
+- **✨ feat**: A new feature
+- **🐛 fix**: A bug fix
+- **📝 docs**: Documentation only changes
+- **💄 style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
+- **♻️ refactor**: A code change that neither fixes a bug nor adds a feature
+- **✅ test**: Adding missing tests or correcting existing tests
+- **🔧 chore**: Other changes that don't modify src or test files
+
+## Scope (Optional)
+
+The scope should be the name of the package/component affected. Examples:
+- `header`, `footer`, `hero`, `about`
+- `api`, `middleware`, `config`
+- `deps`, `build`, `ci`
+
+## Subject
+
+- Use imperative, present tense: "change" not "changed" nor "changes"
+- Don't capitalize the first letter
+- No period (.) at the end
+- Maximum 72 characters
+- **Keep it short and brief** - should be self-explanatory
+- Be concise and descriptive
+
+## Body (Optional - Only for Complex Commits)
+
+**Only use body for large, complex commits that cannot be understood from the subject alone.**
+
+- Use imperative, present tense
+- Explain the "what" and "why" vs. "how"
+- Wrap at 72 characters
+- Keep it brief - one or two sentences if needed
+- Can include multiple paragraphs for very complex changes
+- Separate paragraphs with blank lines
+
+## Footer (Optional - Only for Complex Commits)
+
+**Only use footer when necessary for issue references or breaking changes.**
+
+- Reference issue numbers: `Closes #123`, `Fixes #456`
+- Breaking changes: `BREAKING CHANGE: <description>`
+
+## Examples
+
+**Short commits (preferred):**
+
+```
+✨ feat(header): add mobile navigation menu
+```
+
+```
+🐛 fix(api): resolve image loading error
+```
+
+```
+📝 docs(readme): update setup instructions
+```
+
+```
+♻️ refactor(components): extract common button styles
+```
+
+```
+💄 style(header): fix indentation
+```
+
+```
+✅ test(api): add unit tests for image loader
+```
+
+```
+🔧 chore(deps): update next.js to latest version
+```
+
+**Complex commits (only when body/footer is necessary):**
+
+```
+✨ feat(header): add mobile navigation menu
+
+Implement responsive navigation menu with hamburger icon for mobile devices.
+Includes smooth animations and accessibility improvements.
+
+Closes #42
+```
+
+```
+🐛 fix(api): resolve image loading error in production
+
+The Cloudinary image loader was failing due to incorrect environment variable handling.
+Added proper error handling and fallback mechanism.
+
+Fixes #38
+```
+
+## Rules for AI Commit Message Generation
+
+When generating commit messages:
+
+1. Always use the conventional commit format with emoji icons
+2. Start with the appropriate emoji for the commit type
+3. Choose the most appropriate type based on the changes
+4. Include scope when it's clear what component/area is affected
+5. **Keep commit messages short and brief** - prefer single-line commits
+6. Write clear, concise subject lines (max 72 chars) that are self-explanatory
+7. **Only add body/footer for large, complex commits** that cannot be understood from the subject alone
+8. Use present tense, imperative mood
+9. Be specific about what changed in the subject line
+10. Use only the commonly used commit types: feat, fix, docs, style, refactor, test, chore
+11. **Default to short format** - only expand with body/footer when absolutely necessary
+

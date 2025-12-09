@@ -14,10 +14,10 @@ export default function Home() {
   return (
     <div className="relative w-full">
       <Header />
-      <main className="w-full">
+      <main className="w-full -mt-[100px]">
         <Hero />
-        <Services />
-        {/* <Trust />
+        {/* <Services />
+        <Trust />
         <Portfolio />
         <About />
         <Certifications />

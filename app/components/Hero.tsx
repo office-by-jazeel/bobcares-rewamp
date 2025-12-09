@@ -13,7 +13,9 @@ export default function Hero() {
   const [videoDurations, setVideoDurations] = useState<number[]>([]);
 
   return (
-    <section className="relative h-[900px] md:h-[1000px] lg:h-[980px] w-full overflow-hidden">
+    <section
+      id="hero-section"
+      className="relative h-dvh w-full overflow-hidden">
 
       {/* ================= BACKGROUND VIDEO ================= */}
       <div className="absolute inset-0 w-full h-full">
@@ -38,47 +40,46 @@ export default function Hero() {
         z-20 
         left-6 right-6 
         top-[200px]
-        md:left-[80px] md:right-auto 
-        lg:left-[160px]
-        flex flex-col gap-8
-        max-w-[900px]
       ">
+        <div className="container mx-auto flex flex-col gap-8">
 
-        {/* TITLE */}
-        <h1 className="
+          {/* TITLE */}
+          <h1 className="
           text-white font-bold tracking-[-1.5px] whitespace-pre-wrap
           text-[42px] leading-[1]
           sm:text-[56px]
           md:text-[72px]
           lg:text-[96px] lg:leading-[0.85]
+        max-w-[900px]
         ">
-          {title.line1}
-        </h1>
+            {title.line1}
+          </h1>
 
-        {/* DESCRIPTION */}
-        <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-[1.5] whitespace-pre-wrap">
-          {description.line1} <br /> {description.line2}
-        </p>
+          {/* DESCRIPTION */}
+          <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-[1.5] whitespace-pre-wrap
+        max-w-[900px]">
+            {description.line1} <br /> {description.line2}
+          </p>
 
-        {/* RATINGS */}
-        <div className="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
-          {ratings.map((rating, index) => (
-            <div key={index} className="flex items-center gap-3 md:gap-4">
-              {index > 0 && (
-                <div className="hidden md:block h-6 border-l border-white/30" />
-              )}
+          {/* RATINGS */}
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
+            {ratings.map((rating, index) => (
+              <div key={index} className="flex items-center gap-3 md:gap-4">
+                {index > 0 && (
+                  <div className="hidden md:block h-6 border-l border-white/30" />
+                )}
 
-              <span className="text-white text-xl">{rating.icon}</span>
-              <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
-                {rating.platform}
-              </span>
-              <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
-                {rating.rating}
-              </span>
-            </div>
-          ))}
+                <span className="text-white text-xl">{rating.icon}</span>
+                <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
+                  {rating.platform}
+                </span>
+                <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
+                  {rating.rating}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-
       </div>
 
       {/* ================= BUTTONS + TIMELINE ================= */}
