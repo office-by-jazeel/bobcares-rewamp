@@ -7,16 +7,18 @@ import { getAssetUrlWithFallback, isCloudinaryConfigured } from '@/lib/cloudinar
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
-    const path = params.path.join('/');
+    const { path: pathArray } = await params;
+    const path = pathArray.join('/');
     const { searchParams } = new URL(request.url);
     
     const cloudinaryId = searchParams.get('cloudinaryId');
     const width = searchParams.get('width') ? parseInt(searchParams.get('width')!) : undefined;
     const height = searchParams.get('height') ? parseInt(searchParams.get('height')!) : undefined;
-    const quality = searchParams.get('quality') || 'auto';
+    const qualityParam = searchParams.get('quality');
+    const quality = qualityParam && qualityParam !== 'auto' ? parseInt(qualityParam) : undefined;
     const format = searchParams.get('format') || 'auto';
 
     // Construct local path
@@ -26,7 +28,7 @@ export async function GET(
     const assetUrl = await getAssetUrlWithFallback(cloudinaryId, localPath, {
       width,
       height,
-      quality: quality === 'auto' ? 'auto' : parseInt(quality),
+      quality,
       format,
     });
 
