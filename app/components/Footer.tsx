@@ -1,4 +1,8 @@
+'use client';
+
+import { useState } from 'react';
 import Image from "next/image";
+import footerData from "../../data/footer.json";
 
 const socialIcons = {
   Facebook: "/icons/facebook-icon.svg",
@@ -9,98 +13,165 @@ const socialIcons = {
 };
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const { newsletter, contact, links, copyright } = footerData;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle newsletter submission
+    console.log('Newsletter signup:', email);
+    setEmail('');
+  };
+
   return (
-    <footer className="bg-[#080808] h-[1554px] overflow-hidden relative">
-      <div className="absolute flex flex-col gap-14 items-start left-[180px] top-[140px] w-[1560px]">
-        <div className="flex flex-col gap-14 items-start w-full">
-          <div className="flex items-end justify-between w-full">
-            <div className="flex flex-col gap-16 items-start w-[531px]">
-              <h2 className="font-semibold leading-[0.9] text-[96px] text-white tracking-[-0.96px] w-full">
-                Register to our newsletter
-              </h2>
-              <div className="bg-[#141414] border border-white/10 border-solid flex items-center justify-between pl-10 pr-2 py-2 rounded-[264px] w-full">
-                <p className="font-normal text-[20px] text-gray-500">Email Address</p>
-                <button className="bg-[#0073ec] flex items-center justify-center px-[38px] py-5 rounded-[45px] hover:bg-[#005bb5] transition-colors">
-                  <span className="font-medium text-[20px] text-white tracking-[-1px]">Submit</span>
-                </button>
+    <footer className="bg-black flex flex-col items-center px-6 sm:px-12 lg:px-[180px] py-[80px] lg:py-[140px]">
+      <div className="w-full max-w-[1560px] flex flex-col gap-16 lg:gap-20">
+        
+        {/* Top Section */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12 w-full">
+          
+          {/* Newsletter Section */}
+          <div className="flex flex-col gap-8 lg:gap-12 w-full lg:w-auto lg:max-w-[600px]">
+            <h2 className="font-semibold leading-[1.1] text-[40px] sm:text-[56px] lg:text-[72px] xl:text-[96px] text-white tracking-[-1px]">
+              {newsletter.title}
+            </h2>
+            <form onSubmit={handleSubmit} className="flex gap-3 w-full">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={newsletter.placeholder}
+                className="
+                  flex-1 
+                  bg-[#1a1a1a] 
+                  border border-white/10 
+                  rounded-full 
+                  px-6 sm:px-8 lg:px-10 
+                  py-4 sm:py-5 
+                  text-white 
+                  text-[16px] sm:text-[18px] lg:text-[20px]
+                  placeholder:text-gray-500
+                  focus:outline-none focus:border-white/30
+                  transition-colors
+                "
+                required
+              />
+              <button 
+                type="submit"
+                className="
+                  bg-[#0073ec] 
+                  flex items-center justify-center 
+                  px-8 sm:px-10 lg:px-[38px] 
+                  py-4 sm:py-5 
+                  rounded-full 
+                  hover:bg-[#005bb5] 
+                  transition-colors
+                  shrink-0
+                "
+              >
+                <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
+                  {newsletter.buttonText}
+                </span>
+              </button>
+            </form>
+          </div>
+
+          {/* Contact Information */}
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 lg:gap-10 items-start sm:items-center">
+            <div className="flex gap-4 sm:gap-6 items-center">
+              <div className="relative shrink-0 size-6 sm:size-8">
+                <Image
+                  src="/icons/email-icon.svg"
+                  alt="Email"
+                  width={32}
+                  height={32}
+                  className="w-full h-full"
+                />
               </div>
+              <a 
+                href={`mailto:${contact.email}`}
+                className="font-normal text-[18px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] hover:text-[#0073ec] transition-colors"
+              >
+                {contact.email}
+              </a>
             </div>
-            <div className="flex gap-10 items-center justify-end">
-              <div className="flex gap-6 items-center w-[328px]">
-                <div className="relative shrink-0 size-16">
-                  <Image
-                    src="/icons/email-icon.svg"
-                    alt="Email"
-                    width={64}
-                    height={64}
-                    className="w-full h-full"
-                  />
-                </div>
-                <p className="font-normal text-[24px] text-white tracking-[-1px]">sales@bobcares.com</p>
+            <div className="flex gap-4 sm:gap-6 items-center">
+              <div className="relative shrink-0 size-6 sm:size-8">
+                <Image
+                  src="/icons/phone-icon.svg"
+                  alt="Phone"
+                  width={32}
+                  height={32}
+                  className="w-full h-full"
+                />
               </div>
-              <div className="flex h-[39px] items-center justify-center w-0">
-                <div className="h-0 w-[39px] border-l border-white/20 rotate-90" />
-              </div>
-              <div className="flex gap-6 items-center">
-                <div className="relative shrink-0 size-16">
-                  <Image
-                    src="/icons/phone-icon.svg"
-                    alt="Phone"
-                    width={64}
-                    height={64}
-                    className="w-full h-full"
-                  />
-                </div>
-                <p className="font-normal text-[24px] text-white tracking-[-1px]">1-800-383-5193</p>
-              </div>
+              <a 
+                href={`tel:${contact.phone}`}
+                className="font-normal text-[18px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] hover:text-[#0073ec] transition-colors"
+              >
+                {contact.phone}
+              </a>
             </div>
           </div>
         </div>
-        
-        {/* Footer bottom */}
-        <div className="border-[#1a1a1a] border-t border-l-0 border-r-0 border-b-0 border-solid flex flex-col items-start px-0 py-6 w-full">
-          <div className="flex gap-[187px] items-center w-full">
-            <div className="flex gap-[282px] items-center">
-              <p className="font-light leading-[1.5] text-[#a4a4a4] text-[16px] tracking-[-0.16px]">
-                © 2025 Bobcares. All Rights Reserved.
-              </p>
-              <div className="flex items-center justify-between w-[545px]">
-                <a href="#" className="font-light leading-[1.5] text-[#a4a4a4] text-[16px] tracking-[-0.16px] hover:text-white transition-colors">Privacy Policy</a>
-                <div className="h-[14px] w-0 border-l border-white/20 rotate-90" />
-                <a href="#" className="font-light leading-[1.5] text-[#a4a4a4] text-[16px] tracking-[-0.16px] hover:text-white transition-colors">Terms and Service</a>
-                <div className="h-[14px] w-0 border-l border-white/20 rotate-90" />
-                <a href="#" className="font-light leading-[1.5] text-[#a4a4a4] text-[16px] tracking-[-0.16px] hover:text-white transition-colors">GDPR</a>
-                <div className="h-[14px] w-0 border-l border-white/20 rotate-90" />
-                <a href="#" className="font-light leading-[1.5] text-[#a4a4a4] text-[16px] tracking-[-0.16px] hover:text-white transition-colors">Acceptable Use Policy</a>
-              </div>
-            </div>
-            <div className="flex gap-6 items-center">
-              {/* Social Media Icons */}
-              {Object.entries(socialIcons).map(([name, iconPath]) => (
-                <a key={name} href="#" className="relative shrink-0 size-6 hover:opacity-70 transition-opacity">
-                  <Image
-                    src={iconPath}
-                    alt={name}
-                    width={24}
-                    height={24}
-                    className="w-full h-full"
-                  />
-                </a>
+
+        {/* Bottom Section */}
+        <div className="border-t border-white/10 pt-8 lg:pt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 w-full">
+          
+          {/* Copyright and Legal Links */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 lg:gap-8 flex-1">
+            <p className="font-light text-[14px] sm:text-[16px] text-[#a4a4a4] tracking-[-0.16px]">
+              {copyright}
+            </p>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              {links.legal.map((link, index) => (
+                <div key={link.label} className="flex items-center gap-4 sm:gap-6">
+                  {index > 0 && (
+                    <div className="h-4 w-px bg-white/20" />
+                  )}
+                  <a 
+                    href={link.href} 
+                    className="font-light text-[14px] sm:text-[16px] text-[#a4a4a4] tracking-[-0.16px] hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </div>
               ))}
             </div>
           </div>
+
+          {/* Social Media Icons */}
+          <div className="flex gap-4 sm:gap-6 items-center">
+            {['Facebook', 'Instagram', 'Twitter', 'LinkedIn'].map((name) => (
+              <a 
+                key={name} 
+                href="#" 
+                className="relative shrink-0 size-6 sm:size-8 hover:opacity-70 transition-opacity"
+              >
+                <Image
+                  src={socialIcons[name as keyof typeof socialIcons]}
+                  alt={name}
+                  width={32}
+                  height={32}
+                  className="w-full h-full"
+                />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
-      
-      {/* Large logo background */}
-      <div className="absolute inset-[40%_6%_40%_9%] opacity-10">
-        <Image
-          src="/icons/logo-white.svg"
-          alt="Bobcares Logo"
-          width={500}
-          height={200}
-          className="w-full h-full object-contain"
-        />
+
+        {/* Large background logo - appears after all content */}
+        <div className="w-full pt-8 lg:pt-12 mt-8 lg:mt-12">
+          <div className="relative w-full flex items-center justify-center opacity-5">
+            <Image
+              src="/icons/logo-white.svg"
+              alt="Bobcares Logo"
+              width={1200}
+              height={400}
+              className="w-full h-auto object-contain max-w-[90%]"
+            />
+          </div>
+        </div>
       </div>
     </footer>
   );
