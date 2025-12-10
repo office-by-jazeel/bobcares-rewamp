@@ -112,7 +112,7 @@ function CTACard({ ctaCard }: { ctaCard: any }) {
       flex flex-col gap-8 text-white
     ">
       <div className="absolute inset-0 opacity-20">
-        <Image src="/images/services-cta-bg.jpg" alt="" fill className="object-cover" />
+        <Image src="/icons/bob.png" alt="" fill className="object-cover" />
       </div>
 
       <div className="relative z-10 flex flex-col gap-8">

@@ -2,49 +2,49 @@
   "services": [
     {
       "id": 1,
-      "icon": "📦",
+      "icon": "/icons/endtoend.png",
       "title": "End-to-End product Engineering",
       "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
     },
     {
       "id": 2,
-      "icon": "🔄",
+      "icon": "/icons/digitaltr.png",
       "title": "Digital transformation",
       "description": "We modernize your business systems with streamlined processes, upgraded technology, and smarter digital workflows that improve efficiency and performance."
     },
     {
       "id": 3,
-      "icon": "🤖",
+      "icon": "/icons/artificial.png",
       "title": "Artificial intelligence services",
       "description": "We develop intelligent AI solutions that improve decision-making, automate operations, and create new opportunities across your organization."
     },
     {
       "id": 4,
-      "icon": "⚙️",
+      "icon": "/icons/infra.png",
       "title": "Infrastructure optimization",
       "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
     },
     {
       "id": 5,
-      "icon": "🚀",
+      "icon": "/icons/devops.png",
       "title": "DevOps & automation services",
       "description": "We accelerate delivery with automated pipelines, improved deployment workflows, and DevOps practices that enhance stability and operational efficiency."
     },
     {
       "id": 6,
-      "icon": "🔒",
+      "icon": "/icons/cyber.png",
       "title": "Cybersecurity & compliance services",
       "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
     },
     {
       "id": 7,
-      "icon": "🧪",
+      "icon": "/icons/qa.png",
       "title": "QA and test automation",
       "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
     },
     {
       "id": 8,
-      "icon": "💬",
+      "icon": "/icons/outsourced.png",
       "title": "Outsourced support services",
       "description": "We provide round-the-clock technical and customer support that keeps your operations running smoothly and ensures a great experience for your users."
     }
