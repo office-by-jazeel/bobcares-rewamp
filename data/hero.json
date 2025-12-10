@@ -5,12 +5,12 @@
     {
       "platform": "Google",
       "rating": 4.8,
-      "icon": "⭐"
+      "icon": "/images/hero/google-icon.png"
     },
     {
       "platform": "Clutch",
       "rating": 4.5,
-      "icon": "⭐"
+      "icon": "/images/hero/clutch-icon.png"
     }
   ],
   "buttons": [

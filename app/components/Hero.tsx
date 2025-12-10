@@ -4,6 +4,7 @@ import { useState } from "react";
 import VideoCarousel from "@/components/VideoCarousel";
 import VideoTimeline from "@/components/VideoTimeline";
 import heroData from "../../data/hero.json";
+import CloudinaryImage from "@/components/CloudinaryImage";
 
 // Type for video items to match the JSON structure
 type VideoItem = {
@@ -26,10 +27,10 @@ export default function Hero() {
   return (
     <section
       id="hero-section"
-      className="relative h-dvh w-full overflow-hidden bg-black -z-20 flex items-end">
+      className="relative h-dvh w-full overflow-hidden bg-black">
 
       {/* ================= BACKGROUND VIDEO ================= */}
-      <div className="absolute inset-0 w-full h-full -z-10">
+      <div className="absolute inset-0 w-full h-full">
         <VideoCarousel
           videos={videos}
           className="absolute inset-0 w-full h-full object-cover"
@@ -46,62 +47,78 @@ export default function Hero() {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-[118px] max-md:gap-8">
-        <div className="flex flex-col gap-8">
-          {/* TITLE */}
-          <h1 className="font-grotesque text-white font-bold tracking-[-2%] whitespace-pre-wrap text-[42px] leading-none sm:text-[56px] md:text-[72px] lg:text-[96px] lg:leading-[0.85] lg:max-w-[900px]">
-            {title}
-          </h1>
+      <div className="absolute left-0 bottom-0 w-full">
+        <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-[118px] max-md:gap-8">
+          <div className="flex flex-col gap-10">
+            {/* TITLE */}
+            <h1 className="font-grotesque text-white font-bold tracking-[-0.02em] whitespace-pre-wrap text-[42px] leading-none sm:text-[56px] md:text-[72px] lg:text-[96px] lg:leading-[0.85] lg:max-w-[750px]">
+              {title}
+            </h1>
 
-          {/* DESCRIPTION */}
-          <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-normal whitespace-pre-wrap lg:max-w-[900px]">
-            {description}
-          </p>
+            {/* DESCRIPTION */}
+            <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-normal whitespace-pre-wrap lg:max-w-[750px]">
+              {description}
+            </p>
 
-          {/* RATINGS */}
-          <div className="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">
-            {ratings.map((rating, index) => (
-              <div key={index} className="flex items-center gap-3 md:gap-4">
-                {index > 0 && (
-                  <div className="hidden md:block h-6 border-l border-white/30" />
-                )}
-
-                <span className="text-white text-xl">{rating.icon}</span>
-                <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
-                  {rating.platform}
-                </span>
-                <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
-                  {rating.rating}
-                </span>
-              </div>
-            ))}
+            {/* RATINGS */}
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-[34px]">
+              {ratings.map((rating, index) => (
+                <>
+                  <div key={index} className="flex items-center gap-[10px]">
+                    <CloudinaryImage
+                      src={rating.icon}
+                      alt={rating.platform}
+                      width={24}
+                      height={24}
+                      className="object-contain shrink-0"
+                    />
+                    <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
+                      {rating.platform}
+                    </span>
+                    <CloudinaryImage
+                      src="/images/hero/star-rating.png"
+                      alt="star"
+                      width={140}
+                      height={24}
+                      className="object-contain shrink-0"
+                    />
+                    <span className="text-white text-[16px] sm:text-[18px] md:text-[20px] tracking-[-1px]">
+                      {rating.rating}
+                    </span>
+                  </div>
+                  {index !== ratings.length - 1 && (
+                    <div className="hidden md:block h-6 border-l border-white/30" />
+                  )}
+                </>
+              ))}
+            </div>
+            {/* BUTTONS */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              {buttons.map((btn, index) => (
+                <button
+                  key={index}
+                  className={
+                    btn.variant === "primary"
+                      ? "bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
+                      : "border border-white px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
+                  }
+                >
+                  {btn.text}
+                </button>
+              ))}
+            </div>
           </div>
-          {/* BUTTONS */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            {buttons.map((btn, index) => (
-              <button
-                key={index}
-                className={
-                  btn.variant === "primary"
-                    ? "bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
-                    : "border border-white px-[28px] py-4 sm:px-[38px] sm:py-5 rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
-                }
-              >
-                {btn.text}
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {/* TIMELINE — moves under buttons on small screens */}
-        <div className="flex justify-center md:justify-end md:pr-[100px] lg:pr-[10px]">
-          <VideoTimeline
-            videos={videos}
-            currentVideoIndex={currentVideoIndex}
-            currentTime={currentTime}
-            videoDurations={videoDurations}
-            onVideoClick={(index) => setCurrentVideoIndex(index)}
-          />
+          {/* TIMELINE — moves under buttons on small screens */}
+          <div className="flex justify-center md:justify-end md:pr-[100px] lg:pr-[10px]">
+            <VideoTimeline
+              videos={videos}
+              currentVideoIndex={currentVideoIndex}
+              currentTime={currentTime}
+              videoDurations={videoDurations}
+              onVideoClick={(index) => setCurrentVideoIndex(index)}
+            />
+          </div>
         </div>
       </div>
     </section>
