@@ -5,7 +5,7 @@
       "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
       "category": "Server Management",
       "description": "Streamlined API management solution for secure data flows",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port1.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -13,7 +13,7 @@
       "title": "Reform RX - story of a unified fitness experience - Bobcares",
       "category": "Web Development",
       "description": "Comprehensive fitness platform with integrated workout tracking",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port2.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -21,7 +21,7 @@
       "title": "How Bobcares mobile app development transformed Paykini's financial services",
       "category": "Mobile App Development",
       "description": "Revolutionary mobile banking experience with seamless transactions",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port3.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -29,7 +29,7 @@
       "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
       "category": "Server Management",
       "description": "Enterprise-grade API security and management platform",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port4.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -37,7 +37,7 @@
       "title": "Reform RX - story of a unified fitness experience - Bobcares",
       "category": "Web Development",
       "description": "Next-generation fitness web application with real-time analytics",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port5.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -45,7 +45,7 @@
       "title": "How Bobcares mobile app development transformed Paykini's financial services",
       "category": "Mobile App Development",
       "description": "Mobile-first financial services platform with advanced security",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port6.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -53,7 +53,7 @@
       "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
       "category": "Server Management",
       "description": "Scalable API infrastructure for modern applications",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port7.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -61,7 +61,7 @@
       "title": "Reform RX - story of a unified fitness experience - Bobcares",
       "category": "Web Development",
       "description": "Integrated fitness ecosystem with personalized coaching",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port8.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
@@ -69,7 +69,7 @@
       "title": "How Bobcares mobile app development transformed Paykini's financial services",
       "category": "Mobile App Development",
       "description": "Award-winning mobile banking solution with intuitive UX",
-      "image": "/images/portfolio-1.jpg",
+      "image": "/images/port9.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     }
   ]
