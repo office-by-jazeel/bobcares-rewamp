@@ -5,8 +5,19 @@ import VideoCarousel from "@/components/VideoCarousel";
 import VideoTimeline from "@/components/VideoTimeline";
 import heroData from "../../data/hero.json";
 
+// Type for video items to match the JSON structure
+type VideoItem = {
+  src?: string;
+  cloudinaryId?: string | null;
+  thumbnail?: string;
+  thumbnailCloudinaryId?: string | null;
+};
+
 export default function Hero() {
   const { title, description, ratings, buttons, backgroundVideos } = heroData;
+  
+  // Ensure backgroundVideos matches the expected type
+  const videos: VideoItem[] = backgroundVideos as VideoItem[];
 
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -15,12 +26,12 @@ export default function Hero() {
   return (
     <section
       id="hero-section"
-      className="relative h-dvh w-full overflow-hidden">
+      className="relative h-dvh w-full overflow-hidden bg-black">
 
       {/* ================= BACKGROUND VIDEO ================= */}
       <div className="absolute inset-0 w-full h-full">
         <VideoCarousel
-          videos={backgroundVideos}
+          videos={videos}
           className="absolute inset-0 w-full h-full object-cover"
           showTimeline={false}
           currentVideoIndex={currentVideoIndex}
@@ -52,13 +63,13 @@ export default function Hero() {
           lg:text-[96px] lg:leading-[0.85]
         max-w-[900px]
         ">
-            {title.line1}
+            {title}
           </h1>
 
           {/* DESCRIPTION */}
           <p className="text-white w-full md:w-[520px] text-[16px] sm:text-[18px] md:text-[20px] leading-[1.5] whitespace-pre-wrap
         max-w-[900px]">
-            {description.line1} <br /> {description.line2}
+            {description}
           </p>
 
           {/* RATINGS */}
@@ -115,7 +126,7 @@ export default function Hero() {
         {/* TIMELINE — moves under buttons on small screens */}
         <div className="flex justify-center md:justify-end md:pr-[100px] lg:pr-[10px]">
           <VideoTimeline
-            videos={backgroundVideos}
+            videos={videos}
             currentVideoIndex={currentVideoIndex}
             currentTime={currentTime}
             videoDurations={videoDurations}
