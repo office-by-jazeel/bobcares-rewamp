@@ -16,6 +16,11 @@
   --border-grey: #e8e8e8;
 }
 
+@theme {
+  --font-grotesque: "Darker Grotesque", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -34,4 +39,15 @@ body {
 button,
 a {
   @apply cursor-pointer;
+}
+
+/* Ensure container has breathing room on small screens */
+.container {
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
 }
