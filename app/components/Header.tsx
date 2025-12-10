@@ -25,7 +25,7 @@ export default function Header() {
   const isTransparent = heroVisible;
 
   const headerClasses = [
-    "container mx-auto z-50 flex h-[100px] items-center justify-between py-4 transition-colors duration-300",
+    "z-50 w-full h-[70px] md:h-[100px] py-4 transition-colors duration-300",
     isTransparent ? "relative" : "sticky top-0",
     isTransparent
       ? "bg-transparent border-transparent text-white"
@@ -44,62 +44,64 @@ export default function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className="flex items-center justify-center">
-        <div className="flex flex-col items-start pb-1 pt-0 px-1">
-          <div className="h-[46.614px] w-[254.06px] relative">
-            <Image
-              src={isTransparent ? "/icons/logo.svg" : "/icons/logo-white.svg"}
-              alt="Bobcares Logo"
-              width={254}
-              height={47}
-              className="h-full w-auto"
-            />
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-start pb-1 pt-0 px-1">
+            <div className="h-[46.614px] max-h-full w-[254.06px] relative">
+              <Image
+                src={isTransparent ? "/icons/logo.svg" : "/icons/logo-white.svg"}
+                alt="Bobcares Logo"
+                width={254}
+                height={47}
+                className="h-full w-auto"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex gap-5 items-center justify-end">
-        <div className="flex gap-4 items-center">
-          <button className={cn(
-            "border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-            // isTransparent ? ""backdrop-blur-md bg-black/5 : ""
-          )}>
+        <div className="flex gap-5 items-center justify-end">
+          <div className="flex gap-4 items-center">
+            <button className={cn(
+              "border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
+              // isTransparent ? ""backdrop-blur-md bg-black/5 : ""
+            )}>
+              <Image
+                src="/icons/search-icon.svg"
+                alt="Search"
+                width={26}
+                height={26}
+                className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
+              />
+            </button>
+            <button className={cn(
+              "border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
+              isTransparent ? "backdrop-blur-md bg-black/5" : ""
+            )}>
+              <Image
+                src="/icons/phone-icon.svg"
+                alt="Phone"
+                width={26}
+                height={26}
+                className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
+              />
+            </button>
+            <button className={textButtonClasses}>
+              <span
+                className={`font-medium text-[20px] leading-[22px] ${isTransparent ? "text-white/80" : "text-black/80"
+                  }`}
+              >
+                Emergency
+              </span>
+            </button>
+          </div>
+          <button className="h-3 w-10 relative">
             <Image
-              src="/icons/search-icon.svg"
-              alt="Search"
-              width={26}
-              height={26}
-              className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
+              src="/icons/menu-icon.svg"
+              alt="Menu"
+              fill
+              className="object-contain"
             />
-          </button>
-          <button className={cn(
-            "border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-            isTransparent ? "backdrop-blur-md bg-black/5" : ""
-          )}>
-            <Image
-              src="/icons/phone-icon.svg"
-              alt="Phone"
-              width={26}
-              height={26}
-              className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
-            />
-          </button>
-          <button className={textButtonClasses}>
-            <span
-              className={`font-medium text-[20px] leading-[22px] ${isTransparent ? "text-white/80" : "text-black/80"
-                }`}
-            >
-              Emergency
-            </span>
           </button>
         </div>
-        <button className="h-3 w-10 relative">
-          <Image
-            src="/icons/menu-icon.svg"
-            alt="Menu"
-            fill
-            className="object-contain"
-          />
-        </button>
       </div>
     </header>
   );
