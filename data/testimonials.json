@@ -2,16 +2,19 @@
   "testimonials": [
     {
       "id": 1,
+      "type": "text-image-video",
       "category": "Amazing support",
       "quote": "I have used Bobcares team for building an MVP at the beginning of 2024 and building out full...",
       "author": "Sai Kalur",
       "role": "CEO, Sanatio Technologies Inc",
       "bgColor": "#fbe9ac",
       "image": "/images/testimonial-sai.jpg",
-      "imageCloudinaryId": "bobcares/testimonials/sai"
+      "imageCloudinaryId": "bobcares/testimonials/sai",
+      "videoUrl": "/videos/test4.mp4"
     },
     {
       "id": 2,
+      "type": "text-image",
       "category": "NO compliance forms",
       "quote": "We had a quick turnaround support from Ameer from BobCares team to fix a Cname issue we were facing with email delivery. This was rectified by Ameer instantly...",
       "author": "Shamil Abdul Latheef",
@@ -22,6 +25,7 @@
     },
     {
       "id": 3,
+      "type": "text",
       "category": "NO compliance forms",
       "quote": "Bobcares helped me with the configuration of server side settings that allowed for our development team to use Github with cPanel.",
       "author": "Matthew Owen",

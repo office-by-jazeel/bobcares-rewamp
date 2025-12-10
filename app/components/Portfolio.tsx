@@ -5,49 +5,105 @@ export default function Portfolio() {
   const { projects } = portfolioData;
 
   return (
-    <section className="bg-white h-[1074px] overflow-hidden relative">
-      <div className="absolute flex flex-col gap-16 items-start left-[179px] top-[177px] w-[1562px]">
-        <div className="flex items-center justify-between w-full">
-          <h2 className="font-semibold leading-[0.9] text-[96px] text-black tracking-[-0.96px] w-[639px]">
-            <span>Our </span>
-            <span className="text-[#0073ec]">portfolio</span>
-          </h2>
-          <button className="border border-black border-solid flex items-center justify-center px-[38px] py-5 rounded-[45px] hover:bg-black hover:text-white transition-colors">
-            <span className="font-medium text-[20px] text-black tracking-[-1px]">View All Projects</span>
-          </button>
-        </div>
-        <div className="flex gap-4 items-start w-[1560px] overflow-x-auto pb-4">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} isFirst={project.featured} />
+    <section className="bg-white flex flex-col items-center px-6 sm:px-12 lg:px-[180px] py-[80px] lg:py-[140px]">
+      <div className="w-full max-w-[1560px] flex flex-col gap-20">
+        
+        {/* Header */}
+        <h2 className="font-semibold text-[40px] sm:text-[56px] lg:text-[96px] leading-[1] tracking-[-1px]">
+          <span>Our </span>
+          <span className="text-[#0073ec]">portfolio</span>
+        </h2>
+
+        {/* 3x3 Grid */}
+        <div className="
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          lg:grid-cols-3 
+          gap-8 
+          lg:gap-12
+        ">
+          {projects.slice(0, 9).map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+
+        {/* View All Projects Button */}
+        <div className="flex justify-center">
+          <button className="
+            border border-black border-solid 
+            flex items-center justify-center 
+            px-[38px] py-5 
+            rounded-[45px] 
+            hover:bg-black hover:text-white 
+            transition-colors
+          ">
+            <span className="font-medium text-[20px] text-black tracking-[-1px]">
+              View All Projects
+            </span>
+          </button>
+        </div>
+
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project, isFirst }: { project: { id: number; title: string; category: string; featured: boolean; image: string; imageCloudinaryId?: string }; isFirst: boolean }) {
+function ProjectCard({ project }: { 
+  project: { 
+    id: number; 
+    title: string; 
+    category: string; 
+    description: string;
+    image: string; 
+    imageCloudinaryId?: string;
+  }; 
+}) {
   return (
-    <div className={`bg-[#ececec] h-[591px] overflow-hidden relative rounded-2xl shrink-0 ${isFirst ? 'w-[992px]' : 'w-[173px]'}`}>
-      {isFirst && (
+    <div className="group relative flex flex-col cursor-pointer">
+      
+      {/* Image Container */}
+      <div className="relative w-full h-[280px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-2xl mb-6">
         <CloudinaryImage
           src={project.image}
           cloudinaryId={project.imageCloudinaryId}
           alt={project.title}
           fill
-          className="object-cover opacity-80"
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
-      )}
-      <div className="absolute bottom-12 left-12 flex flex-col gap-8 items-start w-[884px] z-10">
-        <div className="flex flex-col gap-6 items-start w-full">
-          <div className="border border-solid border-white flex items-center justify-center px-4 py-3 rounded-[57px]">
-            <p className="font-normal text-[16px] text-white">{project.category}</p>
-          </div>
-          <h3 className="font-semibold leading-[1.1] text-[48px] text-white w-full">
-            {project.title}
-          </h3>
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col gap-4">
+        {/* Category Badge */}
+        <div className="inline-flex items-center justify-center px-4 py-2 bg-[#f7f7f7] rounded-full w-fit">
+          <p className="font-normal text-[14px] sm:text-[16px] text-black">
+            {project.category}
+          </p>
         </div>
-        <a href="#" className="font-medium text-[20px] text-white tracking-[-0.5px] underline hover:text-[#0073ec] transition-colors">
+
+        {/* Title */}
+        <h3 className="font-semibold text-[24px] sm:text-[28px] lg:text-[32px] leading-[1.2] text-black">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-[15px] sm:text-[16px] text-[#4d4d4d] leading-[1.5] line-clamp-2">
+          {project.description}
+        </p>
+
+        {/* View Project Link */}
+        <a 
+          href="#" 
+          className="
+            font-medium text-[18px] sm:text-[20px] 
+            text-black 
+            underline 
+            hover:text-[#0073ec] 
+            transition-colors
+            w-fit
+          "
+        >
           View Project
         </a>
       </div>

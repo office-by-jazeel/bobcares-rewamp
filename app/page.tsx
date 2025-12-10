@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
       <main className="w-full -mt-[100px]">
         <Hero />
-        {/* <Services />
+        <Services />
         <Trust />
         <Portfolio />
         <About />
@@ -24,7 +24,7 @@ export default function Home() {
         <Testimonials />
         <Blogs />
         <Collaborate />
-        <Footer /> */}
+        <Footer />
       </main>
     </div>
   );
