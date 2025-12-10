@@ -5,11 +5,11 @@ import Image from "next/image";
 import footerData from "../../data/footer.json";
 
 const socialIcons = {
-  Facebook: "/icons/facebook-icon.svg",
-  Twitter: "/icons/twitter-icon.svg",
-  LinkedIn: "/icons/linkedin-icon.svg",
-  Instagram: "/icons/instagram-icon.svg",
-  YouTube: "/icons/youtube-icon.svg"
+  Facebook: "/icons/facebook.svg",
+  Twitter: "/icons/x.svg",
+  LinkedIn: "/icons/link.svg",
+  Instagram: "/icons/instagram.svg",
+  YouTube: "/icons/youtube.svg"
 };
 
 export default function Footer() {
@@ -81,7 +81,7 @@ export default function Footer() {
             <div className="flex gap-4 sm:gap-6 items-center">
               <div className="relative shrink-0 size-6 sm:size-8">
                 <Image
-                  src="/icons/email-icon.svg"
+                  src="/icons/mail.svg"
                   alt="Email"
                   width={32}
                   height={32}
@@ -98,7 +98,7 @@ export default function Footer() {
             <div className="flex gap-4 sm:gap-6 items-center">
               <div className="relative shrink-0 size-6 sm:size-8">
                 <Image
-                  src="/icons/phone-icon.svg"
+                  src="/icons/call.svg"
                   alt="Phone"
                   width={32}
                   height={32}
@@ -164,11 +164,14 @@ export default function Footer() {
         <div className="w-full pt-8 lg:pt-12 mt-8 lg:mt-12">
           <div className="relative w-full flex items-center justify-center opacity-5">
             <Image
-              src="/icons/logo-white.svg"
+              src="/images/bobcares.svg"
               alt="Bobcares Logo"
               width={1200}
               height={400}
               className="w-full h-auto object-contain max-w-[90%]"
+              style={{
+                filter: 'brightness(0) invert(1)',
+              }}
             />
           </div>
         </div>
