@@ -17,6 +17,12 @@ const config: Config = {
         "2xl": "81.25%",
       },
     },
+    extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        grotesque: ["var(--font-darker-grotesque)"],
+      },
+    },
   },
 };
 
