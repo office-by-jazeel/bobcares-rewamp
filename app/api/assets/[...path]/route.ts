@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAssetUrlWithFallback, isCloudinaryConfigured } from '@/lib/cloudinary';
+import { getAssetUrlWithFallback } from '@/lib/cloudinary';
 
 /**
  * API route to serve assets with Cloudinary fallback

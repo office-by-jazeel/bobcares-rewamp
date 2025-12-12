@@ -4,32 +4,45 @@ import { useEffect, useRef, useState } from 'react';
 import CloudinaryImage from "@/components/CloudinaryImage";
 import testimonialsData from "../../data/testimonials.json";
 
+interface Testimonial {
+  id: number;
+  type: string;
+  category: string;
+  quote: string;
+  author: string;
+  role: string;
+  bgColor: string;
+  image: string;
+  imageCloudinaryId?: string;
+  videoUrl?: string;
+}
+
 export default function Testimonials() {
   const { testimonials } = testimonialsData;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-  const [selectedTestimonial, setSelectedTestimonial] = useState<any | null>(null);
-  
+  const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+
   // Duplicate testimonials for seamless infinite scroll
   const duplicatedTestimonials = [...testimonials, ...testimonials];
-  
+
   const handlePlayClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
   };
-  
+
   const closeVideoModal = () => {
     setSelectedVideo(null);
   };
-  
-  const handleReadMore = (testimonial: any) => {
+
+  const handleReadMore = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
   };
-  
+
   const closeTestimonialModal = () => {
     setSelectedTestimonial(null);
   };
-  
+
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -47,18 +60,18 @@ export default function Testimonials() {
 
       const deltaTime = currentTime - lastTime;
       lastTime = currentTime;
-      
+
       // Calculate scroll based on time for consistent speed
       scrollPosition += scrollSpeed * (deltaTime / 16.67); // Normalize to 60fps
-      
+
       // Calculate the width of one set of testimonials
       const singleSetWidth = container.scrollWidth / 2;
-      
+
       // Reset scroll position when we've scrolled through one full set
       if (scrollPosition >= singleSetWidth) {
         scrollPosition = scrollPosition - singleSetWidth;
       }
-      
+
       container.scrollLeft = scrollPosition;
       animationFrameId = requestAnimationFrame(scroll);
     };
@@ -83,64 +96,70 @@ export default function Testimonials() {
   }, [isPaused]);
 
   return (
-    <section className="bg-[#110536] flex flex-col items-center px-6 sm:px-12 lg:px-[180px] py-[80px] lg:py-[140px] relative overflow-hidden">
-      <div className="w-full max-w-[1560px] flex flex-col gap-12 lg:gap-20">
-        
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 w-full">
-          <h2 className="font-semibold leading-[1.1] text-[40px] sm:text-[56px] lg:text-[72px] xl:text-[96px] text-white tracking-[-1px]">
-            <span>Kind words from </span>
-            <br className="hidden sm:block" />
-            <span className="text-[#00e8e8]">valued clients</span>
-          </h2>
-          <button className="
-            border border-solid border-white 
-            flex items-center justify-center 
-            px-8 sm:px-[38px] py-4 sm:py-5 
-            rounded-[45px] 
-            hover:bg-white/10 
-            transition-colors
-            shrink-0
-          ">
-            <span className="font-medium text-[18px] sm:text-[20px] text-white tracking-[-1px]">
-              View All Testimonials
-            </span>
-          </button>
-        </div>
+    <section className="relative overflow-hidden">
+      <div className="bg-[#110536]">
+        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[140px] relative">
+          <div className="w-full flex flex-col gap-12 lg:gap-20">
 
-        {/* Carousel */}
-        <div className="w-full overflow-hidden">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              scrollBehavior: 'auto'
-            }}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
-          >
-            {duplicatedTestimonials.map((testimonial, index) => (
-              <TestimonialCard 
-                key={`${testimonial.id}-${index}`} 
-                testimonial={testimonial} 
-                onPlayClick={handlePlayClick}
-                onReadMore={handleReadMore}
-              />
-            ))}
+            {/* Header */}
+            <div className="w-full">
+              <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 w-full">
+                <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] md:text-[72px] text-white tracking-[-1px]">
+                  <span>Kind words from </span>
+                  <br className="hidden sm:block" />
+                  <span className="text-[#00e8e8]">valued clients</span>
+                </h2>
+                <button className="hidden md:flex border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
+              rounded-[45px] hover:bg-white/10 transition-colors shrink-0">
+                  <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
+                    View All Testimonials
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Carousel */}
+            <div className="w-full">
+              <div
+                ref={scrollContainerRef}
+                className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  scrollBehavior: 'auto'
+                }}
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+                onTouchStart={() => setIsPaused(true)}
+                onTouchEnd={() => setIsPaused(false)}
+              >
+                {duplicatedTestimonials.map((testimonial, index) => (
+                  <TestimonialCard
+                    key={`${testimonial.id}-${index}`}
+                    testimonial={testimonial}
+                    onPlayClick={handlePlayClick}
+                    onReadMore={handleReadMore}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <button className="w-fit mx-auto flex md:hidden border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
+              rounded-[45px] hover:bg-white/10 transition-colors shrink-0">
+              <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
+                View All Testimonials
+              </span>
+            </button>
+
           </div>
         </div>
-
       </div>
-      
+
       {/* Video Modal */}
       {selectedVideo && (
         <VideoModal videoUrl={selectedVideo} onClose={closeVideoModal} />
       )}
-      
+
       {/* Testimonial Detail Modal */}
       {selectedTestimonial && (
         <TestimonialDetailModal testimonial={selectedTestimonial} onClose={closeTestimonialModal} />
@@ -149,94 +168,104 @@ export default function Testimonials() {
   );
 }
 
-function TestimonialCard({ 
-  testimonial, 
+function TestimonialCard({
+  testimonial,
   onPlayClick,
   onReadMore
-}: { 
-  testimonial: { 
-    id: number; 
-    type: string;
-    category: string; 
-    quote: string; 
-    author: string; 
-    role: string; 
-    bgColor: string; 
-    image: string; 
-    imageCloudinaryId?: string;
-    videoUrl?: string;
-  };
+}: {
+  testimonial: Testimonial;
   onPlayClick: (videoUrl: string) => void;
-  onReadMore: (testimonial: any) => void;
+  onReadMore: (testimonial: Testimonial) => void;
 }) {
   // Show large image if type is "text-image" or "text-image-video"
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   // Show play button only if type is "text-image-video" and videoUrl exists
-  const showPlayButton = testimonial.type === "text-image-video" && testimonial.videoUrl;
-  
+  const showPlayButton = testimonial.type === "text-image-video" && !!testimonial.videoUrl && testimonial.videoUrl !== "";
+
   return (
-    <div className="bg-white flex flex-col sm:flex-row gap-6 sm:gap-8 lg:gap-12 items-start px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 rounded-3xl shrink-0 w-[320px] sm:w-[500px] lg:w-[600px] h-[400px] sm:h-[450px] lg:h-[500px]">
-      {/* Left Content */}
-      <div className="flex flex-1 flex-col gap-6 sm:gap-8 items-start w-full">
-        {/* Category Tag */}
-        <p className="font-medium leading-normal text-[12px] sm:text-[14px] text-black uppercase">
-          {testimonial.category}
-        </p>
-        
-        {/* Quote - reduced size */}
-        <p className="font-semibold leading-[1.3] text-[16px] sm:text-[18px] lg:text-[20px] text-black w-full">
-          "{testimonial.quote}"
-        </p>
-        
-        {/* Read More Link */}
-        <button 
-          onClick={() => onReadMore(testimonial)}
-          className="font-medium text-[16px] sm:text-[18px] text-black tracking-[-0.5px] underline hover:text-[#0073ec] transition-colors text-left"
-        >
-          Read More
-        </button>
-        
-        {/* Client Info */}
-        <div className="flex gap-3 sm:gap-4 items-center w-full mt-auto">
-          <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden">
-            <CloudinaryImage
-              src={testimonial.image}
-              cloudinaryId={testimonial.imageCloudinaryId}
-              alt={testimonial.author}
-              fill
-              className="object-cover rounded-full"
-            />
-          </div>
-          <div className="flex flex-1 flex-col gap-0.5 text-black">
-            <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
-            <p className="font-normal text-[14px] sm:text-[16px] text-[#4d4d4d]">{testimonial.role}</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Right Large Image (only for first testimonial) */}
-      {showLargeImage && (
-        <div className="bg-gray-200 overflow-hidden relative rounded-2xl shrink-0 w-full sm:w-[200px] lg:w-[240px] h-full">
-          <CloudinaryImage
-            src={testimonial.image}
-            cloudinaryId={testimonial.imageCloudinaryId}
-            alt={testimonial.author}
-            fill
-            className="object-cover"
-          />
-          {/* Play Button Overlay - only show if type is text-image-video */}
-          {showPlayButton && testimonial.videoUrl && (
-            <button
-              onClick={() => onPlayClick(testimonial.videoUrl!)}
-              className="absolute bottom-4 right-4 bg-white/90 rounded-full p-3 hover:bg-white transition-colors cursor-pointer z-10"
-              aria-label="Play video"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 5V19L19 12L8 5Z" fill="black"/>
-              </svg>
-            </button>
+    <div className="bg-[#1A173A] p-[2px] rounded-3xl shrink-0 w-[320px] sm:w-[500px] lg:w-[728px]">
+      <div className="bg-white flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-12 items-start px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 rounded-[22px] min-h-[550px] md:h-auto md:min-h-[375px]">
+        {/* Left Content */}
+        <div className="flex flex-1 flex-col gap-6 items-start w-full">
+          {/* Category Tag */}
+          <p className="font-medium leading-normal text-[12px] sm:text-[14px] text-black uppercase">
+            {testimonial.category}
+          </p>
+
+          {/* Large Image - Mobile (at top) */}
+          {showLargeImage && (
+            <div className="block md:hidden w-full">
+              <LargeImage image={testimonial.image} imageCloudinaryId={testimonial.imageCloudinaryId} author={testimonial.author} showPlayButton={showPlayButton} videoUrl={testimonial.videoUrl} onPlayClick={onPlayClick} />
+            </div>
           )}
+
+          {/* Quote with gradient fade */}
+          <div className="min-h-[104px] relative overflow-hidden">
+            <p className="font-semibold leading-[1.3] text-[16px] sm:text-[18px] lg:text-[20px] text-black w-full line-clamp-4">
+              {testimonial.quote}
+            </p>
+            {/* Gradient fade overlay - fades text from black to transparent */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+          </div>
+
+          {/* Read More Link */}
+          <button
+            onClick={() => onReadMore(testimonial)}
+            className="font-medium text-[16px] sm:text-[18px] text-black tracking-[-0.5px] underline underline-offset-4 hover:text-[#0073ec] transition-colors text-left"
+          >
+            Read More
+          </button>
+
+          {/* Client Info */}
+          <div className="flex gap-3 sm:gap-4 items-center w-full mt-auto">
+            <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden">
+              <CloudinaryImage
+                src={testimonial.image}
+                cloudinaryId={testimonial.imageCloudinaryId}
+                alt={testimonial.author}
+                fill
+                className="object-cover rounded-full"
+              />
+            </div>
+            <div className="flex flex-1 flex-col gap-0.5 text-black">
+              <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
+              <p className="font-normal text-[14px] sm:text-[16px] text-[#4d4d4d]">{testimonial.role}</p>
+            </div>
+          </div>
         </div>
+
+        {/* Right Large Image - Desktop */}
+        {showLargeImage && (
+          <div className="hidden md:block shrink-0">
+            <LargeImage image={testimonial.image} imageCloudinaryId={testimonial.imageCloudinaryId} author={testimonial.author} showPlayButton={showPlayButton} videoUrl={testimonial.videoUrl} onPlayClick={onPlayClick} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function LargeImage({ image, imageCloudinaryId, author, showPlayButton = false, videoUrl = "", onPlayClick }: { image: string; imageCloudinaryId?: string; author: string; showPlayButton?: boolean; videoUrl?: string; onPlayClick: (videoUrl: string) => void }) {
+  return (
+    <div className="bg-gray-200 overflow-hidden relative rounded-2xl shrink-0 w-full md:w-[200px] lg:w-[240px] h-[186px] md:h-[240px] lg:h-[280px]">
+      <CloudinaryImage
+        src={image}
+        cloudinaryId={imageCloudinaryId}
+        alt={author}
+        fill
+        className="object-cover"
+      />
+      {/* Play Button Overlay - only show if type is text-image-video */}
+      {showPlayButton && videoUrl !== "" && (
+        <button
+          onClick={() => onPlayClick(videoUrl)}
+          className="absolute bottom-4 right-4 bg-white rounded-full p-3 hover:bg-white/90 transition-colors cursor-pointer z-10 shadow-lg"
+          aria-label="Play video"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5V19L19 12L8 5Z" fill="black" />
+          </svg>
+        </button>
       )}
     </div>
   );
@@ -244,29 +273,29 @@ function TestimonialCard({
 
 function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  
+
   useEffect(() => {
     // Play video when modal opens
     if (videoRef.current) {
       videoRef.current.play();
     }
-    
+
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, []);
-  
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
-  
+
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
@@ -278,10 +307,10 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
           aria-label="Close modal"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
-        
+
         {/* Video Player */}
         <video
           ref={videoRef}
@@ -297,27 +326,27 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
   );
 }
 
-function TestimonialDetailModal({ testimonial, onClose }: { testimonial: any; onClose: () => void }) {
+function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimonial; onClose: () => void }) {
   useEffect(() => {
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, []);
-  
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
-  
+
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   const showPlayButton = testimonial.type === "text-image-video" && testimonial.videoUrl;
-  
+
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
       onClick={handleBackdropClick}
     >
@@ -329,10 +358,10 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: any; on
           aria-label="Close modal"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
-        
+
         <div className="flex flex-col lg:flex-row gap-8 p-8 lg:p-12">
           {/* Left Content */}
           <div className="flex flex-1 flex-col gap-6">
@@ -340,12 +369,12 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: any; on
             <p className="font-medium leading-normal text-[14px] text-black uppercase">
               {testimonial.category}
             </p>
-            
+
             {/* Quote */}
             <p className="font-semibold leading-[1.3] text-[24px] sm:text-[28px] lg:text-[32px] text-black">
-              "{testimonial.quote}"
+              &ldquo;{testimonial.quote}&rdquo;
             </p>
-            
+
             {/* Client Info */}
             <div className="flex gap-4 items-center">
               <div className="relative rounded-full shrink-0 size-16 overflow-hidden">
@@ -363,7 +392,7 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: any; on
               </div>
             </div>
           </div>
-          
+
           {/* Right Large Image (if applicable) */}
           {showLargeImage && (
             <div className="bg-gray-200 overflow-hidden relative rounded-2xl shrink-0 w-full lg:w-[300px] h-[300px] lg:h-[400px]">
@@ -385,7 +414,7 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: any; on
                   aria-label="Play video"
                 >
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 5V19L19 12L8 5Z" fill="black"/>
+                    <path d="M8 5V19L19 12L8 5Z" fill="black" />
                   </svg>
                 </button>
               )}

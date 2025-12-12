@@ -4,43 +4,36 @@ import blogsData from "../../data/blogs.json";
 export default function Blogs() {
   const { blogs } = blogsData;
   return (
-    <section className="bg-white flex flex-col items-center px-6 sm:px-12 lg:px-[180px] py-[80px] lg:py-[140px]">
-      <div className="w-full max-w-[1560px] flex flex-col gap-12 lg:gap-16">
-        
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 w-full">
-          <h2 className="font-semibold leading-[1.1] text-[40px] sm:text-[56px] lg:text-[72px] xl:text-[96px] tracking-[-1px]">
-            <span className="text-black">Trending</span>
-            <span className="text-[#0073ec]"> blogs</span>
-          </h2>
-          <button className="
-            border border-black border-solid 
-            flex items-center justify-center 
-            px-8 sm:px-[38px] 
-            py-4 sm:py-5 
-            rounded-[45px] 
-            hover:bg-black hover:text-white 
-            transition-colors
-            shrink-0
-          ">
-            <span className="font-medium text-[18px] sm:text-[20px] text-black tracking-[-1px]">
-              View All
-            </span>
-          </button>
-        </div>
+    <section>
+      <div className="bg-white">
+        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[140px]">
+          <div className="w-full flex flex-col gap-12 lg:gap-16">
 
-        {/* Blog Cards Grid */}
-        <div className="
-          grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          gap-8 
-          lg:gap-10
-        ">
-          {blogs.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 w-full">
+              <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] lg:text-[72px] xl:text-[96px] tracking-[-1px]">
+                <span className="text-black">Trending</span>
+                <span className="text-[#0073ec]"> blogs</span>
+              </h2>
+              <button className="hidden border border-black border-solid md:flex items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
+                <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] tracking-[-1px]">
+                  View All
+                </span>
+              </button>
+            </div>
+
+            {/* Blog Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+              {blogs.map((post) => (
+                <BlogCard key={post.id} post={post} />
+              ))}
+              <button className="w-fit mx-auto flex md:hidden border border-black border-solid items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
+                <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] tracking-[-1px]">
+                  View All
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -63,22 +56,22 @@ function BlogCard({ post }: { post: { id: number; category: string; title: strin
 
       {/* Content */}
       <div className="flex flex-col gap-6 sm:gap-8 items-start w-full">
-        <div className="flex flex-col gap-4 sm:gap-6 items-start w-full">
+        <div className="flex flex-col gap-3 sm:gap-6 items-start w-full">
           {/* Category Tag */}
-          <div className="border border-black border-solid flex items-center justify-center px-4 py-2 sm:py-3 rounded-full w-fit">
-            <p className="font-normal text-[14px] sm:text-[16px] text-black">{post.category}</p>
+          <div className="border border-black border-solid flex items-center justify-center px-4 py-2 rounded-full w-fit">
+            <p className="font-normal text-[13px] sm:text-[16px] text-black leading-none">{post.category}</p>
           </div>
-          
+
           {/* Title */}
-          <h3 className="font-semibold leading-[1.2] text-[24px] sm:text-[28px] lg:text-[32px] xl:text-[36px] text-black w-full">
+          <h3 className="font-grotesque font-semibold leading-[1.1] text-[22px] sm:text-[26px] lg:text-[32px] xl:text-[36px] text-black w-full line-clamp-2 max-h-[72px]">
             {post.title}
           </h3>
         </div>
-        
+
         {/* Learn More Link */}
-        <a 
-          href="#" 
-          className="font-medium text-[18px] sm:text-[20px] text-black tracking-[-0.5px] underline hover:text-[#0073ec] transition-colors"
+        <a
+          href="#"
+          className="font-medium text-[16px] sm:text-[18px] text-[#0073ec] md:text-black tracking-[-0.5px] underline underline-offset-4 hover:text-[#0073ec] transition-colors"
         >
           Learn More
         </a>

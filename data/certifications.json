@@ -6,7 +6,8 @@
       "title": "Data Engineer",
       "level": "Professional",
       "icon": "/images/cert-google-icon.jpg",
-      "iconCloudinaryId": "bobcares/certifications/google-cloud"
+      "iconCloudinaryId": "bobcares/certifications/google-cloud",
+      "logoIcon": "/images/cert-logo-1.png"
     },
     {
       "id": 2,
@@ -14,7 +15,8 @@
       "title": "Cloud Network Engineer",
       "level": "Professional",
       "icon": "/images/cert-google-icon.jpg",
-      "iconCloudinaryId": "bobcares/certifications/google-cloud"
+      "iconCloudinaryId": "bobcares/certifications/google-cloud",
+      "logoIcon": "/images/cert-logo-2.png"
     },
     {
       "id": 3,
@@ -22,8 +24,8 @@
       "title": "Solution Architect",
       "level": "Associate",
       "icon": "/images/cert-badge.jpg",
-      "iconCloudinaryId": "bobcares/certifications/aws"
+      "iconCloudinaryId": "bobcares/certifications/aws",
+      "logoIcon": "/images/cert-logo-1.png"
     }
   ]
 }
-

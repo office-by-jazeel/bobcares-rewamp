@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
 import CloudinaryImage from './CloudinaryImage';
 
@@ -29,7 +29,6 @@ interface VideoCarouselProps {
 export default function VideoCarousel({
   videos,
   className,
-  showTimeline = true,
   currentVideoIndex: controlledIndex,
   onVideoChange,
   onTimeUpdate,
@@ -44,16 +43,10 @@ export default function VideoCarousel({
     }
     onVideoChange?.(index);
   };
-  const [videoSrcs, setVideoSrcs] = useState<string[]>([]);
-  const [videoDurations, setVideoDurations] = useState<number[]>([]);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [showThumbnail, setShowThumbnail] = useState(true);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Initialize video sources
-  useEffect(() => {
-    const sources = videos.map((video) => {
+  
+  // Compute video sources from props using useMemo
+  const videoSrcs = useMemo(() => {
+    return videos.map((video) => {
       if (video.cloudinaryId) {
         // Check if cloudinaryId is a full URL (starts with http:// or https://)
         const isFullUrl = video.cloudinaryId.startsWith('http://') || video.cloudinaryId.startsWith('https://');
@@ -73,26 +66,31 @@ export default function VideoCarousel({
       // Fallback to src if available, otherwise empty string
       return video.src || '';
     });
-    setVideoSrcs(sources);
   }, [videos]);
+  
+  const [showThumbnail, setShowThumbnail] = useState(true);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const prevVideoIndexRef = useRef(currentVideoIndex);
 
   // Load video durations and handle thumbnail visibility
   useEffect(() => {
     if (videoRef.current && videoSrcs.length > 0) {
       const video = videoRef.current;
       
-      // Reset thumbnail visibility when video changes
-      setShowThumbnail(true);
-      setIsVideoReady(false);
+      // Reset thumbnail visibility when video index changes
+      if (prevVideoIndexRef.current !== currentVideoIndex) {
+        // Use setTimeout to defer state updates and avoid synchronous setState in effect
+        setTimeout(() => {
+          setShowThumbnail(true);
+          setIsVideoReady(false);
+        }, 0);
+        prevVideoIndexRef.current = currentVideoIndex;
+      }
       
       const handleLoadedMetadata = () => {
         if (video.duration) {
-          setVideoDurations((prev) => {
-            const newDurations = [...prev];
-            newDurations[currentVideoIndex] = video.duration;
-            onDurationsUpdate?.(newDurations);
-            return newDurations;
-          });
+          onDurationsUpdate?.([video.duration]);
         }
         setIsVideoReady(true);
       };
@@ -134,7 +132,6 @@ export default function VideoCarousel({
     if (!video) return;
 
     const handleTimeUpdate = () => {
-      setCurrentTime(video.currentTime);
       onTimeUpdate?.(video.currentTime);
     };
 
@@ -148,7 +145,6 @@ export default function VideoCarousel({
   const handleVideoEnd = () => {
     const nextIndex = (currentVideoIndex + 1) % videos.length;
     setCurrentVideoIndex(nextIndex);
-    setCurrentTime(0);
     setShowThumbnail(true);
     setIsVideoReady(false);
     onVideoChange?.(nextIndex);
@@ -166,31 +162,22 @@ export default function VideoCarousel({
     }
   };
 
-  // Jump to specific video (exposed via ref or callback)
-  const jumpToVideo = (index: number) => {
-    if (index >= 0 && index < videos.length && index !== currentVideoIndex) {
-      setCurrentVideoIndex(index);
-      setCurrentTime(0);
-      onVideoChange?.(index);
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-      }
-    }
-  };
-
   // Sync with controlled index - when parent changes the index, update the video
   useEffect(() => {
     if (controlledIndex !== undefined && controlledIndex !== internalIndex) {
-      setInternalIndex(controlledIndex);
-      setShowThumbnail(true);
-      setIsVideoReady(false);
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.load();
-        videoRef.current.play().catch(() => {
-          // Autoplay might fail, that's okay
-        });
-      }
+      // Use setTimeout to defer state updates and avoid synchronous setState in effect
+      setTimeout(() => {
+        setInternalIndex(controlledIndex);
+        setShowThumbnail(true);
+        setIsVideoReady(false);
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0;
+          videoRef.current.load();
+          videoRef.current.play().catch(() => {
+            // Autoplay might fail, that's okay
+          });
+        }
+      }, 0);
     }
   }, [controlledIndex, internalIndex]);
 

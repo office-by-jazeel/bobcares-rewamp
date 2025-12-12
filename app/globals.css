@@ -26,6 +26,10 @@
   --font-inter: var(--font-inter);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -37,17 +41,6 @@ a {
   @apply cursor-pointer;
 }
 
-/* Ensure container has breathing room on small screens */
-.container {
-  padding-inline: 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding-inline: 1.5rem;
-  }
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -55,6 +48,12 @@ a {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.container {
+  @apply max-md:px-5;
 }

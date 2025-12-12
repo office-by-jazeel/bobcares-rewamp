@@ -1,0 +1,229 @@
+{
+  "primary": [
+    {
+      "label": "Solutions",
+      "key": "solutions"
+    },
+    {
+      "label": "Pricing",
+      "key": "pricing"
+    },
+    {
+      "label": "Portfolio",
+      "key": "portfolio"
+    },
+    {
+      "label": "About",
+      "key": "about"
+    },
+    {
+      "label": "Blog",
+      "key": "blog"
+    }
+  ],
+  "subMenus": {
+    "solutions": {
+      "sections": [
+        {
+          "title": "Product Engineering",
+          "items": [
+            {
+              "label": "Web Development",
+              "icon": "/icons/service-icon-1.svg",
+              "href": "https://bobcares.com/web-development/"
+            },
+            {
+              "label": "Microservices Architecture",
+              "icon": "/icons/service-icon-2.svg"
+            },
+            {
+              "label": "Mobile Apps",
+              "icon": "/icons/service-icon-6.svg",
+              "href": "https://bobcares.com/mobile-application-development/"
+            },
+            {
+              "label": "UI/UX Design",
+              "icon": "/icons/service-icon-5.svg",
+              "href": "https://bobcares.com/ui-ux-design/"
+            },
+            {
+              "label": "MVP to Scale Builds",
+              "icon": "/icons/service-icon-3.svg"
+            },
+            {
+              "label": "Agile & Dev Team Augmentation",
+              "icon": "/icons/service-icon-4.svg"
+            },
+            {
+              "label": "Ecommerce",
+              "icon": "/icons/service-icon-7.svg",
+              "href": "https://bobcares.com/ecommerce-development/"
+            },
+            {
+              "label": "QA and Test Automation",
+              "icon": "/icons/service-icon-1.svg",
+              "href": "https://bobcares.com/software-testing-qa-services/"
+            }
+          ]
+        },
+        {
+          "title": "Digital Transformation",
+          "items": [
+            {
+              "label": "Digital Transformation",
+              "icon": "/icons/service-icon-1.svg",
+              "href": "https://bobcares.com/digital-transformation/"
+            },
+            {
+              "label": "Legacy Modernization",
+              "icon": "/icons/service-icon-2.svg"
+            },
+            {
+              "label": "Workflow Automation",
+              "icon": "/icons/service-icon-3.svg"
+            },
+            {
+              "label": "Data-Driven Dashboards",
+              "icon": "/icons/service-icon-4.svg"
+            },
+            {
+              "label": "CRM/ERP Integration",
+              "icon": "/icons/service-icon-5.svg"
+            },
+            {
+              "label": "Business Process Reengineering",
+              "icon": "/icons/service-icon-6.svg"
+            }
+          ]
+        },
+        {
+          "title": "AI Services",
+          "items": [
+            {
+              "label": "AI & Machine Learning",
+              "icon": "/icons/service-icon-1.svg",
+              "href": "https://bobcares.com/ai-development-services/"
+            },
+            {
+              "label": "AIOps",
+              "icon": "/icons/service-icon-2.svg",
+              "href": "https://bobcares.com/aiops-services/"
+            },
+            {
+              "label": "Intelligent Automation",
+              "icon": "/icons/service-icon-3.svg"
+            },
+            {
+              "label": "Business Intelligence and Analytics",
+              "icon": "/icons/service-icon-4.svg"
+            },
+            {
+              "label": "AI Installation & Compute DataCenter Support",
+              "icon": "/icons/service-icon-5.svg"
+            }
+          ]
+        },
+        {
+          "title": "Infrastructure Management & Optimization",
+          "items": [
+            {
+              "label": "Cloud Setup",
+              "icon": "/icons/service-icon-1.svg"
+            },
+            {
+              "label": "Cloud Migration",
+              "icon": "/icons/service-icon-2.svg"
+            },
+            {
+              "label": "Managed Cloud Services",
+              "icon": "/icons/service-icon-3.svg",
+              "href": "https://bobcares.com/cloud-management/"
+            },
+            {
+              "label": "Server & Hosting Management",
+              "icon": "/icons/service-icon-4.svg",
+              "href": "https://bobcares.com/server-management/"
+            },
+            {
+              "label": "Cost Optimization & Monitoring",
+              "icon": "/icons/service-icon-5.svg"
+            },
+            {
+              "label": "Performance Optimization & Monitoring",
+              "icon": "/icons/service-icon-6.svg"
+            },
+            {
+              "label": "Outsourced Support Services",
+              "icon": "/icons/service-icon-7.svg"
+            }
+          ]
+        },
+        {
+          "title": "DevOps & Automation Services",
+          "items": [
+            {
+              "label": "CI/CD Setup & Pipeline Automation",
+              "icon": "/icons/service-icon-1.svg"
+            },
+            {
+              "label": "Kubernetes & Docker Management",
+              "icon": "/icons/service-icon-2.svg"
+            },
+            {
+              "label": "Infrastructure as Code (IaC)",
+              "icon": "/icons/service-icon-3.svg"
+            },
+            {
+              "label": "Cloud-Native Migration",
+              "icon": "/icons/service-icon-4.svg"
+            },
+            {
+              "label": "DevSecOps",
+              "icon": "/icons/service-icon-5.svg"
+            }
+          ]
+        },
+        {
+          "title": "Cybersecurity & Compliance Services",
+          "items": [
+            {
+              "label": "Security Hardening & Monitoring",
+              "icon": "/icons/service-icon-1.svg"
+            },
+            {
+              "label": "Vulnerability Assessment & Penetration Testing (VAPT)",
+              "icon": "/icons/service-icon-2.svg"
+            },
+            {
+              "label": "Incident Response Management",
+              "icon": "/icons/service-icon-3.svg"
+            },
+            {
+              "label": "Backup & Disaster Recovery Services",
+              "icon": "/icons/service-icon-4.svg"
+            }
+          ]
+        }
+      ]
+    },
+    "pricing": {
+      "sections": []
+    },
+    "portfolio": {
+      "sections": []
+    },
+    "about": {
+      "sections": []
+    },
+    "blog": {
+      "sections": []
+    }
+  },
+  "promotionalContent": {
+    "image": "/images/aboutus.jpg",
+    "headline": "We're passionate about tech, support, and experiences.",
+    "description": "In 1999, as maintainers of an eCommerce website, we waited 4 days for our Web Host to fix our website.",
+    "buttonText": "Know More",
+    "buttonHref": "#"
+  }
+}

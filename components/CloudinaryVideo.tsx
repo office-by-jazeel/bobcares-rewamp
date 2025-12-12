@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
 
 interface CloudinaryVideoProps {
@@ -29,43 +29,39 @@ export default function CloudinaryVideo({
   controls = false,
   onError,
 }: CloudinaryVideoProps) {
-  const [videoSrc, setVideoSrc] = useState<string>(src);
   const [hasError, setHasError] = useState(false);
+  const [fallbackSrc, setFallbackSrc] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    // If we have a cloudinaryId, check if it's a full URL or a Cloudinary public ID
-    if (cloudinaryId && !hasError) {
-      // Check if cloudinaryId is a full URL (starts with http:// or https://)
-      const isFullUrl = cloudinaryId.startsWith('http://') || cloudinaryId.startsWith('https://');
-      
-      if (isFullUrl) {
-        // Use the URL directly
-        setVideoSrc(cloudinaryId);
-      } else if (isCloudinaryConfigured()) {
-        // It's a Cloudinary public ID, generate the URL
-        try {
-          const cloudinaryVideoUrl = getVideoUrl(cloudinaryId, src);
-          setVideoSrc(cloudinaryVideoUrl);
-        } catch (error) {
-          console.warn('Failed to generate Cloudinary video URL, using local:', error);
-          setVideoSrc(src);
-        }
-      } else {
-        // Cloudinary not configured, use local
-        setVideoSrc(src);
-      }
-    } else {
-      // No cloudinaryId, use local
-      setVideoSrc(src);
+  // Compute the video source from props
+  const computedSrc = useMemo(() => {
+    if (fallbackSrc) {
+      return fallbackSrc;
     }
-  }, [cloudinaryId, src, hasError]);
+    if (hasError) {
+      return src;
+    }
+    if (cloudinaryId) {
+      const isFullUrl = cloudinaryId.startsWith('http://') || cloudinaryId.startsWith('https://');
+      if (isFullUrl) {
+        return cloudinaryId;
+      }
+      if (isCloudinaryConfigured()) {
+        try {
+          return getVideoUrl(cloudinaryId, src);
+        } catch {
+          return src;
+        }
+      }
+    }
+    return src;
+  }, [cloudinaryId, src, hasError, fallbackSrc]);
 
   const handleError = () => {
     // If Cloudinary video fails, fallback to local
-    if (videoSrc !== src && !hasError) {
+    if (computedSrc !== src && !hasError) {
       setHasError(true);
-      setVideoSrc(src);
+      setFallbackSrc(src);
       onError?.();
     }
   };
@@ -73,7 +69,7 @@ export default function CloudinaryVideo({
   return (
     <video
       ref={videoRef}
-      src={videoSrc}
+      src={computedSrc}
       className={className}
       autoPlay={autoPlay}
       loop={loop}

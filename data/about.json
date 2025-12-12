@@ -21,9 +21,8 @@
       "label": "Years of Services"
     }
   ],
-  "teamImage": "/images/aboutus.jpg",
+  "teamImage": "/images/success.png",
   "teamImageCloudinaryId": "bobcares/about-team",
   "backgroundImage": "/images/about-tunnel-bg.jpg",
   "backgroundImageCloudinaryId": "bobcares/about-tunnel-bg"
 }
-
