@@ -26,8 +26,25 @@
   --font-inter: var(--font-inter);
 }
 
-html {
-  scroll-behavior: smooth;
+/* Lenis smooth scroll styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 body {
@@ -42,16 +59,36 @@ a {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.scrollbar-hide::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar-track,
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;
+  -ms-overflow-style: none !important;
   /* IE and Edge */
-  scrollbar-width: none;
+  scrollbar-width: none !important;
   /* Firefox */
+}
+
+/* Ensure scrollbar-hide works with Lenis */
+.scrollbar-hide[data-lenis-prevent]::-webkit-scrollbar,
+.scrollbar-hide[data-lenis-prevent]::-webkit-scrollbar-track,
+.scrollbar-hide[data-lenis-prevent]::-webkit-scrollbar-thumb {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+.scrollbar-hide[data-lenis-prevent] {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 .container {

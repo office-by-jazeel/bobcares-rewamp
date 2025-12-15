@@ -16,15 +16,26 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
 
-  // Lock body scroll when menu is open
+  // Lock body scroll and stop Lenis when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Stop Lenis smooth scroll when menu is open
+      if (window.lenis) {
+        window.lenis.stop();
+      }
     } else {
       document.body.style.overflow = "";
+      // Resume Lenis smooth scroll when menu is closed
+      if (window.lenis) {
+        window.lenis.start();
+      }
     }
     return () => {
       document.body.style.overflow = "";
+      if (window.lenis) {
+        window.lenis.start();
+      }
     };
   }, [isOpen]);
 
@@ -128,7 +139,7 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
               <div className="flex-1 flex items-start md:gap-[18%] overflow-hidden">
                 {/* Left Column - Primary Navigation */}
                 <div className="w-full md:w-[35%] flex flex-col">
-                  <nav className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 md:gap-9">
+                  <nav className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 md:gap-9" data-lenis-prevent>
                     {navigationData.primary.map((item) => {
                       const isActive = selectedNavItem === item.key;
                       return (
@@ -168,7 +179,7 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
                 </div>
 
                 {/* Right Column - Two Types of Submenu */}
-                <div className="flex-1 overflow-y-auto scrollbar-hide max-h-[70dvh]">
+                <div className="flex-1 overflow-y-auto scrollbar-hide max-h-[70dvh]" data-lenis-prevent>
                   {selectedNavItem && currentSubMenu ? (
                     // Type 1: Expandable Sections Submenu (for items with sections that have items)
                     currentSubMenu.sections.length > 0 && currentSubMenu.sections.some(section => section.items && section.items.length > 0) ? (
