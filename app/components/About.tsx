@@ -1,5 +1,15 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import aboutData from "../../data/about.json";
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function About() {
   const { stats, teamImage, teamImageCloudinaryId, backgroundImage, backgroundImageCloudinaryId } = aboutData;
@@ -22,7 +32,7 @@ export default function About() {
             <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-32 items-center">
 
               {/* Left Section - Team Photo */}
-              <div className="w-full lg:w-1/2 flex-shrink-0">
+              <div className="w-full lg:w-1/2 shrink-0">
                 <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
                   <CloudinaryImage
                     src={teamImage}
@@ -63,14 +73,74 @@ export default function About() {
 }
 
 function StatItem({ stat }: { stat: { value: string; label: string } }) {
+  const [displayValue, setDisplayValue] = useState("0");
+  const valueRef = useRef<HTMLParagraphElement>(null);
+  const hasAnimated = useRef(false);
+
+  // Parse value to extract number and suffix
+  const parseValue = (value: string) => {
+    // Match number (including decimals) and optional suffix (M, +, etc.)
+    const match = value.match(/^([\d.]+)(.*)$/);
+    if (!match) return { number: 0, suffix: "" };
+
+    const number = parseFloat(match[1]);
+    const suffix = match[2] || "";
+    return { number, suffix };
+  };
+
+  useEffect(() => {
+    if (!valueRef.current || hasAnimated.current) return;
+
+    const { number, suffix } = parseValue(stat.value);
+
+    // Format number based on suffix
+    const formatNumber = (num: number): string => {
+      if (suffix === "M" || suffix === "m") {
+        // For millions, show one decimal place if needed
+        return num.toFixed(num % 1 !== 0 ? 1 : 0);
+      }
+      // For other values, show as integer
+      return Math.floor(num).toString();
+    };
+
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: valueRef.current,
+      start: "top 80%",
+      onEnter: () => {
+        if (hasAnimated.current) return;
+        hasAnimated.current = true;
+
+        gsap.to(
+          { value: 0 },
+          {
+            value: number,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: function () {
+              const currentValue = this.targets()[0].value;
+              setDisplayValue(formatNumber(currentValue) + suffix);
+            },
+          }
+        );
+      },
+    });
+
+    return () => {
+      scrollTrigger.kill();
+    };
+  }, [stat.value]);
+
   return (
     <div className="flex flex-col gap-4 relative md:pl-8">
       {/* Blue accent line */}
       <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#133DE2] hidden md:block"></div>
 
       {/* Stat value */}
-      <p className="font-bold text-[40px] sm:text-[52px] lg:text-[64px] text-white tracking-[-0.64px] leading-[1]">
-        {stat.value}
+      <p
+        ref={valueRef}
+        className="font-bold text-[40px] sm:text-[52px] lg:text-[64px] text-white tracking-[-0.64px] leading-none"
+      >
+        {displayValue}
       </p>
 
       {/* Stat label */}
