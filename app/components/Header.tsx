@@ -14,7 +14,9 @@ interface HeaderContentProps {
 export function HeaderContent({ isTransparent, variant = "default", onClose }: HeaderContentProps) {
   const textButtonClasses = [
     "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors",
-    isTransparent ? "border-white/20 hover:bg-black/10" : "border-[#0073EC] bg-[#0073EC] hover:bg-[#0045D9]",
+    variant == 'default'
+      ? isTransparent ? "border-[#FFFFFF2E] hover:bg-black/10" : "border-[#0073EC] bg-[#0073EC] hover:bg-[#0045D9]"
+      : "border-[#FFFFFF2E]"
   ].join(" ");
 
   if (variant === "menu") {
@@ -22,7 +24,7 @@ export function HeaderContent({ isTransparent, variant = "default", onClose }: H
       <div className="flex items-center justify-between py-5">
         <div className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
           <Image
-            src={isTransparent ? "/icons/logo.svg" : "/icons/logo-white.svg"}
+            src={"/icons/logo.svg"}
             alt="Bobcares Logo"
             width={254}
             height={47}
@@ -32,32 +34,32 @@ export function HeaderContent({ isTransparent, variant = "default", onClose }: H
         <div className="flex items-center gap-[30px] md:gap-6">
           <button className={cn(
             "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
-            !isTransparent && "md:border-[#9898982E] bg-[#00000003]"
+            "md:border-[#9898982E] bg-[#00000003]"
           )}>
             <Image
               src="/icons/search-icon.svg"
               alt="Search"
               width={26}
               height={26}
-              className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
+              className={cn("size-[26px]")}
             />
           </button>
           <button className={cn(
             "hidden border border-white/20 border-solid md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-            !isTransparent && "border-[#9898982E] bg-[#00000003]"
+            "border-[#9898982E] bg-[#00000003]"
           )}>
             <Image
               src="/icons/phone-icon.svg"
               alt="Phone"
               width={26}
               height={26}
-              className={cn("size-[26px]", !isTransparent && "-invert brightness-0")}
+              className={cn("size-[26px]")}
             />
           </button>
           <button className={cn(textButtonClasses, "hidden md:block")}>
             <span
               className={cn(
-                "font-medium text-[20px] leading-[22px] text-white"
+                "font-medium text-[20px] leading-[22px] text-white truncate"
               )}
             >
               Client Area
@@ -93,7 +95,7 @@ export function HeaderContent({ isTransparent, variant = "default", onClose }: H
   }
 
   return (
-    <div className="container mx-auto px-5 sm:px-8 flex items-center justify-between">
+    <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-start pb-1 pt-0 px-1">
           <div className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
