@@ -1,8 +1,38 @@
+"use client";
+
+import { useState, useRef } from "react";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import certificationsData from "../../data/certifications.json";
 
 export default function Certifications() {
   const { certifications } = certificationsData;
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
 
   return (
     <section>
@@ -27,7 +57,14 @@ export default function Certifications() {
 
             {/* Right Section - Scrollable Cards */}
             <div className="w-full lg:w-auto lg:flex-1 overflow-hidden">
-              <div className="flex md:gap-[22px] items-center overflow-x-auto pb-4 scrollbar-hide">
+              <div
+                ref={scrollContainerRef}
+                className={`flex md:gap-[22px] items-center overflow-x-auto pb-4 scrollbar-hide ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} select-none`}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+              >
                 {certifications.map((cert) => (
                   <CertCard key={cert.id} cert={cert} />
                 ))}
