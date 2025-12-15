@@ -19,9 +19,9 @@ export default function Trust() {
             <p className="font-normal leading-[1.6] text-[#cccccc] text-[16px] sm:text-[18px] w-full lg:w-[576px]">
               We support businesses across the globe with reliable, expert-driven solutions. Trusted for our consistency, speed, and commitment to quality.
             </p>
-            <button className="bg-[#0073ec] flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-[#005bb5] transition-colors">
+            {/* <button className="bg-[#0073ec] flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-[#005bb5] transition-colors">
               <span className="font-medium text-[18px] sm:text-[20px] text-white tracking-[-1px]">View More</span>
-            </button>
+            </button> */}
           </div>
         </div>
 
