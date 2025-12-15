@@ -20,12 +20,16 @@ interface Testimonial {
 export default function Testimonials() {
   const { testimonials } = testimonialsData;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollPositionRef = useRef<number>(0);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
   // Duplicate testimonials for seamless infinite scroll
   const duplicatedTestimonials = [...testimonials, ...testimonials];
+
+  // Check if animation should be paused (hover/touch OR modal open)
+  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null;
 
   const handlePlayClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
@@ -47,38 +51,53 @@ export default function Testimonials() {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    let scrollPosition = 0;
     const scrollSpeed = 3; // pixels per frame
     let animationFrameId: number;
     let lastTime = performance.now();
 
+    // Initialize scroll position from container's current position when resuming
+    if (container.scrollWidth > 0 && scrollPositionRef.current === 0) {
+      scrollPositionRef.current = container.scrollLeft || 0;
+    }
+
     const scroll = (currentTime: number) => {
-      if (isPaused) {
+      if (shouldPause) {
+        // When paused, sync the ref with the current scroll position
+        scrollPositionRef.current = container.scrollLeft;
         animationFrameId = requestAnimationFrame(scroll);
         return;
+      }
+
+      // When resuming, initialize from current scroll position
+      if (scrollPositionRef.current === 0 || Math.abs(scrollPositionRef.current - container.scrollLeft) > 1) {
+        scrollPositionRef.current = container.scrollLeft || 0;
       }
 
       const deltaTime = currentTime - lastTime;
       lastTime = currentTime;
 
       // Calculate scroll based on time for consistent speed
-      scrollPosition += scrollSpeed * (deltaTime / 16.67); // Normalize to 60fps
+      scrollPositionRef.current += scrollSpeed * (deltaTime / 16.67); // Normalize to 60fps
 
       // Calculate the width of one set of testimonials
       const singleSetWidth = container.scrollWidth / 2;
 
       // Reset scroll position when we've scrolled through one full set
-      if (scrollPosition >= singleSetWidth) {
-        scrollPosition = scrollPosition - singleSetWidth;
+      if (scrollPositionRef.current >= singleSetWidth) {
+        scrollPositionRef.current = scrollPositionRef.current - singleSetWidth;
       }
 
-      container.scrollLeft = scrollPosition;
+      container.scrollLeft = scrollPositionRef.current;
       animationFrameId = requestAnimationFrame(scroll);
     };
 
     // Wait for content to load before starting scroll
     const startScroll = () => {
       if (container.scrollWidth > 0) {
+        // Initialize scroll position if not already set
+        if (scrollPositionRef.current === 0) {
+          scrollPositionRef.current = container.scrollLeft || 0;
+        }
         lastTime = performance.now();
         animationFrameId = requestAnimationFrame(scroll);
       } else {
@@ -93,66 +112,63 @@ export default function Testimonials() {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [isPaused]);
+  }, [shouldPause]);
 
   return (
     <section className="relative overflow-hidden">
-      <div className="bg-[#110536]">
-        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px] relative">
-          <div className="w-full flex flex-col gap-12 lg:gap-20">
+      <div className="bg-[#110536] w-full flex flex-col gap-12 lg:gap-20 py-14 lg:py-[140px]">
+        <div className="container mx-auto flex flex-col items-center relative">
 
-            {/* Header */}
-            <div className="w-full">
-              <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 w-full">
-                <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] md:text-[72px] text-white tracking-[-1px]">
-                  <span>Kind words from </span>
-                  <br className="hidden sm:block" />
-                  <span className="text-[#00e8e8]">valued clients</span>
-                </h2>
-                <button className="hidden md:flex border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
+          {/* Header */}
+          <div className="w-full">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8 w-full">
+              <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] md:text-[72px] text-white tracking-[-1px]">
+                <span>Kind words from </span>
+                <br className="hidden sm:block" />
+                <span className="text-[#00e8e8]">valued clients</span>
+              </h2>
+              {/* <button className="hidden md:flex border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
               rounded-[45px] hover:bg-white/10 transition-colors shrink-0">
-                  <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
-                    View All Testimonials
-                  </span>
-                </button>
-              </div>
+                <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
+                  View All Testimonials
+                </span>
+              </button> */}
             </div>
-
-            {/* Carousel */}
-            <div className="w-full">
-              <div
-                ref={scrollContainerRef}
-                className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
-                style={{
-                  scrollbarWidth: 'none',
-                  msOverflowStyle: 'none',
-                  scrollBehavior: 'auto'
-                }}
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-                onTouchStart={() => setIsPaused(true)}
-                onTouchEnd={() => setIsPaused(false)}
-              >
-                {duplicatedTestimonials.map((testimonial, index) => (
-                  <TestimonialCard
-                    key={`${testimonial.id}-${index}`}
-                    testimonial={testimonial}
-                    onPlayClick={handlePlayClick}
-                    onReadMore={handleReadMore}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <button className="w-fit mx-auto flex md:hidden border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
-              rounded-[45px] hover:bg-white/10 transition-colors shrink-0">
-              <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
-                View All Testimonials
-              </span>
-            </button>
-
           </div>
         </div>
+
+        {/* Carousel */}
+        <div className="w-full">
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              scrollBehavior: 'auto'
+            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+          >
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={`${testimonial.id}-${index}`}
+                testimonial={testimonial}
+                onPlayClick={handlePlayClick}
+                onReadMore={handleReadMore}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* <button className="w-fit mx-auto flex md:hidden border border-solid border-white items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4
+              rounded-[45px] hover:bg-white/10 transition-colors shrink-0">
+          <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
+            View All Testimonials
+          </span>
+        </button> */}
       </div>
 
       {/* Video Modal */}
@@ -273,8 +289,14 @@ function LargeImage({ image, imageCloudinaryId, author, showPlayButton = false, 
 
 function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Trigger fade-in animation after mount
+    requestAnimationFrame(() => {
+      setIsMounted(true);
+    });
+
     // Play video when modal opens
     if (videoRef.current) {
       videoRef.current.play();
@@ -296,7 +318,8 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${isMounted ? 'opacity-100' : 'opacity-0'
+        }`}
       onClick={handleBackdropClick}
     >
       <div className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden">
@@ -327,7 +350,14 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
 }
 
 function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimonial; onClose: () => void }) {
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    // Trigger fade-in animation after mount
+    requestAnimationFrame(() => {
+      setIsMounted(true);
+    });
+
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
 
@@ -347,7 +377,8 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
+      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ${isMounted ? 'opacity-100' : 'opacity-0'
+        }`}
       onClick={handleBackdropClick}
     >
       <div className="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden my-8">
