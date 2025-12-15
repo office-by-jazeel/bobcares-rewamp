@@ -17,6 +17,9 @@ importers:
       framer-motion:
         specifier: ^12.23.26
         version: 12.23.26(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      mac-scrollbar:
+        specifier: ^0.13.8
+        version: 0.13.8
       next:
         specifier: 16.0.7
         version: 16.0.7(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1486,6 +1489,9 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  mac-scrollbar@0.13.8:
+    resolution: {integrity: sha512-lpu9fV8lx7oUHzM4CwgbMOXlLJ+1OGdmxwXmreadq8+8pmnFAEJ1khUdqpFOhbD32vJORLu6RE8GO2+ODpf12w==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -3488,6 +3494,8 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  mac-scrollbar@0.13.8: {}
 
   magic-string@0.30.21:
     dependencies:
