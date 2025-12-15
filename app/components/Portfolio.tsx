@@ -7,7 +7,7 @@ export default function Portfolio() {
   return (
     <section>
       <div className="bg-white">
-        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[80px]">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[80px]">
           <div className="w-full flex flex-col gap-10 lg:gap-16">
 
             {/* Header */}
@@ -85,7 +85,7 @@ function ProjectCard({ project, className = "" }: {
         </div>
 
         {/* Title */}
-        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-3 md:min-h-[82px]">
+        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-3 md:min-h-[132px]">
           {project.title}
         </h3>
 

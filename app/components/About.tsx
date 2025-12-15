@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section className="relative overflow-hidden">
       <div className="bg-black">
-        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[140px] relative">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px] relative">
           {/* Background with subtle grid pattern */}
           <div className="absolute inset-0 opacity-10">
             <CloudinaryImage

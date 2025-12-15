@@ -7,7 +7,7 @@ export default function Certifications() {
   return (
     <section>
       <div className="bg-white">
-        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[140px]">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
           <div className="w-full flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-16 items-center">
 
             {/* Left Section - Text */}

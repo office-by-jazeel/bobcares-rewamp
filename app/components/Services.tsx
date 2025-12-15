@@ -19,7 +19,7 @@ export default function Services() {
   return (
     <section>
       <div className="bg-white">
-        <div className="container mx-auto flex flex-col items-center px-5 sm:px-8 py-14 lg:py-[140px]">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
           <div className="w-full flex flex-col gap-14 lg:gap-20">
 
             {/* Header */}

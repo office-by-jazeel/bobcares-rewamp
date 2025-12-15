@@ -3,7 +3,7 @@ import CloudinaryImage from "@/components/CloudinaryImage";
 export default function Trust() {
   return (
     <section className="bg-black overflow-hidden relative">
-      <div className="container mx-auto px-5 sm:px-8 flex flex-col lg:flex-row items-start h-full w-full py-14 lg:py-[140px] gap-12 lg:gap-16">
+      <div className="container mx-auto flex flex-col lg:flex-row items-start h-full w-full py-14 lg:py-[140px] gap-12 lg:gap-16">
         <div className="flex flex-col gap-8 sm:gap-12 items-start w-full lg:w-[40%]">
           <div className="flex flex-col gap-1 items-start w-full">
             <div className="flex items-center">

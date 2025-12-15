@@ -98,7 +98,7 @@ export default function Testimonials() {
   return (
     <section className="relative overflow-hidden">
       <div className="bg-[#110536]">
-        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-14 lg:py-[140px] relative">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px] relative">
           <div className="w-full flex flex-col gap-12 lg:gap-20">
 
             {/* Header */}

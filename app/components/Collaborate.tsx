@@ -16,7 +16,7 @@ export default function Collaborate() {
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-5 sm:px-8 py-14 lg:py-24 flex flex-col gap-10 items-center text-center text-white z-10">
+      <div className="relative container mx-auto py-14 lg:py-24 flex flex-col gap-10 items-center text-center text-white z-10">
         <div className="flex flex-col gap-6 sm:gap-10 items-center text-center text-white w-full">
           <h2 className="font-grotesque font-semibold leading-[1.02] text-[48px] lg:text-[96px] tracking-[-0.96px] max-w-[680px]">
             <span className="text-white">Collaborate with </span>

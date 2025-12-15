@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     <footer>
       <div className="bg-black">
-        <div className="container mx-auto px-5 sm:px-8 flex flex-col items-center py-12 lg:py-[140px]">
+        <div className="container mx-auto flex flex-col items-center py-12 lg:py-[140px]">
           <div className="w-full flex flex-col gap-14 lg:gap-16">
 
             {/* Top Section */}
