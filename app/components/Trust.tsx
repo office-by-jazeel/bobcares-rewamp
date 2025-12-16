@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import CloudinaryImage from "@/components/CloudinaryImage";
+import InlineSvg from "@/components/InlineSvg";
 import mapPinsData from "../../data/mapPins.json";
 
 // MapPin component for placing pins on the map
@@ -74,7 +75,7 @@ function MapPin({ top, left, label, logo, onClick }: MapPinProps) {
     <>
       <div
         ref={pinRef}
-        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 group-hover:z-[9999]"
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 group-hover:z-9999"
         style={{ top: topValue, left: leftValue }}
         onClick={onClick}
         onMouseEnter={handleMouseEnter}
@@ -107,7 +108,7 @@ function MapPin({ top, left, label, logo, onClick }: MapPinProps) {
       {label && (
         <div
           ref={tooltipRef}
-          className="fixed w-fit flex items-start flex-col gap-2 px-6 pt-4.5 pb-3 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] rounded-bl-none shadow-lg transition-opacity duration-300 pointer-events-none whitespace-nowrap z-[9999]"
+          className="fixed w-fit flex items-start flex-col gap-2 px-6 pt-4.5 pb-3 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] rounded-bl-none shadow-lg transition-opacity duration-300 pointer-events-none whitespace-nowrap z-9999"
           style={{
             top: `${tooltipPosition.top}px`,
             left: `${tooltipPosition.left}px`,
@@ -175,11 +176,12 @@ export default function Trust() {
 
         {/* World Map Graphic */}
         <div className="relative flex-1 mt-32 w-full hidden md:block isolate">
-          <CloudinaryImage
-            src="/images/world-map.png"
-            cloudinaryId="bobcares/world-map"
-            alt="World map showing global clients"
-            className="w-full object-cover"
+          <InlineSvg
+            src="/images/world-map.svg"
+            ariaLabel="World map showing global clients"
+            className="w-full object-cover select-none"
+            hoverMode="cluster"
+            clusterCount={14}
           />
 
           {/* Map Pins - Render pins from data */}
