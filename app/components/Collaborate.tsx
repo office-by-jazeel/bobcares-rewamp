@@ -1,18 +1,16 @@
-import CloudinaryImage from "@/components/CloudinaryImage";
-
 export default function Collaborate() {
   return (
     <section className="bg-black overflow-hidden relative">
       {/* Background graphic */}
-      <div className="absolute left-1/2 size-[900px] sm:size-[1100px] lg:size-[1316px] top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <CloudinaryImage
-          src="/images/collaborate-bg.jpg"
-          cloudinaryId="bobcares/collaborate-bg"
-          alt="Collaborate background"
-          fill
-          className="object-cover opacity-30"
+      <div className="absolute left-1/2 w-full h-full top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <video
+          src="/videos/cta.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}

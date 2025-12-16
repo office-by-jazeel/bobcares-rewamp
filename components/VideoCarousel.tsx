@@ -72,6 +72,7 @@ export default function VideoCarousel({
   const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const prevVideoIndexRef = useRef(currentVideoIndex);
+  const durationsRef = useRef<number[]>([]);
 
   // Load video durations and handle thumbnail visibility
   useEffect(() => {
@@ -89,8 +90,11 @@ export default function VideoCarousel({
       }
       
       const handleLoadedMetadata = () => {
-        if (video.duration) {
-          onDurationsUpdate?.([video.duration]);
+        if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+          // Update duration for current video index
+          durationsRef.current[currentVideoIndex] = video.duration;
+          // Create a new array to trigger state update
+          onDurationsUpdate?.([...durationsRef.current]);
         }
         setIsVideoReady(true);
       };

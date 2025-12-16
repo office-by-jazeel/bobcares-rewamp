@@ -24,9 +24,15 @@ export default function VideoTimeline({
         {videos.map((_, index) => {
           const isActive = index === currentVideoIndex;
 
+          // Calculate progress for the active video segment
+          const currentVideoDuration = videoDurations[currentVideoIndex];
           const segmentProgress =
-            videoDurations[currentVideoIndex] && videoDurations[currentVideoIndex] > 0
-              ? (currentTime / videoDurations[currentVideoIndex]) * 100
+            isActive &&
+              currentVideoDuration &&
+              currentVideoDuration > 0 &&
+              !isNaN(currentTime) &&
+              isFinite(currentTime)
+              ? Math.min(100, Math.max(0, (currentTime / currentVideoDuration) * 100))
               : 0;
 
           return (
