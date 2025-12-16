@@ -43,7 +43,7 @@ export default function Certifications() {
             {/* Left Section - Text */}
             <div className="flex flex-col gap-6 sm:gap-8 lg:gap-14 items-start text-black w-full lg:w-auto lg:max-w-[45%]">
               <div className="flex flex-col gap-4 lg:gap-1 items-start w-full">
-                <p className="font-medium text-[14px] sm:text-[16px] uppercase">Our Achievements</p>
+                {/* <p className="font-medium text-[14px] sm:text-[16px] uppercase">Our Achievements</p> */}
                 <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] lg:text-[72px] xl:text-[96px] tracking-[-1px]">
                   <span>Industry-leading </span>
                   <span className="text-[#133de2]">certifications</span> {' '}

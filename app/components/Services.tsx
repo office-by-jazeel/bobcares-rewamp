@@ -24,9 +24,9 @@ export default function Services() {
 
             {/* Header */}
             <div className="flex flex-col justify-between items-start gap-3">
-              <p className="font-medium text-[14px] uppercase text-black">
+              {/* <p className="font-medium text-[14px] uppercase text-black">
                 What We Do
-              </p>
+              </p> */}
 
               <div className="flex flex-col gap-6 max-w-[900px]">
                 <h2 className="font-grotesque font-semibold text-[48px] md:text-[96px] leading-[1.05] tracking-[-0.5px]">

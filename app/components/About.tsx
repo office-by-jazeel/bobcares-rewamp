@@ -47,9 +47,9 @@ export default function About() {
               {/* Right Section - Content */}
               <div className="w-full lg:w-1/2 flex flex-col gap-6 sm:gap-8 lg:gap-10">
                 {/* Heading */}
-                <p className="font-normal text-[14px] sm:text-[16px] text-[#9e9e9e] uppercase tracking-wide">
+                {/* <p className="font-normal text-[14px] sm:text-[16px] text-[#9e9e9e] uppercase tracking-wide">
                   OUR SUCCESS
-                </p>
+                </p> */}
 
                 {/* Tagline */}
                 <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] lg:text-[72px] tracking-[-1px] -mt-4">

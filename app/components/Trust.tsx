@@ -84,9 +84,9 @@ export default function Trust() {
       <div className="container mx-auto flex flex-col lg:flex-row items-start h-full w-full py-14 lg:py-[140px] gap-12 lg:gap-16">
         <div className="flex flex-col gap-8 sm:gap-12 items-start w-full lg:w-[40%]">
           <div className="flex flex-col gap-1 items-start w-full">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <p className="font-normal text-[16px] text-white uppercase">Clients</p>
-            </div>
+            </div> */}
             <h2 className="font-grotesque font-semibold leading-[0.95] text-[48px] lg:text-[96px] tracking-[-0.96px] w-full">
               <span className="text-[#6e6e6e]">Trusted by </span>
               <span className="text-white underline decoration-3 underline-offset-8">2.5k+ clients</span>
