@@ -30,9 +30,6 @@
   "backgroundVideos": [
     {
       "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/3f1feeb64d2bc242560839b57bc4814e/manifest/video.m3u8"
-    },
-    {
-      "src": "/videos/test4.mp4"
     }
   ]
 }
