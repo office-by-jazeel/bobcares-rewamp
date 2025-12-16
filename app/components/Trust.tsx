@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useRef } from "react";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import mapPinsData from "../../data/mapPins.json";
 
@@ -13,16 +16,102 @@ interface MapPinProps {
 function MapPin({ top, left, label, logo, onClick }: MapPinProps) {
   const topValue = typeof top === "number" ? `${top}px` : top;
   const leftValue = typeof left === "number" ? `${left}px` : left;
+  const [isHovered, setIsHovered] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const pinRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter = () => {
+    if (!pinRef.current || !tooltipRef.current) return;
+
+    const pinRect = pinRef.current.getBoundingClientRect();
+    const tooltipWidth = 250; // w-[250px]
+    // Get tooltip height - it should be available even when opacity is 0
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const tooltipHeight = tooltipRect.height > 0 ? tooltipRect.height : 100; // Fallback estimate
+    const margin = 12; // mb-3 = 12px
+
+    // Calculate initial position: above pin, left-aligned to pin center
+    let tooltipTop = pinRect.top - tooltipHeight - margin;
+    let tooltipLeft = pinRect.left + pinRect.width / 2;
+
+    // Viewport boundary checks
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const padding = 16; // Minimum padding from viewport edges
+
+    // Check if tooltip would go above viewport
+    if (tooltipTop < padding) {
+      // Position below pin instead
+      tooltipTop = pinRect.bottom + margin;
+    }
+
+    // Check if tooltip would go below viewport
+    if (tooltipTop + tooltipHeight > viewportHeight - padding) {
+      // Try to position above pin, or adjust to fit
+      tooltipTop = Math.max(padding, pinRect.top - tooltipHeight - margin);
+    }
+
+    // Check if tooltip would go off left edge
+    if (tooltipLeft < padding) {
+      tooltipLeft = padding;
+    }
+
+    // Check if tooltip would go off right edge
+    if (tooltipLeft + tooltipWidth > viewportWidth - padding) {
+      tooltipLeft = viewportWidth - tooltipWidth - padding;
+    }
+
+    setTooltipPosition({ top: tooltipTop, left: tooltipLeft });
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   return (
-    <div
-      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 group-hover:z-[9999]"
-      style={{ top: topValue, left: leftValue }}
-      onClick={onClick}
-    >
-      {/* Label tooltip (shown on hover) - moved before pin to ensure proper stacking */}
+    <>
+      <div
+        ref={pinRef}
+        className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 group-hover:z-[9999]"
+        style={{ top: topValue, left: leftValue }}
+        onClick={onClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Pin dot */}
+        <div className="relative z-10">
+          {/* Outer glow/pulse effect */}
+          <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping pointer-events-none" />
+
+          {/* Pin circle */}
+          <div className="relative w-6 h-6 rounded-full bg-black border border-[#FFFFFF63] group-hover:bg-white group-hover:border-black transition-colors duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 block group-hover:hidden scale-[75%]">
+              <path d="M6 8H1C0.716667 8 0.479167 7.90417 0.2875 7.7125C0.0958333 7.52083 0 7.28333 0 7C0 6.71667 0.0958333 6.47917 0.2875 6.2875C0.479167 6.09583 0.716667 6 1 6H6V1C6 0.716667 6.09583 0.479167 6.2875 0.2875C6.47917 0.0958333 6.71667 0 7 0C7.28333 0 7.52083 0.0958333 7.7125 0.2875C7.90417 0.479167 8 0.716667 8 1V6H13C13.2833 6 13.5208 6.09583 13.7125 6.2875C13.9042 6.47917 14 6.71667 14 7C14 7.28333 13.9042 7.52083 13.7125 7.7125C13.5208 7.90417 13.2833 8 13 8H8V13C8 13.2833 7.90417 13.5208 7.7125 13.7125C7.52083 13.9042 7.28333 14 7 14C6.71667 14 6.47917 13.9042 6.2875 13.7125C6.09583 13.5208 6 13.2833 6 13V8Z"
+                fill="white" />
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="2" viewBox="0 0 12 2" fill="none"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden group-hover:block scale-[75%]">
+              <path d="M1 2C0.716667 2 0.479167 1.90417 0.2875 1.7125C0.0958333 1.52083 0 1.28333 0 1C0 0.716667 0.0958333 0.479167 0.2875 0.2875C0.479167 0.0958333 0.716667 0 1 0H11C11.2833 0 11.5208 0.0958333 11.7125 0.2875C11.9042 0.479167 12 0.716667 12 1C12 1.28333 11.9042 1.52083 11.7125 1.7125C11.5208 1.90417 11.2833 2 11 2H1Z" fill="black" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Label tooltip (shown on hover) - fixed position */}
       {label && (
-        <div className="absolute bottom-full left-0 w-[250px] flex items-start flex-col gap-2 mb-3 px-6 pt-4.5 pb-3 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] rounded-bl-none shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-[9999]">
+        <div
+          ref={tooltipRef}
+          className="fixed w-[250px] flex items-start flex-col gap-2 px-6 pt-4.5 pb-3 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] rounded-bl-none shadow-lg transition-opacity duration-300 pointer-events-none whitespace-nowrap z-[9999]"
+          style={{
+            top: `${tooltipPosition.top}px`,
+            left: `${tooltipPosition.left}px`,
+            opacity: isHovered ? 1 : 0,
+          }}
+        >
           {logo ? (
             <CloudinaryImage
               src={logo}
@@ -53,27 +142,7 @@ function MapPin({ top, left, label, logo, onClick }: MapPinProps) {
           </span>
         </div>
       )}
-
-      {/* Pin dot */}
-      <div className="relative z-10">
-        {/* Outer glow/pulse effect */}
-        <div className="absolute inset-0 rounded-full bg-white opacity-30 animate-ping pointer-events-none" />
-
-        {/* Pin circle */}
-        <div className="relative w-6 h-6 rounded-full bg-black border border-[#FFFFFF63] group-hover:bg-white group-hover:border-black transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 block group-hover:hidden scale-[75%]">
-            <path d="M6 8H1C0.716667 8 0.479167 7.90417 0.2875 7.7125C0.0958333 7.52083 0 7.28333 0 7C0 6.71667 0.0958333 6.47917 0.2875 6.2875C0.479167 6.09583 0.716667 6 1 6H6V1C6 0.716667 6.09583 0.479167 6.2875 0.2875C6.47917 0.0958333 6.71667 0 7 0C7.28333 0 7.52083 0.0958333 7.7125 0.2875C7.90417 0.479167 8 0.716667 8 1V6H13C13.2833 6 13.5208 6.09583 13.7125 6.2875C13.9042 6.47917 14 6.71667 14 7C14 7.28333 13.9042 7.52083 13.7125 7.7125C13.5208 7.90417 13.2833 8 13 8H8V13C8 13.2833 7.90417 13.5208 7.7125 13.7125C7.52083 13.9042 7.28333 14 7 14C6.71667 14 6.47917 13.9042 6.2875 13.7125C6.09583 13.5208 6 13.2833 6 13V8Z"
-              fill="white" />
-          </svg>
-
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="2" viewBox="0 0 12 2" fill="none"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden group-hover:block scale-[75%]">
-            <path d="M1 2C0.716667 2 0.479167 1.90417 0.2875 1.7125C0.0958333 1.52083 0 1.28333 0 1C0 0.716667 0.0958333 0.479167 0.2875 0.2875C0.479167 0.0958333 0.716667 0 1 0H11C11.2833 0 11.5208 0.0958333 11.7125 0.2875C11.9042 0.479167 12 0.716667 12 1C12 1.28333 11.9042 1.52083 11.7125 1.7125C11.5208 1.90417 11.2833 2 11 2H1Z" fill="black" />
-          </svg>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 
