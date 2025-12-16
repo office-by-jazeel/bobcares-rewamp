@@ -1,0 +1,193 @@
+{
+    "mapPins": [
+        {
+            "id": 1,
+            "top": "28%",
+            "left": "22%",
+            "label": "United States",
+            "logo": "/images/clients/creatingdig.svg"
+        },
+        {
+            "id": 2,
+            "top": "30%",
+            "left": "20%",
+            "label": "United States",
+            "logo": "/images/clients/gullos-hosting.png"
+        },
+        {
+            "id": 3,
+            "top": "35%",
+            "left": "55%",
+            "label": "Israel",
+            "logo": "/images/clients/smilii.png"
+        },
+        {
+            "id": 4,
+            "top": "70%",
+            "left": "75%",
+            "label": "Australia",
+            "logo": "/images/clients/appraise.png"
+        },
+        {
+            "id": 5,
+            "top": "40%",
+            "left": "80%",
+            "label": "Taiwan",
+            "logo": "/images/clients/tuyo-tienda.png"
+        },
+        {
+            "id": 6,
+            "top": "72%",
+            "left": "73%",
+            "label": "Australia",
+            "logo": "/images/clients/super-domains.png"
+        },
+        {
+            "id": 7,
+            "top": "25%",
+            "left": "45%",
+            "label": "United Kingdom",
+            "logo": "/images/clients/imltd.png"
+        },
+        {
+            "id": 8,
+            "top": "28%",
+            "left": "24%",
+            "label": "United States",
+            "logo": "/images/clients/hostirian.png"
+        },
+        {
+            "id": 9,
+            "top": "26%",
+            "left": "26%",
+            "label": "United States",
+            "logo": "/images/clients/freshpage-media.png"
+        },
+        {
+            "id": 10,
+            "top": "27%",
+            "left": "44%",
+            "label": "United Kingdom",
+            "logo": "/images/clients/toucan-graphics.png"
+        },
+        {
+            "id": 11,
+            "top": "29%",
+            "left": "23%",
+            "label": "United States",
+            "logo": "/images/clients/riscosity.svg"
+        },
+        {
+            "id": 12,
+            "top": "26%",
+            "left": "46%",
+            "label": "United Kingdom",
+            "logo": "/images/clients/reformrx.png"
+        },
+        {
+            "id": 13,
+            "top": "31%",
+            "left": "21%",
+            "label": "United States",
+            "logo": "/images/clients/rand4dollar.png"
+        },
+        {
+            "id": 16,
+            "top": "50%",
+            "left": "25%",
+            "label": "Colombia",
+            "logo": "/images/clients/prolego.png"
+        },
+        {
+            "id": 17,
+            "top": "25%",
+            "left": "48%",
+            "label": "Netherlands",
+            "logo": "/images/clients/horecavoordeel.svg"
+        },
+        {
+            "id": 18,
+            "top": "70%",
+            "left": "50%",
+            "label": "South Africa",
+            "logo": "/images/clients/eggsa.jpg"
+        },
+        {
+            "id": 19,
+            "top": "32%",
+            "left": "25%",
+            "label": "United States",
+            "logo": "/images/clients/matthew-owen.png"
+        },
+        {
+            "id": 20,
+            "top": "35%",
+            "left": "58%",
+            "label": "Kuwait",
+            "logo": "/images/clients/chrysalis-digital.png"
+        },
+        {
+            "id": 21,
+            "top": "50%",
+            "left": "65%",
+            "label": "British Virgin Islands",
+            "logo": "/images/clients/hlscc.png"
+        },
+        {
+            "id": 22,
+            "top": "33%",
+            "left": "27%",
+            "label": "United States",
+            "logo": "/images/clients/imc-digital.png"
+        },
+        {
+            "id": 23,
+            "top": "20%",
+            "left": "20%",
+            "label": "Canada",
+            "logo": "/images/clients/oliver-marketing.png"
+        },
+        {
+            "id": 24,
+            "top": "55%",
+            "left": "28%",
+            "label": "Brazil",
+            "logo": "/images/clients/lucanet.png"
+        },
+        {
+            "id": 25,
+            "top": "34%",
+            "left": "22%",
+            "label": "United States",
+            "logo": "/images/clients/besttech-computing.png"
+        },
+        {
+            "id": 26,
+            "top": "26%",
+            "left": "49%",
+            "label": "Netherlands",
+            "logo": "/images/clients/pc-patrol.webp"
+        },
+        {
+            "id": 27,
+            "top": "23%",
+            "left": "46%",
+            "label": "United Kingdom",
+            "logo": "/images/clients/boothbook.webp"
+        },
+        {
+            "id": 28,
+            "top": "23%",
+            "left": "46%",
+            "label": "United Kingdom",
+            "logo": "/images/clients/zut.svg"
+        },
+        {
+            "id": 29,
+            "top": "23%",
+            "left": "46%",
+            "label": "Malaysia",
+            "logo": "/images/clients/paykini.webp"
+        }
+    ]
+}
