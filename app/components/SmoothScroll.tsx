@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 import { GlobalScrollbar } from 'mac-scrollbar';
 import 'mac-scrollbar/dist/mac-scrollbar.css';
 
