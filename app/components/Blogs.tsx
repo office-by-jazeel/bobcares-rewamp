@@ -63,7 +63,7 @@ function BlogCard({ post }: { post: { id: number; category: string; title: strin
           </div>
 
           {/* Title */}
-          <h3 className="font-grotesque font-semibold leading-[1.1] text-[22px] sm:text-[26px] lg:text-[32px] xl:text-[36px] text-black w-full line-clamp-2 max-h-[72px]">
+          <h3 className="font-grotesque font-semibold leading-[1.1] text-[22px] sm:text-[26px] lg:text-[32px] xl:text-[36px] text-black w-full line-clamp-2 max-h-[80px]">
             {post.title}
           </h3>
         </div>
