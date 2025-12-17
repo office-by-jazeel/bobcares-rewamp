@@ -180,8 +180,9 @@ export default function Trust() {
             src="/images/world-map.svg"
             ariaLabel="World map showing global clients"
             className="w-full object-cover select-none"
-            hoverMode="cluster"
-            clusterCount={14}
+            hoverMode="dots"
+            dotMaxSize={2500}
+            dotHighlightCount={15}
           />
 
           {/* Map Pins - Render pins from data */}

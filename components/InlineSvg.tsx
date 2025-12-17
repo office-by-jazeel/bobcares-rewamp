@@ -10,12 +10,19 @@ interface InlineSvgProps {
    * Hover behavior for SVG internal elements.
    * - single: only the element under the cursor is forced to white
    * - cluster: the nearest N elements around the cursor are forced to white
+   * - dots: highlights nearby small path elements (dots) when hovering on any SVG element
    */
-  hoverMode?: 'single' | 'cluster';
+  hoverMode?: 'single' | 'cluster' | 'dots';
   /** Number of nearby elements to light up in cluster mode (default: 12) */
   clusterCount?: number;
   /** Optional max radius (in SVG units) for cluster mode. When omitted, uses nearest-N only. */
   clusterRadius?: number;
+  /** Maximum bounding box area (width * height) to consider an element a "dot" (default: 2500 SVG units²) */
+  dotMaxSize?: number;
+  /** Number of nearby dots to highlight in dots mode (default: 8) */
+  dotHighlightCount?: number;
+  /** Maximum distance to search for dots (in SVG units). When omitted, calculated based on SVG viewBox. */
+  dotMaxDistance?: number;
 }
 
 /**
@@ -30,6 +37,9 @@ export default function InlineSvg({
   hoverMode = 'single',
   clusterCount = 12,
   clusterRadius,
+  dotMaxSize = 2500,
+  dotHighlightCount = 8,
+  dotMaxDistance,
 }: InlineSvgProps) {
   const [svgMarkup, setSvgMarkup] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,6 +106,173 @@ export default function InlineSvg({
     if (!svg) return;
 
     const selector = 'path,polygon,rect,circle,ellipse';
+
+    // Dots mode: identify small path elements and highlight nearby dots on hover
+    if (hoverMode === 'dots') {
+      const svgEl = svg as SVGSVGElement;
+      const allElements = Array.from(svgEl.querySelectorAll(selector)).filter(
+        (n): n is SVGGraphicsElement => n instanceof SVGGraphicsElement,
+      );
+
+      // Pre-process: identify dots (small path elements) and store their positions
+      const dots: Array<{ el: SVGGraphicsElement; cx: number; cy: number }> = [];
+      const regions: SVGGraphicsElement[] = [];
+
+      for (const el of allElements) {
+        try {
+          const bb = el.getBBox();
+          // Skip degenerate boxes
+          if (!Number.isFinite(bb.x) || !Number.isFinite(bb.y) || bb.width === 0 || bb.height === 0) continue;
+
+          // Calculate bounding box area
+          const area = bb.width * bb.height;
+
+          // Convert center to root SVG viewport coordinates
+          const ctm = el.getCTM();
+          if (!ctm) continue;
+          const pt = svgEl.createSVGPoint();
+          pt.x = bb.x + bb.width / 2;
+          pt.y = bb.y + bb.height / 2;
+          const p2 = pt.matrixTransform(ctm);
+
+          // Classify as dot if area is below threshold
+          if (area < dotMaxSize) {
+            // Ensure smooth transitions for dots
+            el.style.setProperty('transition', 'fill 200ms ease-in-out', 'important');
+            dots.push({ el, cx: p2.x, cy: p2.y });
+          } else {
+            regions.push(el);
+          }
+        } catch {
+          // Some SVG elements may not support getBBox depending on state
+        }
+      }
+
+      // Calculate default max distance if not provided (10% of SVG diagonal)
+      const viewBox = svgEl.viewBox.baseVal;
+      const svgWidth = viewBox.width || svgEl.clientWidth;
+      const svgHeight = viewBox.height || svgEl.clientHeight;
+      const defaultMaxDistance = Math.sqrt(svgWidth * svgWidth + svgHeight * svgHeight) * 0.1;
+      const maxDistance = dotMaxDistance ?? defaultMaxDistance;
+      const maxDistance2 = maxDistance * maxDistance;
+
+      const activeDots = new Set<SVGGraphicsElement>();
+      let rafId: number | null = null;
+      let lastHoveredElement: SVGGraphicsElement | null = null;
+
+      const clientToSvgPoint = (clientX: number, clientY: number) => {
+        const ctm = svgEl.getScreenCTM();
+        if (!ctm) return null;
+        const pt = svgEl.createSVGPoint();
+        pt.x = clientX;
+        pt.y = clientY;
+        const transformed = pt.matrixTransform(ctm.inverse());
+        return { x: transformed.x, y: transformed.y };
+      };
+
+      const getElementCenter = (el: SVGGraphicsElement) => {
+        try {
+          const bb = el.getBBox();
+          const ctm = el.getCTM();
+          if (!ctm) return null;
+          const pt = svgEl.createSVGPoint();
+          pt.x = bb.x + bb.width / 2;
+          pt.y = bb.y + bb.height / 2;
+          const p2 = pt.matrixTransform(ctm);
+          return { x: p2.x, y: p2.y };
+        } catch {
+          return null;
+        }
+      };
+
+      const updateDotsHighlight = () => {
+        rafId = null;
+        if (!lastHoveredElement) {
+          // Clear all highlights
+          for (const dot of activeDots) {
+            dot.style.removeProperty('fill');
+          }
+          activeDots.clear();
+          return;
+        }
+
+        const hoverCenter = getElementCenter(lastHoveredElement);
+        if (!hoverCenter) return;
+
+        const { x, y } = hoverCenter;
+
+        // Find nearest dots within max distance
+        const candidates: Array<{ el: SVGGraphicsElement; d2: number }> = [];
+        for (const dot of dots) {
+          const dx = dot.cx - x;
+          const dy = dot.cy - y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 <= maxDistance2) {
+            candidates.push({ el: dot.el, d2 });
+          }
+        }
+
+        // Sort by distance and select nearest N
+        candidates.sort((a, b) => a.d2 - b.d2);
+        const toHighlight = candidates.slice(0, dotHighlightCount).map((c) => c.el);
+        const nextActive = new Set(toHighlight);
+
+        // Remove highlight from dots no longer active (with smooth transition)
+        for (const dot of activeDots) {
+          if (!nextActive.has(dot)) {
+            // Ensure transition is set before removing fill for smooth fade-out
+            dot.style.setProperty('transition', 'fill 200ms ease-in-out', 'important');
+            dot.style.removeProperty('fill');
+          }
+        }
+
+        // Add highlight to newly active dots (with smooth transition)
+        for (const dot of nextActive) {
+          if (!activeDots.has(dot)) {
+            // Ensure transition is set before setting fill for smooth fade-in
+            dot.style.setProperty('transition', 'fill 200ms ease-in-out', 'important');
+            dot.style.setProperty('fill', '#ffffff', 'important');
+          }
+        }
+
+        activeDots.clear();
+        for (const dot of nextActive) activeDots.add(dot);
+      };
+
+      const onPointerMove = (e: PointerEvent) => {
+        const target = e.target;
+        if (!target || !(target instanceof SVGGraphicsElement)) return;
+        if (!target.matches(selector)) return;
+
+        // Process hover on any SVG element to highlight nearby dots
+        lastHoveredElement = target;
+        if (rafId == null) rafId = window.requestAnimationFrame(updateDotsHighlight);
+      };
+
+      const onPointerLeave = () => {
+        lastHoveredElement = null;
+        if (rafId != null) {
+          window.cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        updateDotsHighlight();
+      };
+
+      svgEl.addEventListener('pointermove', onPointerMove);
+      svgEl.addEventListener('pointerleave', onPointerLeave);
+
+      return () => {
+        svgEl.removeEventListener('pointermove', onPointerMove);
+        svgEl.removeEventListener('pointerleave', onPointerLeave);
+        if (rafId != null) {
+          window.cancelAnimationFrame(rafId);
+        }
+        for (const dot of activeDots) {
+          dot.style.removeProperty('fill');
+        }
+        activeDots.clear();
+      };
+    }
 
     // Default: highlight only the element under cursor
     if (hoverMode === 'single') {
@@ -226,7 +403,7 @@ export default function InlineSvg({
       svgEl.removeEventListener('pointerleave', clear);
       clear();
     };
-  }, [svgMarkup, hoverMode, clusterCount, clusterRadius]);
+  }, [svgMarkup, hoverMode, clusterCount, clusterRadius, dotMaxSize, dotHighlightCount, dotMaxDistance]);
 
   if (!svgMarkup) return null;
 
