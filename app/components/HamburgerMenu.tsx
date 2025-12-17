@@ -8,10 +8,10 @@ import navigationData from "../../data/navigation.json";
 import { HeaderContent } from "./Header";
 
 interface HamburgerMenuProps {
-  isTransparent?: boolean;
+  isHeaderFixed?: boolean;
 }
 
-export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuProps) {
+export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
@@ -105,8 +105,8 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
           )}
         >
           <svg width="40" height="15" viewBox="0 0 40 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="1.5" y1="1.5" x2="38.5" y2="1.5" stroke={isTransparent && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
-            <line x1="1.5" y1="13.5" x2="38.5" y2="13.5" stroke={isTransparent && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
+            <line x1="1.5" y1="1.5" x2="38.5" y2="1.5" stroke={isHeaderFixed && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
+            <line x1="1.5" y1="13.5" x2="38.5" y2="13.5" stroke={isHeaderFixed && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
           </svg>
         </span>
       </button>
@@ -136,7 +136,7 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
             <div className="container mx-auto h-full flex flex-col gap-10 md:gap-[72px]">
               {/* Header within menu */}
               <HeaderContent
-                isTransparent={isTransparent}
+                isHeaderFixed={isHeaderFixed}
                 variant="menu"
                 onClose={toggleMenu}
               />
