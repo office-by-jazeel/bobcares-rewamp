@@ -2,63 +2,65 @@
   "projects": [
     {
       "id": 1,
-      "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
+      "title": "Riscosity - Secure and Manage API Data Flows Effortlessly",
       "category": "Server Management",
-      "description": "Streamlined API management solution for secure data flows",
       "image": "/images/port1.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/riscosity-secure-and-manage-api-data-flows-effortlessly/"
     },
     {
       "id": 2,
-      "title": "Reform RX - story of a unified fitness experience - Bobcares",
+      "title": "Reform RX - Story of a Unified Fitness Experience",
       "category": "Web Development",
-      "description": "Comprehensive fitness platform with integrated workout tracking",
       "image": "/images/port2.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/reform-rx-story-of-a-unified-fitness-experience/"
     },
     {
       "id": 3,
-      "title": "How Bobcares mobile app development transformed Paykini's financial services",
-      "category": "Mobile App Development",
-      "description": "Revolutionary mobile banking experience with seamless transactions",
+      "title": "End-to-End Digital Transformation for Paykini: Strengthening Security, Performance, and Mobile Accessibility",
+      "category": "Financial Services / Online Payments",
       "image": "/images/port3.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
       "id": 4,
-      "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
-      "category": "Server Management",
+      "title": "AI-based Churn Application",
+      "category": "Web Development",
       "description": "Enterprise-grade API security and management platform",
       "image": "/images/port4.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
     },
     {
       "id": 5,
-      "title": "Reform RX - story of a unified fitness experience - Bobcares",
-      "category": "Web Development",
+      "title": "Appraise – Ensuring Reliability and Performance for Cloud Hosting",
+      "category": "Server Management",
       "description": "Next-generation fitness web application with real-time analytics",
       "image": "/images/port5.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/appraise-ensuring-reliability-and-performance-for-cloud-hosting/"
     },
     {
       "id": 6,
-      "title": "How Bobcares mobile app development transformed Paykini's financial services",
-      "category": "Mobile App Development",
+      "title": "Enhancing Server Performance and Security for Nexnova s.n.c.",
+      "category": "Server Management",
       "description": "Mobile-first financial services platform with advanced security",
       "image": "/images/port6.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/enhancing-server-performance-and-security-for-nexnova-s-n-c/"
     },
     {
       "id": 7,
-      "title": "Riscosity - secure and manage API data flows effortlessly - Bobcares",
-      "category": "Server Management",
+      "title": "Streamlining Support for GH1 Web Hosting: Enhancing Efficiency and Customer Satisfaction",
+      "category": "Affordable Support",
       "description": "Scalable API infrastructure for modern applications",
       "image": "/images/port7.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link" : "https://bobcares.com/case-study/streamlining-support-for-gh1-web-hosting-enhancing-efficiency-and-customer-satisfaction/"
     },
     {
       "id": 8,
-      "title": "Reform RX - story of a unified fitness experience - Bobcares",
+      "title": "Building a Self-Healing Cloud: Inside an AIOps-Driven Ops Transformation",
       "category": "Web Development",
       "description": "Integrated fitness ecosystem with personalized coaching",
       "image": "/images/port8.png",
@@ -66,12 +68,12 @@
     },
     {
       "id": 9,
-      "title": "How Bobcares mobile app development transformed Paykini's financial services",
-      "category": "Mobile App Development",
-      "description": "Award-winning mobile banking solution with intuitive UX",
+      "title": "Scalable SaaS for Hotel Solutions on AWS",
+      "category": "Web Development",
+      "description": "Our client, operating in the hospitality industry, specializes in developing advanced technology solutions to enhance operational efficiency for hotels. Their goal was to create a scalable Software-as-a-Service (SaaS) platform capable of managing hotel operations seamlessly. To achieve this, they partnered with Bobcares for web development, ensuring a robust, user-friendly, and scalable solution that optimizes hotel management processes effectively.",
       "image": "/images/port9.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/scalable-saas-for-hotel-solutions-on-aws/"
     }
   ]
 }
-

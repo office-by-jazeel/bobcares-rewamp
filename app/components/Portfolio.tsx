@@ -29,15 +29,7 @@ export default function Portfolio() {
 
             {/* View All Projects Button */}
             <div className="flex justify-center">
-              <button className="
-            border border-black border-solid 
-            flex items-center justify-center 
-            flex items-center justify-center 
-            px-[32px] sm:px-[38px] py-3 sm:py-4
-            rounded-[45px] 
-            hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC]
-            transition-colors
-          ">
+              <button className="border border-black border-solid flex items-center justify-center px-[32px] sm:px-[38px] py-3 sm:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors">
                 <span className="font-medium text-[18px] sm:text-[20px] tracking-[-1px]">
                   View All Projects
                 </span>
@@ -59,6 +51,7 @@ function ProjectCard({ project, className = "" }: {
     description: string;
     image: string;
     imageCloudinaryId?: string;
+    link?: string | null;
   };
   className?: string;
 }) {
@@ -91,7 +84,7 @@ function ProjectCard({ project, className = "" }: {
 
         {/* View Project Link */}
         <a
-          href="#"
+          href={project.link ?? "#"}
           className="font-medium text-[18px] text-[#0073ec]  md:text-black  underline underline-offset-4 decoration-1 hover:text-[#0073ec]  transition-colors w-fit"
         >
           View Project
