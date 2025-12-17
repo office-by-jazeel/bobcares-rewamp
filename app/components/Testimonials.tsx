@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import CloudinaryImage from "@/components/CloudinaryImage";
 import testimonialsData from "../../data/testimonials.json";
 
@@ -25,11 +25,20 @@ export default function Testimonials() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
+  // Drag state management
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartXRef = useRef<number>(0);
+  const dragStartScrollLeftRef = useRef<number>(0);
+  const lastMoveXRef = useRef<number>(0);
+  const lastMoveTimeRef = useRef<number>(0);
+  const velocityRef = useRef<number>(0);
+  const momentumAnimationIdRef = useRef<number | null>(null);
+
   // Duplicate testimonials for seamless infinite scroll
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
-  // Check if animation should be paused (hover/touch OR modal open)
-  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null;
+  // Check if animation should be paused (hover/touch OR modal open OR dragging)
+  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
 
   const handlePlayClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
@@ -46,6 +55,242 @@ export default function Testimonials() {
   const closeTestimonialModal = () => {
     setSelectedTestimonial(null);
   };
+
+  // Cancel momentum animation
+  const cancelMomentum = useCallback(() => {
+    if (momentumAnimationIdRef.current !== null) {
+      cancelAnimationFrame(momentumAnimationIdRef.current);
+      momentumAnimationIdRef.current = null;
+    }
+  }, []);
+
+  // Update scroll position helper
+  const updateScrollPosition = useCallback((newScrollLeft: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const singleSetWidth = container.scrollWidth / 2;
+    scrollPositionRef.current = newScrollLeft;
+
+    // Handle infinite scroll loop
+    if (scrollPositionRef.current >= singleSetWidth) {
+      scrollPositionRef.current = scrollPositionRef.current - singleSetWidth;
+      dragStartScrollLeftRef.current = container.scrollLeft;
+    } else if (scrollPositionRef.current < 0) {
+      scrollPositionRef.current = singleSetWidth + scrollPositionRef.current;
+      dragStartScrollLeftRef.current = container.scrollLeft;
+    }
+
+    container.scrollLeft = scrollPositionRef.current;
+  }, []);
+
+  // Momentum animation function
+  const startMomentum = useCallback((initialVelocity: number) => {
+    cancelMomentum();
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let velocity = initialVelocity;
+    const friction = 0.95; // Deceleration factor
+    const minVelocity = 0.5; // Stop when velocity is below this threshold
+
+    const animate = () => {
+      const currentShouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
+
+      if (Math.abs(velocity) < minVelocity || currentShouldPause) {
+        cancelMomentum();
+        // Sync scrollPositionRef when momentum ends
+        scrollPositionRef.current = container.scrollLeft;
+        return;
+      }
+
+      scrollPositionRef.current += velocity;
+      updateScrollPosition(scrollPositionRef.current);
+      velocity *= friction;
+      momentumAnimationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    momentumAnimationIdRef.current = requestAnimationFrame(animate);
+  }, [cancelMomentum, updateScrollPosition, isPaused, selectedVideo, selectedTestimonial, isDragging]);
+
+  // Check if target is an interactive element (button, link, etc.)
+  const isInteractiveElement = (target: EventTarget | null): boolean => {
+    if (!target || !(target instanceof HTMLElement)) return false;
+    const tagName = target.tagName.toLowerCase();
+    const isButton = tagName === 'button' || tagName === 'a';
+    const isClickable = target.onclick !== null || target.getAttribute('role') === 'button';
+    return isButton || isClickable || target.closest('button, a, [role="button"]') !== null;
+  };
+
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Don't start drag if clicking on interactive elements
+    if (isInteractiveElement(e.target)) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    e.preventDefault();
+    setIsDragging(true);
+    dragStartXRef.current = e.clientX;
+    dragStartScrollLeftRef.current = container.scrollLeft;
+    lastMoveXRef.current = e.clientX;
+    lastMoveTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    cancelMomentum();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+
+    const currentTime = performance.now();
+    const deltaX = e.clientX - lastMoveXRef.current;
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+
+    // Calculate velocity (pixels per millisecond)
+    if (deltaTime > 0) {
+      velocityRef.current = deltaX / deltaTime;
+    }
+
+    // Update scroll position
+    const scrollDelta = e.clientX - dragStartXRef.current;
+    const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+
+    updateScrollPosition(newScrollLeft);
+    lastMoveXRef.current = e.clientX;
+    lastMoveTimeRef.current = currentTime;
+  };
+
+  const handleMouseUp = useCallback(() => {
+    if (!isDragging) return;
+
+    setIsDragging(false);
+
+    // Start momentum animation if velocity is significant
+    if (Math.abs(velocityRef.current) > 0.1) {
+      startMomentum(velocityRef.current);
+    } else {
+      // Sync scrollPositionRef when drag ends without momentum
+      const container = scrollContainerRef.current;
+      if (container) {
+        scrollPositionRef.current = container.scrollLeft;
+      }
+    }
+  }, [isDragging, startMomentum]);
+
+  // Touch drag handlers
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    // Don't start drag if touching interactive elements
+    if (isInteractiveElement(e.target)) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const touch = e.touches[0];
+    setIsDragging(true);
+    dragStartXRef.current = touch.clientX;
+    dragStartScrollLeftRef.current = container.scrollLeft;
+    lastMoveXRef.current = touch.clientX;
+    lastMoveTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    cancelMomentum();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+
+    const touch = e.touches[0];
+    const currentTime = performance.now();
+    const deltaX = touch.clientX - lastMoveXRef.current;
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+
+    // Calculate velocity (pixels per millisecond)
+    if (deltaTime > 0) {
+      velocityRef.current = deltaX / deltaTime;
+    }
+
+    // Update scroll position
+    const scrollDelta = touch.clientX - dragStartXRef.current;
+    const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+
+    updateScrollPosition(newScrollLeft);
+    lastMoveXRef.current = touch.clientX;
+    lastMoveTimeRef.current = currentTime;
+  };
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging) return;
+
+    setIsDragging(false);
+
+    // Start momentum animation if velocity is significant
+    if (Math.abs(velocityRef.current) > 0.1) {
+      startMomentum(velocityRef.current);
+    } else {
+      // Sync scrollPositionRef when drag ends without momentum
+      const container = scrollContainerRef.current;
+      if (container) {
+        scrollPositionRef.current = container.scrollLeft;
+      }
+    }
+  }, [isDragging, startMomentum]);
+
+  // Global mouse event handlers for drag outside container
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const currentTime = performance.now();
+      const deltaX = e.clientX - lastMoveXRef.current;
+      const deltaTime = currentTime - lastMoveTimeRef.current;
+
+      // Calculate velocity (pixels per millisecond)
+      if (deltaTime > 0) {
+        velocityRef.current = deltaX / deltaTime;
+      }
+
+      // Update scroll position
+      const scrollDelta = e.clientX - dragStartXRef.current;
+      const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+
+      updateScrollPosition(newScrollLeft);
+      lastMoveXRef.current = e.clientX;
+      lastMoveTimeRef.current = currentTime;
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+
+      // Start momentum animation if velocity is significant
+      if (Math.abs(velocityRef.current) > 0.1) {
+        startMomentum(velocityRef.current);
+      } else {
+        // Sync scrollPositionRef when drag ends without momentum
+        const container = scrollContainerRef.current;
+        if (container) {
+          scrollPositionRef.current = container.scrollLeft;
+        }
+      }
+    };
+
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, updateScrollPosition, startMomentum]);
+
+  // Cleanup momentum on unmount
+  useEffect(() => {
+    return () => {
+      cancelMomentum();
+    };
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -141,16 +386,44 @@ export default function Testimonials() {
         <div className="w-full">
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
+            className={`flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
-              scrollBehavior: 'auto'
+              scrollBehavior: 'auto',
+              userSelect: isDragging ? 'none' : 'auto'
             }}
             onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
+            onMouseLeave={() => {
+              setIsPaused(false);
+              // Cancel drag if mouse leaves container
+              if (isDragging) {
+                setIsDragging(false);
+                cancelMomentum();
+                const container = scrollContainerRef.current;
+                if (container) {
+                  scrollPositionRef.current = container.scrollLeft;
+                }
+              }
+            }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onTouchStart={(e) => {
+              setIsPaused(true);
+              handleTouchStart(e);
+            }}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={(e) => {
+              handleTouchEnd();
+              // Resume auto-scroll after touch ends (momentum will continue independently)
+              // Use setTimeout to allow handleTouchEnd to complete first
+              setTimeout(() => {
+                if (selectedVideo === null && selectedTestimonial === null) {
+                  setIsPaused(false);
+                }
+              }, 0);
+            }}
           >
             {duplicatedTestimonials.map((testimonial, index) => (
               <TestimonialCard
@@ -184,6 +457,32 @@ export default function Testimonials() {
   );
 }
 
+// Helper function to get initials from a name
+function getInitials(name: string): string {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].substring(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+// Avatar placeholder component
+function AvatarPlaceholder({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
+  const initials = getInitials(name);
+  const sizeClasses = {
+    sm: "text-[12px]",
+    md: "text-[14px] sm:text-[16px]",
+    lg: "text-[18px]"
+  };
+
+  return (
+    <div className={`w-full h-full bg-gradient-to-br from-[#0073ec] to-[#00e8e8] flex items-center justify-center text-white font-semibold ${sizeClasses[size]}`}>
+      {initials}
+    </div>
+  );
+}
+
 function TestimonialCard({
   testimonial,
   onPlayClick,
@@ -197,6 +496,7 @@ function TestimonialCard({
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   // Show play button only if type is "text-image-video" and videoUrl exists
   const showPlayButton = testimonial.type === "text-image-video" && !!testimonial.videoUrl && testimonial.videoUrl !== "";
+  const hasImage = testimonial.image && testimonial.image.trim() !== "";
 
   return (
     <div className="bg-[#1A173A] p-[2px] rounded-3xl shrink-0 w-[320px] sm:w-[500px] lg:w-[728px]">
@@ -234,14 +534,18 @@ function TestimonialCard({
 
           {/* Client Info */}
           <div className="flex gap-3 sm:gap-4 items-center w-full mt-auto">
-            <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden">
-              <CloudinaryImage
-                src={testimonial.image}
-                cloudinaryId={testimonial.imageCloudinaryId}
-                alt={testimonial.author}
-                fill
-                className="object-cover rounded-full"
-              />
+            <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden bg-gray-200">
+              {hasImage ? (
+                <CloudinaryImage
+                  src={testimonial.image}
+                  cloudinaryId={testimonial.imageCloudinaryId}
+                  alt={testimonial.author}
+                  fill
+                  className="object-cover rounded-full"
+                />
+              ) : (
+                <AvatarPlaceholder name={testimonial.author} size="md" />
+              )}
             </div>
             <div className="flex flex-1 flex-col gap-0.5 text-black">
               <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
@@ -374,6 +678,7 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
 
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   const showPlayButton = testimonial.type === "text-image-video" && testimonial.videoUrl;
+  const hasImage = testimonial.image && testimonial.image.trim() !== "";
 
   return (
     <div
@@ -402,20 +707,24 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
             </p>
 
             {/* Quote */}
-            <p className="font-semibold leading-[1.3] text-[24px] sm:text-[28px] lg:text-[32px] text-black">
+            <p className="font-grotesque font-semibold leading-[1.15] text-[24px] sm:text-[28px] lg:text-[32px] text-black">
               &ldquo;{testimonial.quote}&rdquo;
             </p>
 
             {/* Client Info */}
             <div className="flex gap-4 items-center">
-              <div className="relative rounded-full shrink-0 size-16 overflow-hidden">
-                <CloudinaryImage
-                  src={testimonial.image}
-                  cloudinaryId={testimonial.imageCloudinaryId}
-                  alt={testimonial.author}
-                  fill
-                  className="object-cover rounded-full"
-                />
+              <div className="relative rounded-full shrink-0 size-16 overflow-hidden bg-gray-200">
+                {hasImage ? (
+                  <CloudinaryImage
+                    src={testimonial.image}
+                    cloudinaryId={testimonial.imageCloudinaryId}
+                    alt={testimonial.author}
+                    fill
+                    className="object-cover rounded-full"
+                  />
+                ) : (
+                  <AvatarPlaceholder name={testimonial.author} size="lg" />
+                )}
               </div>
               <div className="flex flex-1 flex-col gap-1 text-black">
                 <p className="font-semibold text-[20px]">{testimonial.author}</p>

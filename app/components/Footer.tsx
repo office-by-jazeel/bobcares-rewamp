@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import footerData from "../../data/footer.json";
 
 const socialIcons = {
@@ -14,7 +16,8 @@ const socialIcons = {
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const { newsletter, contact, links, copyright } = footerData;
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['Product Engineering']));
+  const { newsletter, contact, links, copyright, services } = footerData;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,11 +26,19 @@ export default function Footer() {
     setEmail('');
   };
 
+  const toggleSection = (sectionTitle: string) => {
+    if (expandedSections.has(sectionTitle)) {
+      setExpandedSections(new Set());
+    } else {
+      setExpandedSections(new Set([sectionTitle]));
+    }
+  };
+
   return (
     <footer>
       <div className="bg-black">
         <div className="container mx-auto flex flex-col items-center py-12 lg:py-[140px]">
-          <div className="w-full flex flex-col gap-14 lg:gap-16">
+          <div className="w-full flex flex-col gap-10 lg:gap-16">
 
             {/* Top Section */}
             <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-10 lg:gap-12 w-full">
@@ -99,8 +110,118 @@ export default function Footer() {
               </div>
             </div>
 
+            {/* Services Section */}
+            <div className="w-full md:border-t md:border-white/10 md:pt-14">
+              {/* Desktop: 6-column grid */}
+              <div className="hidden lg:grid lg:grid-cols-6 gap-12">
+                {services.map((service) => (
+                  <div key={service.title} className="flex flex-col gap-12">
+                    <h3 className="font-medium text-[16px] text-white uppercase leading-[1.54] tracking-normal min-h-[50px] line-clamp-2">
+                      {service.title}
+                    </h3>
+                    <div className="flex flex-col gap-[32px]">
+                      {service.items.map((item, index) => (
+                        <a
+                          key={index}
+                          href="#"
+                          className="font-light text-[18px] text-[#a4a4a4] leading-normal tracking-[-0.18px] hover:text-white transition-colors"
+                        >
+                          {item}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile: Accordion */}
+              <div className="lg:hidden flex flex-col">
+                {services.map((service, index) => {
+                  const isExpanded = expandedSections.has(service.title);
+
+                  return (
+                    <div
+                      key={service.title}
+                      className={cn(
+                        "border-b",
+                        isExpanded ? "border-white pb-[48px] pt-[32px]" : "border-[#1c1c1c] py-[24px]"
+                      )}
+                    >
+                      <button
+                        onClick={() => toggleSection(service.title)}
+                        className="w-full flex items-center justify-between"
+                        aria-label={isExpanded ? `Collapse ${service.title}` : `Expand ${service.title}`}
+                      >
+                        <h3
+                          className={cn(
+                            "font-medium text-[16px] uppercase leading-[1.1] tracking-normal text-left",
+                            isExpanded ? "text-[#e6e6e6]" : "text-[#8a8a8a]"
+                          )}
+                        >
+                          {service.title}
+                        </h3>
+                        <div className="relative shrink-0 size-6">
+                          {isExpanded ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path d="M12 5V19M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                            </svg>
+                          )}
+                        </div>
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{
+                              type: "spring",
+                              mass: 1,
+                              stiffness: 300,
+                              damping: 20,
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <div className="flex items-start justify-between gap-8 mt-[32px]">
+                              <div className="flex flex-col gap-[32px] flex-1">
+                                {service.items.slice(0, Math.ceil(service.items.length / 2)).map((item, itemIndex) => (
+                                  <a
+                                    key={itemIndex}
+                                    href="#"
+                                    className="font-light text-[14px] text-[#a4a4a4] leading-normal tracking-[-0.14px] hover:text-white transition-colors"
+                                  >
+                                    {item}
+                                  </a>
+                                ))}
+                              </div>
+                              <div className="flex flex-col gap-[32px] flex-1">
+                                {service.items.slice(Math.ceil(service.items.length / 2)).map((item, itemIndex) => (
+                                  <a
+                                    key={itemIndex}
+                                    href="#"
+                                    className="font-light text-[14px] text-[#a4a4a4] leading-normal tracking-[-0.14px] hover:text-white transition-colors"
+                                  >
+                                    {item}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Bottom Section */}
-            <div className="border-t border-white/10 pt-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-6 w-full">
+            <div className="md:border-t md:border-white/10 md:pt-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-6 w-full">
               {/* Copyright and Legal Links */}
               <div className="relative max-md:w-full max-md:text-center">
                 <p className="font-light text-[14px] sm:text-[16px] text-[#a4a4a4] tracking-[-0.16px]">

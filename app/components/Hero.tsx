@@ -42,8 +42,9 @@ export default function Hero() {
         />
 
         {/* Overlays */}
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-gradient-to-b from-black/60 to-transparent" />
+        {/* <div className="absolute inset-0 bg-black/40" /> */}
+        <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-b from-black/80 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-t from-black/80 to-transparent" />
       </div>
 
       {/* ================= CONTENT ================= */}
@@ -63,8 +64,8 @@ export default function Hero() {
             {/* RATINGS */}
             <div className="flex flex-wrap md:flex-nowrap items-center gap-4 sm:gap-6 md:gap-[34px]">
               {ratings.map((rating, index) => (
-                <div key={index} >
-                  <div className="flex items-center flex-wrap gap-[10px]">
+                <>
+                  <div key={index} className="flex items-center flex-wrap gap-[10px]">
                     <div className="flex items-center flex-nowrap gap-[10px]">
                       <CloudinaryImage
                         src={rating.icon}
@@ -115,7 +116,7 @@ export default function Hero() {
                   {index !== ratings.length - 1 && (
                     <div className="block h-6 border-l border-white/30 shrink-0" />
                   )}
-                </div>
+                </>
               ))}
             </div>
             {/* BUTTONS */}

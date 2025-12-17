@@ -20,7 +20,7 @@ export default function Services() {
     <section>
       <div className="bg-white">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
-          <div className="w-full flex flex-col gap-14 lg:gap-20">
+          <div className="w-full flex flex-col gap-5 lg:gap-20">
 
             {/* Header */}
             <div className="flex flex-col justify-between items-start gap-3">
@@ -41,17 +41,24 @@ export default function Services() {
               </div>
             </div>
 
-            {/* Responsive grid */}
-            <div className="
-          grid 
-          grid-cols-1 
-          sm:grid-cols-2 
-          lg:grid-cols-3 
-          gap-10 
-          sm:gap-14
-          lg:gap-24
-          lg:gap-y-32
-        ">
+            {/* Mobile list view */}
+            <div className="md:hidden w-full">
+              <div className="relative">
+                {services.slice(0, 8).map((service, index) => (
+                  <MobileServiceItem key={service.id} service={service} isLast={index === 7} />
+                ))}
+              </div>
+
+              {/* View All Services button */}
+              <div className="mt-8 flex justify-center">
+                <button className="border border-black rounded-full px-6 py-3 text-[16px] font-medium hover:bg-gray-50 transition-colors">
+                  View All Services
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop grid view */}
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-14 lg:gap-24 lg:gap-y-32">
               {services.slice(0, 8).map((service, index) => (
                 <ServiceCard key={index} service={service} />
               ))}
@@ -67,6 +74,43 @@ export default function Services() {
   );
 }
 
+
+function MobileServiceItem({ service, isLast }: { service: Service; isLast: boolean }) {
+  return (
+    <div className="py-4">
+      <div className="flex items-center gap-4">
+        {/* Icon */}
+        <div className="relative size-12 shrink-0">
+          <div className="absolute inset-0 bg-[#f7f7f7] rounded-lg" />
+          <div className="absolute inset-2 flex items-center justify-center">
+            {service.icon.startsWith("/") ? (
+              <Image src={service.icon} alt="" width={20} height={20} className="w-5 h-5" />
+            ) : (
+              <span className="text-xl">{service.icon}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Title */}
+        <h3 className="flex-1 font-grotesque font-bold text-[22px] leading-[1.2]">
+          {service.title}
+        </h3>
+
+        {/* Chevron */}
+        <div className="size-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
+            <path d="M4.175 5.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.275 4.875C6.375 4.975 6.44583 5.08333 6.4875 5.2C6.52917 5.31667 6.55 5.44167 6.55 5.575C6.55 5.70833 6.52917 5.83333 6.4875 5.95C6.44583 6.06667 6.375 6.175 6.275 6.275L1.675 10.875C1.49167 11.0583 1.25833 11.15 0.975 11.15C0.691667 11.15 0.458333 11.0583 0.275 10.875C0.0916667 10.6917 0 10.4583 0 10.175C0 9.89167 0.0916667 9.65833 0.275 9.475L4.175 5.575Z" fill="black" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Divider */}
+      {!isLast && (
+        <div className="mt-4 border-t border-[#D9D9D9]" />
+      )}
+    </div>
+  );
+}
 
 function ServiceCard({ service }: { service: Service }) {
   return (

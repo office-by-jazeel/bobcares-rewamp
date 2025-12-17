@@ -5,20 +5,19 @@
       "key": "solutions"
     },
     {
-      "label": "Pricing",
-      "key": "pricing"
-    },
-    {
       "label": "Portfolio",
-      "key": "portfolio"
+      "key": "portfolio",
+      "href": "https://bobcares.com/about-us/"
     },
     {
       "label": "About",
-      "key": "about"
+      "key": "about",
+      "href": "https://bobcares.com/about-us/"
     },
     {
       "label": "Blog",
-      "key": "blog"
+      "key": "blog",
+      "href": "https://bobcares.com/blog/"
     }
   ],
   "subMenus": {

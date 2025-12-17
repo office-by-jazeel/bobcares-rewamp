@@ -8,39 +8,118 @@
     "email": "sales@bobcares.com",
     "phone": "1-800-383-5193"
   },
+  "services": [
+    {
+      "title": "Product Engineering",
+      "items": [
+        "Web Development",
+        "Microservices Architecture",
+        "Mobile Apps",
+        "UI/UX Design",
+        "MVP to Scale Builds",
+        "Agile & Dev Team Augmentation",
+        "Ecommerce",
+        "QA and Test Automation"
+      ]
+    },
+    {
+      "title": "Digital Transformation",
+      "items": [
+        "Legacy Modernization",
+        "Workflow Automation",
+        "Data-Driven Dashboards",
+        "CRM/ERP Integration",
+        "Business Process Reengineering"
+      ]
+    },
+    {
+      "title": "Artificial Intelligence Services",
+      "items": [
+        "AI & Machine Learning",
+        "AIOps",
+        "Intelligent Automation",
+        "Business Intelligence and Analytics",
+        "AI Installation & Compute DataCenter Support"
+      ]
+    },
+    {
+      "title": "Management & Optimization",
+      "items": [
+        "Cloud Setup",
+        "Cloud Migration",
+        "Managed Cloud Services",
+        "Server & Hosting Management",
+        "Cost Optimization & Monitoring",
+        "Performance Optimization & Monitoring",
+        "Outsourced Support Services"
+      ]
+    },
+    {
+      "title": "DevOps & Automation",
+      "items": [
+        "CI/CD Setup & Pipeline Automation",
+        "Kubernetes & Docker Management",
+        "Infrastructure as Code (IaC)",
+        "Cloud-Native Migration",
+        "DevSecOps"
+      ]
+    },
+    {
+      "title": "Cybersecurity & Compliance Services",
+      "items": [
+        "Security Hardening & Monitoring",
+        "Vulnerability Assessment & Penetration Testing (VAPT)",
+        "Incident Response Management",
+        "Backup & Disaster Recovery Services"
+      ]
+    }
+  ],
   "links": {
-    "company": [
-      { "label": "About Us", "href": "#" },
-      { "label": "Our Team", "href": "#" },
-      { "label": "Careers", "href": "#" },
-      { "label": "Contact", "href": "#" }
-    ],
-    "services": [
-      { "label": "Server Management", "href": "#" },
-      { "label": "Cloud Solutions", "href": "#" },
-      { "label": "DevOps Services", "href": "#" },
-      { "label": "Support Services", "href": "#" }
-    ],
-    "resources": [
-      { "label": "Blog", "href": "#" },
-      { "label": "Documentation", "href": "#" },
-      { "label": "Knowledge Base", "href": "#" },
-      { "label": "Case Studies", "href": "#" }
-    ],
     "legal": [
-      { "label": "Privacy Policy", "href": "#" },
-      { "label": "Terms and Service", "href": "#" },
-      { "label": "GDPR", "href": "#" },
-      { "label": "Acceptable Use Policy", "href": "#" }
+      {
+        "label": "Privacy Policy",
+        "href": "#"
+      },
+      {
+        "label": "Terms and Service",
+        "href": "#"
+      },
+      {
+        "label": "GDPR",
+        "href": "#"
+      },
+      {
+        "label": "Acceptable Use Policy",
+        "href": "#"
+      }
     ]
   },
   "social": [
-    { "name": "Facebook", "href": "#", "icon": "facebook" },
-    { "name": "Twitter", "href": "#", "icon": "twitter" },
-    { "name": "LinkedIn", "href": "#", "icon": "linkedin" },
-    { "name": "Instagram", "href": "#", "icon": "instagram" },
-    { "name": "YouTube", "href": "#", "icon": "youtube" }
+    {
+      "name": "Facebook",
+      "href": "#",
+      "icon": "facebook"
+    },
+    {
+      "name": "Twitter",
+      "href": "#",
+      "icon": "twitter"
+    },
+    {
+      "name": "LinkedIn",
+      "href": "#",
+      "icon": "linkedin"
+    },
+    {
+      "name": "Instagram",
+      "href": "#",
+      "icon": "instagram"
+    },
+    {
+      "name": "YouTube",
+      "href": "#",
+      "icon": "youtube"
+    }
   ],
   "copyright": "© 2025 Bobcares. All Rights Reserved."
 }
-
