@@ -48,7 +48,7 @@ function ProjectCard({ project, className = "" }: {
     id: number;
     title: string;
     category: string;
-    description: string;
+    description?: string;
     image: string;
     imageCloudinaryId?: string;
     link?: string | null;
