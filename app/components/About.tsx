@@ -58,7 +58,7 @@ export default function About() {
                 </h2>
 
                 {/* Statistics Grid */}
-                <div className="grid grid-cols-2 md:gap-20 mt-6 sm:mt-8">
+                <div className="grid grid-cols-2 gap-y-5 md:gap-20 mt-6 sm:mt-8">
                   {stats.map((stat) => (
                     <StatItem key={stat.id} stat={stat} />
                   ))}
