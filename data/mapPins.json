@@ -4,191 +4,232 @@
       "id": 1,
       "top": "43%",
       "left": "14.5%",
-      "label": "Gullo’s Hosting",
-      "logo": "/images/clients/gullos-hosting.png"
+      "clients": [
+        {
+          "label": "Gullo's Hosting",
+          "logo": "/images/clients/gullos-hosting.png"
+        },
+        {
+          "label": "Hostirian",
+          "logo": "/images/clients/hostirian.png"
+        },
+        {
+          "label": "Riscosity",
+          "logo": "/images/clients/riscosity.svg"
+        },
+        {
+          "label": "IMC Digital Universe, Inc",
+          "logo": "/images/clients/imc-digital.png"
+        }
+      ]
     },
     {
       "id": 2,
-      "top": "43%",
-      "left": "19.25%",
-      "label": "Hostirian",
-      "logo": "/images/clients/hostirian.png"
+      "top": "46%",
+      "left": "19.4%",
+      "clients": [
+        {
+          "label": "Besttech Computing",
+          "logo": "/images/clients/besttech-computing.png"
+        },
+        {
+          "label": "LucaNet Sistemas Ltda.",
+          "logo": "/images/clients/lucanet.png"
+        },
+        {
+          "label": "Rand4Dollar",
+          "logo": "/images/clients/rand4dollar.png"
+        }
+      ]
     },
     {
       "id": 3,
       "top": "43%",
-      "left": "28%",
-      "label": "Riscosity",
-      "logo": "/images/clients/riscosity.svg"
+      "left": "25%",
+      "clients": [
+        {
+          "label": "Matthew Owen LLC",
+          "logo": "/images/clients/matthew-owen.png"
+        },
+        {
+          "label": "Freshpage Media",
+          "logo": "/images/clients/freshpage-media.png"
+        },
+        {
+          "label": "Creating Digital",
+          "logo": "/images/clients/creatingdig.svg"
+        }
+      ]
     },
     {
       "id": 4,
-      "top": "46%",
-      "left": "23%",
-      "label": "IMC Digital Universe, Inc",
-      "logo": "/images/clients/imc-digital.png"
-    },
-    {
-      "id": 5,
-      "top": "49%",
-      "left": "19%",
-      "label": "Besttech Computing",
-      "logo": "/images/clients/besttech-computing.png"
-    },
-    {
-      "id": 6,
-      "top": "70%",
-      "left": "32%",
-      "label": "LucaNet Sistemas Ltda.",
-      "logo": "/images/clients/lucanet.png"
+      "top": "29%",
+      "left": "46%",
+      "clients": [
+        {
+          "label": "Information Management Ltd.",
+          "logo": "/images/clients/imltd.png"
+        },
+        {
+          "label": "BoothBook",
+          "logo": "/images/clients/boothbook.webp"
+        },
+        {
+          "label": "ReformRx",
+          "logo": "/images/clients/reformrx.png"
+        },
+        {
+          "label": "Zut Media",
+          "logo": "/images/clients/zut.svg"
+        },
+        {
+          "label": "Toucan Graphics",
+          "logo": "/images/clients/toucan-graphics.png"
+        }
+      ]
     },
     {
       "id": 7,
       "top": "75%",
       "left": "85%",
-      "label": "Appraise",
-      "logo": "/images/clients/appraise.png"
+      "clients": [
+        {
+          "label": "Appraise",
+          "logo": "/images/clients/appraise.png"
+        }
+      ]
     },
     {
       "id": 8,
       "top": "76.5%",
       "left": "81%",
-      "label": "Super Domains",
-      "logo": "/images/clients/super-domains.png"
+      "clients": [
+        {
+          "label": "Super Domains",
+          "logo": "/images/clients/super-domains.png"
+        }
+      ]
     },
     {
       "id": 9,
       "top": "54%",
       "left": "60.5%",
-      "label": "Chrysalis Digital",
-      "logo": "/images/clients/chrysalis-digital.png"
+      "clients": [
+        {
+          "label": "Chrysalis Digital",
+          "logo": "/images/clients/chrysalis-digital.png"
+        }
+      ]
     },
     {
       "id": 10,
       "top": "64%",
       "left": "76%",
-      "label": "Paykini",
-      "logo": "/images/clients/paykini.webp"
+      "clients": [
+        {
+          "label": "Paykini",
+          "logo": "/images/clients/paykini.webp"
+        }
+      ]
     },
     {
       "id": 11,
       "top": "57%",
       "left": "80%",
-      "label": "Tuyo Tienda",
-      "logo": "/images/clients/tuyo-tienda.png"
-    },
-
-    {
-      "id": 12,
-      "top": "50%",
-      "left": "14.5%",
-      "label": "Creating Digital",
-      "logo": "/images/clients/creatingdig.svg"
-    },
-    {
-      "id": 13,
-      "top": "34%",
-      "left": "45%",
-      "label": "BoothBook",
-      "logo": "/images/clients/boothbook.webp"
-    },
-    {
-      "id": 14,
-      "top": "41%",
-      "left": "22%",
-      "label": "Freshpage Media",
-      "logo": "/images/clients/freshpage-media.png"
+      "clients": [
+        {
+          "label": "Tuyo Tienda",
+          "logo": "/images/clients/tuyo-tienda.png"
+        }
+      ]
     },
     {
       "id": 15,
       "top": "83%",
       "left": "53%",
-      "label": "eGGSA",
-      "logo": "/images/clients/eggsa.jpg"
+      "clients": [
+        {
+          "label": "eGGSA",
+          "logo": "/images/clients/eggsa.jpg"
+        }
+      ]
     },
     {
       "id": 16,
-      "top": "1%",
-      "left": "80%",
-      "label": "HLSCC",
-      "logo": "/images/clients/hlscc.png"
+      "top": "73%",
+      "left": "67%",
+      "clients": [
+        {
+          "label": "HLSCC",
+          "logo": "/images/clients/hlscc.png"
+        }
+      ]
     },
     {
       "id": 17,
-      "top": "10%",
-      "left": "80%",
-      "label": "Horecavoordeel",
-      "logo": "/images/clients/horecavoordeel.svg"
-    },
-    {
-      "id": 18,
-      "top": "29%",
-      "left": "46%",
-      "label": "Information Management Ltd.",
-      "logo": "/images/clients/imltd.png"
-    },
-    {
-      "id": 19,
-      "top": "43%",
-      "left": "25%",
-      "label": "Matthew Owen LLC",
-      "logo": "/images/clients/matthew-owen.png"
+      "top": "35%",
+      "left": "49%",
+      "clients": [
+        {
+          "label": "Horecavoordeel",
+          "logo": "/images/clients/horecavoordeel.svg"
+        }
+      ]
     },
     {
       "id": 20,
       "top": "24%",
       "left": "16%",
-      "label": "Oliver Marketing",
-      "logo": "/images/clients/oliver-marketing.png"
+      "clients": [
+        {
+          "label": "Oliver Marketing",
+          "logo": "/images/clients/oliver-marketing.png"
+        }
+      ]
     },
     {
       "id": 21,
       "top": "37%",
       "left": "52%",
-      "label": "PC Patrol",
-      "logo": "/images/clients/pc-patrol.webp"
+      "clients": [
+        {
+          "label": "PC Patrol",
+          "logo": "/images/clients/pc-patrol.webp"
+        }
+      ]
     },
     {
       "id": 22,
       "top": "65%",
       "left": "27%",
-      "label": "PROLEGO S.A.S",
-      "logo": "/images/clients/prolego.png"
-    },
-    {
-      "id": 23,
-      "top": "40%",
-      "left": "17%",
-      "label": "Rand4Dollar",
-      "logo": "/images/clients/rand4dollar.png"
-    },
-    {
-      "id": 24,
-      "top": "38%",
-      "left": "47%",
-      "label": "ReformRx",
-      "logo": "/images/clients/reformrx.png"
+      "clients": [
+        {
+          "label": "PROLEGO S.A.S",
+          "logo": "/images/clients/prolego.png"
+        }
+      ]
     },
     {
       "id": 25,
       "top": "10%",
       "left": "80%",
-      "label": "Smilii",
-      "logo": "/images/clients/smilii.png"
+      "clients": [
+        {
+          "label": "Smilii",
+          "logo": "/images/clients/smilii.png"
+        }
+      ]
     },
     {
       "id": 26,
-      "top": "1%",
-      "left": "80%",
-      "label": "Toucan Graphics",
-      "logo": "/images/clients/toucan-graphics.png"
-    },
-    {
-      "id": 27,
-      "top": "1%",
-      "left": "80%",
-      "label": "Zut Media",
-      "logo": "/images/clients/zut.svg"
+      "top": "50%",
+      "left": "57%",
+      "clients": [
+        {
+          "label": "Toucan Graphics",
+          "logo": "/images/clients/toucan-graphics.png"
+        }
+      ]
     }
   ]
 }

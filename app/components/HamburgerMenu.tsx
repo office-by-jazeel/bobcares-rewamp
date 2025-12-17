@@ -59,7 +59,13 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
     }
   };
 
-  const handleNavItemClick = (key: string) => {
+  const handleNavItemClick = (key: string, href?: string) => {
+    // If href exists, redirect to external URL
+    if (href) {
+      window.location.href = href;
+      return;
+    }
+
     setSelectedNavItem(key);
     // Auto-expand first section if it exists
     const subMenu = navigationData.subMenus[key as keyof typeof navigationData.subMenus];
@@ -142,10 +148,18 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
                   <nav className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 md:gap-9" data-lenis-prevent>
                     {navigationData.primary.map((item) => {
                       const isActive = selectedNavItem === item.key;
+                      const hasHref = "href" in item && item.href;
+                      const Component = hasHref ? "a" : "button";
+                      const componentProps = hasHref
+                        ? {
+                          href: item.href
+                        }
+                        : { onClick: () => handleNavItemClick(item.key, item.href) };
+
                       return (
                         <div key={item.key} className="group">
-                          <button
-                            onClick={() => handleNavItemClick(item.key)}
+                          <Component
+                            {...componentProps}
                             className={cn(
                               "w-full pb-6 md:pb-10 flex items-center justify-between text-left transition-colors group",
                               isActive
@@ -167,7 +181,7 @@ export default function HamburgerMenu({ isTransparent = false }: HamburgerMenuPr
                                   fill={isActive ? "white" : "#4E4E4E"} />
                               </svg>
                             </span>
-                          </button>
+                          </Component>
                           <div className="relative">
                             <div className="h-px bg-[#272727]" />
                             <div className={cn("absolute top-0 left-0 h-1 bg-[#0073EC] w-0 group-hover:w-full transition-all duration-300", isActive && "w-full")} />

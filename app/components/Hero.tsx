@@ -42,7 +42,7 @@ export default function Hero() {
         />
 
         {/* Overlays */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* <div className="absolute inset-0 bg-black/40" /> */}
         <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-gradient-to-b from-black/60 to-transparent" />
       </div>
 

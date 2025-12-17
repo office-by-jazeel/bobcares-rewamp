@@ -147,6 +147,15 @@ export default function VideoCarousel({
 
   // Handle video end - play next video
   const handleVideoEnd = () => {
+    // If there's only one video, manually restart it
+    if (videos.length === 1 && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {
+        // Autoplay might fail, that's okay
+      });
+      return;
+    }
+    
     const nextIndex = (currentVideoIndex + 1) % videos.length;
     setCurrentVideoIndex(nextIndex);
     setShowThumbnail(true);
