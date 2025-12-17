@@ -230,6 +230,25 @@
           "logo": "/images/clients/toucan-graphics.png"
         }
       ]
+    },
+    {
+      "id": 27,
+      "top": "35%",
+      "left": "72%",
+      "clients": [
+        {
+          "logo": "/images/clients/demo/1.png"
+        },
+        {
+          "logo": "/images/clients/demo/2.png"
+        },
+        {
+          "logo": "/images/clients/demo/3.png"
+        },
+        {
+          "logo": "/images/clients/demo/4.png"
+        }
+      ]
     }
   ]
 }
