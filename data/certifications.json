@@ -5,27 +5,88 @@
       "provider": "Google Cloud Certified",
       "title": "Data Engineer",
       "level": "Professional",
-      "icon": "/images/cert-google-icon.jpg",
-      "iconCloudinaryId": "bobcares/certifications/google-cloud",
-      "logoIcon": "/images/cert-logo-1.png"
+      "icon": "/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/certificates/Data-Engineer.png"
     },
     {
       "id": 2,
       "provider": "Google Cloud Certified",
       "title": "Cloud Network Engineer",
       "level": "Professional",
-      "icon": "/images/cert-google-icon.jpg",
-      "iconCloudinaryId": "bobcares/certifications/google-cloud",
-      "logoIcon": "/images/cert-logo-2.png"
+      "icon": "/certificates/Cloud-Architect.png",
+      "logoIcon": "/certificates/Cloud-Network-Engineer.png"
     },
     {
       "id": 3,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Architect",
+      "level": "Professional",
+      "icon": "/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/certificates/Cloud-Architect.png"
+    },
+    {
+      "id": 4,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Security Engineer",
+      "level": "Professional",
+      "icon": "/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/certificates/Cloud-Security-Engineer.png"
+    },
+    {
+      "id": 5,
       "provider": "AWS Certified",
-      "title": "Solution Architect",
+      "title": "Solutions Architect",
       "level": "Associate",
-      "icon": "/images/cert-badge.jpg",
-      "iconCloudinaryId": "bobcares/certifications/aws",
-      "logoIcon": "/images/cert-logo-1.png"
+      "icon": "/certificates/AWS-Security.png",
+      "logoIcon": "/certificates/aws-Solutions.png"
+    },
+    {
+      "id": 6,
+      "provider": "AWS Certified",
+      "title": "Database",
+      "level": "Specialty",
+      "icon": "/certificates/AWS-Security.png",
+      "logoIcon": "/certificates/AWS-Database.png"
+    },
+    {
+      "id": 7,
+      "provider": "AWS Certified",
+      "title": "Security",
+      "level": "Specialty",
+      "icon": "/certificates/AWS-Security.png",
+      "logoIcon": "/certificates/AWS-Security.png"
+    },
+    {
+      "id": 8,
+      "provider": "Microsoft",
+      "title": "Certified Professional",
+      "level": "Professional",
+      "icon": "/certificates/Microsoft-Certified.png",
+      "logoIcon": "/certificates/Microsoft-Certified.png"
+    },
+    {
+      "id": 9,
+      "provider": "ISO",
+      "title": "27001",
+      "level": "Certified",
+      "icon": "/certificates/ISO-27001.png",
+      "logoIcon": "/certificates/ISO-27001.png"
+    },
+    {
+      "id": 10,
+      "provider": "cPanel",
+      "title": "Certified",
+      "level": "Professional",
+      "icon": "/certificates/C-Panel.png",
+      "logoIcon": "/certificates/C-Panel.png"
+    },
+    {
+      "id": 11,
+      "provider": "Top Web Design Companies",
+      "title": "Award Winner",
+      "level": "Recognition",
+      "icon": "/certificates/top-web-design-companies-1.png",
+      "logoIcon": "/certificates/top-web-design-companies-1.png"
     }
   ]
 }
