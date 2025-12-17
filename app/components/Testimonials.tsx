@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import CloudinaryImage from "@/components/CloudinaryImage";
 import testimonialsData from "../../data/testimonials.json";
 
@@ -25,11 +25,20 @@ export default function Testimonials() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
+  // Drag state management
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartXRef = useRef<number>(0);
+  const dragStartScrollLeftRef = useRef<number>(0);
+  const lastMoveXRef = useRef<number>(0);
+  const lastMoveTimeRef = useRef<number>(0);
+  const velocityRef = useRef<number>(0);
+  const momentumAnimationIdRef = useRef<number | null>(null);
+
   // Duplicate testimonials for seamless infinite scroll
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
-  // Check if animation should be paused (hover/touch OR modal open)
-  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null;
+  // Check if animation should be paused (hover/touch OR modal open OR dragging)
+  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
 
   const handlePlayClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
@@ -46,6 +55,242 @@ export default function Testimonials() {
   const closeTestimonialModal = () => {
     setSelectedTestimonial(null);
   };
+
+  // Cancel momentum animation
+  const cancelMomentum = useCallback(() => {
+    if (momentumAnimationIdRef.current !== null) {
+      cancelAnimationFrame(momentumAnimationIdRef.current);
+      momentumAnimationIdRef.current = null;
+    }
+  }, []);
+
+  // Update scroll position helper
+  const updateScrollPosition = useCallback((newScrollLeft: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const singleSetWidth = container.scrollWidth / 2;
+    scrollPositionRef.current = newScrollLeft;
+
+    // Handle infinite scroll loop
+    if (scrollPositionRef.current >= singleSetWidth) {
+      scrollPositionRef.current = scrollPositionRef.current - singleSetWidth;
+      dragStartScrollLeftRef.current = container.scrollLeft;
+    } else if (scrollPositionRef.current < 0) {
+      scrollPositionRef.current = singleSetWidth + scrollPositionRef.current;
+      dragStartScrollLeftRef.current = container.scrollLeft;
+    }
+
+    container.scrollLeft = scrollPositionRef.current;
+  }, []);
+
+  // Momentum animation function
+  const startMomentum = useCallback((initialVelocity: number) => {
+    cancelMomentum();
+    
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let velocity = initialVelocity;
+    const friction = 0.95; // Deceleration factor
+    const minVelocity = 0.5; // Stop when velocity is below this threshold
+
+    const animate = () => {
+      const currentShouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
+      
+      if (Math.abs(velocity) < minVelocity || currentShouldPause) {
+        cancelMomentum();
+        // Sync scrollPositionRef when momentum ends
+        scrollPositionRef.current = container.scrollLeft;
+        return;
+      }
+
+      scrollPositionRef.current += velocity;
+      updateScrollPosition(scrollPositionRef.current);
+      velocity *= friction;
+      momentumAnimationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    momentumAnimationIdRef.current = requestAnimationFrame(animate);
+  }, [cancelMomentum, updateScrollPosition, isPaused, selectedVideo, selectedTestimonial, isDragging]);
+
+  // Check if target is an interactive element (button, link, etc.)
+  const isInteractiveElement = (target: EventTarget | null): boolean => {
+    if (!target || !(target instanceof HTMLElement)) return false;
+    const tagName = target.tagName.toLowerCase();
+    const isButton = tagName === 'button' || tagName === 'a';
+    const isClickable = target.onclick !== null || target.getAttribute('role') === 'button';
+    return isButton || isClickable || target.closest('button, a, [role="button"]') !== null;
+  };
+
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Don't start drag if clicking on interactive elements
+    if (isInteractiveElement(e.target)) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    e.preventDefault();
+    setIsDragging(true);
+    dragStartXRef.current = e.clientX;
+    dragStartScrollLeftRef.current = container.scrollLeft;
+    lastMoveXRef.current = e.clientX;
+    lastMoveTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    cancelMomentum();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+
+    const currentTime = performance.now();
+    const deltaX = e.clientX - lastMoveXRef.current;
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+
+    // Calculate velocity (pixels per millisecond)
+    if (deltaTime > 0) {
+      velocityRef.current = deltaX / deltaTime;
+    }
+
+    // Update scroll position
+    const scrollDelta = e.clientX - dragStartXRef.current;
+    const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+    
+    updateScrollPosition(newScrollLeft);
+    lastMoveXRef.current = e.clientX;
+    lastMoveTimeRef.current = currentTime;
+  };
+
+  const handleMouseUp = useCallback(() => {
+    if (!isDragging) return;
+
+    setIsDragging(false);
+    
+    // Start momentum animation if velocity is significant
+    if (Math.abs(velocityRef.current) > 0.1) {
+      startMomentum(velocityRef.current);
+    } else {
+      // Sync scrollPositionRef when drag ends without momentum
+      const container = scrollContainerRef.current;
+      if (container) {
+        scrollPositionRef.current = container.scrollLeft;
+      }
+    }
+  }, [isDragging, startMomentum]);
+
+  // Touch drag handlers
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    // Don't start drag if touching interactive elements
+    if (isInteractiveElement(e.target)) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const touch = e.touches[0];
+    setIsDragging(true);
+    dragStartXRef.current = touch.clientX;
+    dragStartScrollLeftRef.current = container.scrollLeft;
+    lastMoveXRef.current = touch.clientX;
+    lastMoveTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    cancelMomentum();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+
+    const touch = e.touches[0];
+    const currentTime = performance.now();
+    const deltaX = touch.clientX - lastMoveXRef.current;
+    const deltaTime = currentTime - lastMoveTimeRef.current;
+
+    // Calculate velocity (pixels per millisecond)
+    if (deltaTime > 0) {
+      velocityRef.current = deltaX / deltaTime;
+    }
+
+    // Update scroll position
+    const scrollDelta = touch.clientX - dragStartXRef.current;
+    const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+    
+    updateScrollPosition(newScrollLeft);
+    lastMoveXRef.current = touch.clientX;
+    lastMoveTimeRef.current = currentTime;
+  };
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging) return;
+
+    setIsDragging(false);
+    
+    // Start momentum animation if velocity is significant
+    if (Math.abs(velocityRef.current) > 0.1) {
+      startMomentum(velocityRef.current);
+    } else {
+      // Sync scrollPositionRef when drag ends without momentum
+      const container = scrollContainerRef.current;
+      if (container) {
+        scrollPositionRef.current = container.scrollLeft;
+      }
+    }
+  }, [isDragging, startMomentum]);
+
+  // Global mouse event handlers for drag outside container
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const currentTime = performance.now();
+      const deltaX = e.clientX - lastMoveXRef.current;
+      const deltaTime = currentTime - lastMoveTimeRef.current;
+
+      // Calculate velocity (pixels per millisecond)
+      if (deltaTime > 0) {
+        velocityRef.current = deltaX / deltaTime;
+      }
+
+      // Update scroll position
+      const scrollDelta = e.clientX - dragStartXRef.current;
+      const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
+      
+      updateScrollPosition(newScrollLeft);
+      lastMoveXRef.current = e.clientX;
+      lastMoveTimeRef.current = currentTime;
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+      
+      // Start momentum animation if velocity is significant
+      if (Math.abs(velocityRef.current) > 0.1) {
+        startMomentum(velocityRef.current);
+      } else {
+        // Sync scrollPositionRef when drag ends without momentum
+        const container = scrollContainerRef.current;
+        if (container) {
+          scrollPositionRef.current = container.scrollLeft;
+        }
+      }
+    };
+
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, updateScrollPosition, startMomentum]);
+
+  // Cleanup momentum on unmount
+  useEffect(() => {
+    return () => {
+      cancelMomentum();
+    };
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -141,16 +386,44 @@ export default function Testimonials() {
         <div className="w-full">
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide"
+            className={`flex gap-4 sm:gap-6 items-start overflow-x-auto pb-4 scrollbar-hide select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
-              scrollBehavior: 'auto'
+              scrollBehavior: 'auto',
+              userSelect: isDragging ? 'none' : 'auto'
             }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeaveCapture={() => {
+              // Cancel drag if mouse leaves container
+              if (isDragging) {
+                setIsDragging(false);
+                cancelMomentum();
+                const container = scrollContainerRef.current;
+                if (container) {
+                  scrollPositionRef.current = container.scrollLeft;
+                }
+              }
+            }}
+            onTouchStart={(e) => {
+              setIsPaused(true);
+              handleTouchStart(e);
+            }}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={(e) => {
+              handleTouchEnd();
+              // Resume auto-scroll after touch ends (momentum will continue independently)
+              // Use setTimeout to allow handleTouchEnd to complete first
+              setTimeout(() => {
+                if (selectedVideo === null && selectedTestimonial === null) {
+                  setIsPaused(false);
+                }
+              }, 0);
+            }}
           >
             {duplicatedTestimonials.map((testimonial, index) => (
               <TestimonialCard
