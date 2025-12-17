@@ -87,7 +87,7 @@ export default function Testimonials() {
   // Momentum animation function
   const startMomentum = useCallback((initialVelocity: number) => {
     cancelMomentum();
-    
+
     const container = scrollContainerRef.current;
     if (!container) return;
 
@@ -97,7 +97,7 @@ export default function Testimonials() {
 
     const animate = () => {
       const currentShouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
-      
+
       if (Math.abs(velocity) < minVelocity || currentShouldPause) {
         cancelMomentum();
         // Sync scrollPositionRef when momentum ends
@@ -158,7 +158,7 @@ export default function Testimonials() {
     // Update scroll position
     const scrollDelta = e.clientX - dragStartXRef.current;
     const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
-    
+
     updateScrollPosition(newScrollLeft);
     lastMoveXRef.current = e.clientX;
     lastMoveTimeRef.current = currentTime;
@@ -168,7 +168,7 @@ export default function Testimonials() {
     if (!isDragging) return;
 
     setIsDragging(false);
-    
+
     // Start momentum animation if velocity is significant
     if (Math.abs(velocityRef.current) > 0.1) {
       startMomentum(velocityRef.current);
@@ -215,7 +215,7 @@ export default function Testimonials() {
     // Update scroll position
     const scrollDelta = touch.clientX - dragStartXRef.current;
     const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
-    
+
     updateScrollPosition(newScrollLeft);
     lastMoveXRef.current = touch.clientX;
     lastMoveTimeRef.current = currentTime;
@@ -225,7 +225,7 @@ export default function Testimonials() {
     if (!isDragging) return;
 
     setIsDragging(false);
-    
+
     // Start momentum animation if velocity is significant
     if (Math.abs(velocityRef.current) > 0.1) {
       startMomentum(velocityRef.current);
@@ -255,7 +255,7 @@ export default function Testimonials() {
       // Update scroll position
       const scrollDelta = e.clientX - dragStartXRef.current;
       const newScrollLeft = dragStartScrollLeftRef.current - scrollDelta;
-      
+
       updateScrollPosition(newScrollLeft);
       lastMoveXRef.current = e.clientX;
       lastMoveTimeRef.current = currentTime;
@@ -263,7 +263,7 @@ export default function Testimonials() {
 
     const handleGlobalMouseUp = () => {
       setIsDragging(false);
-      
+
       // Start momentum animation if velocity is significant
       if (Math.abs(velocityRef.current) > 0.1) {
         startMomentum(velocityRef.current);
@@ -394,11 +394,8 @@ export default function Testimonials() {
               userSelect: isDragging ? 'none' : 'auto'
             }}
             onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeaveCapture={() => {
+            onMouseLeave={() => {
+              setIsPaused(false);
               // Cancel drag if mouse leaves container
               if (isDragging) {
                 setIsDragging(false);
@@ -409,6 +406,9 @@ export default function Testimonials() {
                 }
               }
             }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
             onTouchStart={(e) => {
               setIsPaused(true);
               handleTouchStart(e);

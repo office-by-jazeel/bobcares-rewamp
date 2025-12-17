@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 // Client interface for map pins
 interface Client {
-  label: string;
+  label?: string;
   logo?: string | null;
 }
 
@@ -129,7 +129,7 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
                 {client.logo ? (
                   <CloudinaryImage
                     src={client.logo}
-                    alt={client.label}
+                    alt={'label' in client && client.label ? client.label : "Client logo"}
                     className="object-contain h-6 w-fit"
                   />
                 ) : (
@@ -151,9 +151,11 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
                     </defs>
                   </svg>
                 )}
-                <span className="text-[#FFFFFF96] text-sm leading-normal font-medium">
-                  {client.label}
-                </span>
+                {client.label && (
+                  <span className="text-[#FFFFFF96] text-sm leading-normal font-medium">
+                    {client.label}
+                  </span>
+                )}
               </div>
               {index < clients.length - 1 && <div className="h-px w-full bg-[#ffffff18] my-2 rounded-full" />}
             </>
@@ -218,7 +220,7 @@ export default function Trust() {
                 {client.logo ? (
                   <CloudinaryImage
                     src={client.logo}
-                    alt={client.label}
+                    alt={'label' in client && client.label ? client.label : "Client logo"}
                     className="object-contain h-6 w-fit"
                   />
                 ) : (
@@ -240,9 +242,11 @@ export default function Trust() {
                     </defs>
                   </svg>
                 )}
-                <span className="text-[#FFFFFF96] font-light text-sm leading-normal">
-                  {client.label}
-                </span>
+                {'label' in client && client.label && (
+                  <span className="text-[#FFFFFF96] font-light text-sm leading-normal">
+                    {client.label}
+                  </span>
+                )}
               </div>
             ))
           )}
