@@ -457,6 +457,32 @@ export default function Testimonials() {
   );
 }
 
+// Helper function to get initials from a name
+function getInitials(name: string): string {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].substring(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+// Avatar placeholder component
+function AvatarPlaceholder({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
+  const initials = getInitials(name);
+  const sizeClasses = {
+    sm: "text-[12px]",
+    md: "text-[14px] sm:text-[16px]",
+    lg: "text-[18px]"
+  };
+
+  return (
+    <div className={`w-full h-full bg-gradient-to-br from-[#0073ec] to-[#00e8e8] flex items-center justify-center text-white font-semibold ${sizeClasses[size]}`}>
+      {initials}
+    </div>
+  );
+}
+
 function TestimonialCard({
   testimonial,
   onPlayClick,
@@ -470,6 +496,7 @@ function TestimonialCard({
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   // Show play button only if type is "text-image-video" and videoUrl exists
   const showPlayButton = testimonial.type === "text-image-video" && !!testimonial.videoUrl && testimonial.videoUrl !== "";
+  const hasImage = testimonial.image && testimonial.image.trim() !== "";
 
   return (
     <div className="bg-[#1A173A] p-[2px] rounded-3xl shrink-0 w-[320px] sm:w-[500px] lg:w-[728px]">
@@ -507,14 +534,18 @@ function TestimonialCard({
 
           {/* Client Info */}
           <div className="flex gap-3 sm:gap-4 items-center w-full mt-auto">
-            <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden">
-              <CloudinaryImage
-                src={testimonial.image}
-                cloudinaryId={testimonial.imageCloudinaryId}
-                alt={testimonial.author}
-                fill
-                className="object-cover rounded-full"
-              />
+            <div className="relative rounded-full shrink-0 size-10 sm:size-12 overflow-hidden bg-gray-200">
+              {hasImage ? (
+                <CloudinaryImage
+                  src={testimonial.image}
+                  cloudinaryId={testimonial.imageCloudinaryId}
+                  alt={testimonial.author}
+                  fill
+                  className="object-cover rounded-full"
+                />
+              ) : (
+                <AvatarPlaceholder name={testimonial.author} size="md" />
+              )}
             </div>
             <div className="flex flex-1 flex-col gap-0.5 text-black">
               <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
@@ -647,6 +678,7 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
 
   const showLargeImage = testimonial.type === "text-image" || testimonial.type === "text-image-video";
   const showPlayButton = testimonial.type === "text-image-video" && testimonial.videoUrl;
+  const hasImage = testimonial.image && testimonial.image.trim() !== "";
 
   return (
     <div
@@ -675,20 +707,24 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
             </p>
 
             {/* Quote */}
-            <p className="font-semibold leading-[1.3] text-[24px] sm:text-[28px] lg:text-[32px] text-black">
+            <p className="font-grotesque font-semibold leading-[1.15] text-[24px] sm:text-[28px] lg:text-[32px] text-black">
               &ldquo;{testimonial.quote}&rdquo;
             </p>
 
             {/* Client Info */}
             <div className="flex gap-4 items-center">
-              <div className="relative rounded-full shrink-0 size-16 overflow-hidden">
-                <CloudinaryImage
-                  src={testimonial.image}
-                  cloudinaryId={testimonial.imageCloudinaryId}
-                  alt={testimonial.author}
-                  fill
-                  className="object-cover rounded-full"
-                />
+              <div className="relative rounded-full shrink-0 size-16 overflow-hidden bg-gray-200">
+                {hasImage ? (
+                  <CloudinaryImage
+                    src={testimonial.image}
+                    cloudinaryId={testimonial.imageCloudinaryId}
+                    alt={testimonial.author}
+                    fill
+                    className="object-cover rounded-full"
+                  />
+                ) : (
+                  <AvatarPlaceholder name={testimonial.author} size="lg" />
+                )}
               </div>
               <div className="flex flex-1 flex-col gap-1 text-black">
                 <p className="font-semibold text-[20px]">{testimonial.author}</p>
