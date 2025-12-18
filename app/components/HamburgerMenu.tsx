@@ -213,8 +213,9 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                               )}
                               <div className={cn("border-b", isExpanded ? "border-white" : "border-[#1C1C1C] py-5", index === currentSubMenu.sections.length - 1 && "border-0")}>
                                 <div
+                                  onClick={() => toggleSection(section.title)}
                                   className={cn(
-                                    "w-full flex items-center justify-between"
+                                    "w-full flex items-center justify-between cursor-pointer"
                                   )}
                                 >
                                   <div>
@@ -227,7 +228,10 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                                     </div>
                                   </div>
                                   <button
-                                    onClick={() => toggleSection(section.title)}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleSection(section.title);
+                                    }}
                                     aria-label={isExpanded ? `Collapse ${section.title}` : `Expand ${section.title}`}
                                   >
                                     {isExpanded
