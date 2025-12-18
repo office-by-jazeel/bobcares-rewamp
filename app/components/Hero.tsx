@@ -121,18 +121,56 @@ export default function Hero() {
             </div>
             {/* BUTTONS */}
             <div className="flex flex-col sm:flex-row gap-4">
-              {buttons.map((btn, index) => (
-                <button
-                  key={index}
-                  className={
-                    btn.variant === "primary"
-                      ? "max-md:leading-none bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
-                      : "max-md:leading-none border border-white px-[28px] py-4 sm:px-[38px] rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
+              {buttons.map((btn, index) => {
+                const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  if (btn.href) {
+                    if (btn.href.startsWith("#")) {
+                      // Handle anchor links with smooth scroll
+                      const targetId = btn.href.substring(1);
+                      const targetElement = document.getElementById(targetId);
+                      if (targetElement) {
+                        // Calculate header height dynamically
+                        const header = document.querySelector("header");
+                        const headerHeight = header ? (window.innerWidth >= 768 ? 100 : 70) : 0;
+                        
+                        if (window.lenis) {
+                          // Use Lenis for smooth scroll
+                          window.lenis.scrollTo(targetElement, {
+                            offset: -headerHeight - 20, // Account for header height + padding
+                            duration: 1.2,
+                          });
+                        } else {
+                          // Fallback: scroll with offset
+                          const elementPosition = targetElement.getBoundingClientRect().top;
+                          const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                          });
+                        }
+                      }
+                    } else {
+                      // Handle external links
+                      window.location.href = btn.href;
+                    }
                   }
-                >
-                  {btn.text}
-                </button>
-              ))}
+                };
+
+                return (
+                  <button
+                    key={index}
+                    onClick={handleClick}
+                    className={
+                      btn.variant === "primary"
+                        ? "max-md:leading-none bg-[#0073ec] hover:bg-[#005bb5] px-[28px] py-4 sm:px-[38px] rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px]"
+                        : "max-md:leading-none border border-white px-[28px] py-4 sm:px-[38px] rounded-[45px] text-white text-[18px] sm:text-[20px] font-medium tracking-[-1px] hover:bg-white/10"
+                    }
+                  >
+                    {btn.text}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

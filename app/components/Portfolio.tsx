@@ -5,7 +5,7 @@ export default function Portfolio() {
   const { projects } = portfolioData;
 
   return (
-    <section>
+    <section id="portfolio">
       <div className="bg-white">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[80px]">
           <div className="w-full flex flex-col gap-10 lg:gap-16">
