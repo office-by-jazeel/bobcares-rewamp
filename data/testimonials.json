@@ -25,6 +25,18 @@
       "videoUrl": ""
     },
     {
+      "id": 10,
+      "type": "text-image-video",
+      "category": "Infrastructure Management",
+      "quote": "Bobcares is a great service!\nI've been a user for nearly two years and whether it's regular server monitoring or responding to unexpected downtime, Bobcares has been there and done a good job.\nMost recently, we had an unexpected downed SQL server that Bobcares noticed through monitoring and brought back up to functioning in under an hour. Great work!",
+      "author": "Ibrahim C (Ibrahim Chishti)",
+      "role": "Director of Technology, IMC DIGITAL UNIVERSE, INC",
+      "bgColor": "#fabcb0",
+      "image": "/images/testimonial-clients/Ibrahim_Chishti.jpg",
+      "imageCloudinaryId": "",
+      "videoUrl": "/videos/testimonials/ibrahim-chishti.mp4"
+    },
+    {
       "id": 6,
       "type": "text",
       "category": "Infrastructure Management",
@@ -45,18 +57,6 @@
       "role": "Designer / Partner, Toucan Graphics",
       "bgColor": "#ffcccb",
       "image": "/images/testimonial-clients/William_Mills.jpg",
-      "imageCloudinaryId": "",
-      "videoUrl": ""
-    },
-    {
-      "id": 10,
-      "type": "text",
-      "category": "Infrastructure Management",
-      "quote": "Bobcares is a great service!\nI've been a user for nearly two years and whether it's regular server monitoring or responding to unexpected downtime, Bobcares has been there and done a good job.\nMost recently, we had an unexpected downed SQL server that Bobcares noticed through monitoring and brought back up to functioning in under an hour. Great work!",
-      "author": "Ibrahim C (Ibrahim Chishti)",
-      "role": "Director of Technology, IMC DIGITAL UNIVERSE, INC",
-      "bgColor": "#fabcb0",
-      "image": "/images/testimonial-clients/Ibrahim_Chishti.jpg",
       "imageCloudinaryId": "",
       "videoUrl": ""
     },

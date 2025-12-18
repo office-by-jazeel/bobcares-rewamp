@@ -574,7 +574,7 @@ function TestimonialCard({
             </div>
             <div className="flex flex-1 flex-col gap-0.5 text-black">
               <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
-              <p className="font-normal text-[14px] sm:text-[16px] text-[#4d4d4d]">{testimonial.role}</p>
+              <p className="line-clamp-1 font-normal text-[14px] sm:text-[16px] text-[#4d4d4d]" title={testimonial.role}>{testimonial.role}</p>
             </div>
           </div>
         </div>
