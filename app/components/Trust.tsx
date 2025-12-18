@@ -192,7 +192,7 @@ export default function Trust() {
         </div>
 
         {/* World Map Graphic */}
-        <div className="relative flex-1 mt-32 w-full hidden md:block isolate">
+        <div className="relative flex-1 w-full hidden md:block isolate">
           <InlineSvg
             src="/images/world-map.svg"
             ariaLabel="World map showing global clients"

@@ -29,6 +29,7 @@
   "backgroundImageCloudinaryId": "bobcares/hero-bg",
   "backgroundVideos": [
     {
+      "src": "/videos/20_SEC_FINAL.mov",
       "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/b9c149133a3238433e0be639a2acb0b8/manifest/video.m3u8"
     }
   ]
