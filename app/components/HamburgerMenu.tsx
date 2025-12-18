@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import navigationData from "../../data/navigation.json";
-import { HeaderContent } from "./Header";
 
 interface HamburgerMenuProps {
   isHeaderFixed?: boolean;
@@ -15,6 +14,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
 
   // Lock body scroll and stop Lenis when menu is open
   useEffect(() => {
@@ -50,12 +50,32 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     if (!isOpen) {
-      // Set Solutions as default when opening
-      setSelectedNavItem("solutions");
-      setExpandedSections(new Set(["Product Engineering"]));
+      // Set Solutions as default when opening (desktop only)
+      if (!isMobile) {
+        setSelectedNavItem("solutions");
+        setExpandedSections(new Set(["Product Engineering"]));
+      } else {
+        // Mobile: no auto-selection
+        setSelectedNavItem(null);
+        setExpandedSections(new Set());
+      }
+    } else {
+      // Reset when closing
+      setSelectedNavItem(null);
+      setExpandedSections(new Set());
     }
   };
 
@@ -135,16 +155,106 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
           >
             <div className="container mx-auto h-full flex flex-col gap-10 md:gap-[72px]">
               {/* Header within menu */}
-              <HeaderContent
-                isHeaderFixed={isHeaderFixed}
-                variant="menu"
-                onClose={toggleMenu}
-              />
+              <div className="flex items-center justify-between py-5">
+                {/* Mobile: Show back button when submenu is selected, otherwise show logo */}
+                {isMobile && selectedNavItem ? (
+                  <button
+                    onClick={() => {
+                      setSelectedNavItem(null);
+                      setExpandedSections(new Set());
+                    }}
+                    className="flex items-center gap-2 text-white hover:opacity-70 transition-opacity"
+                    aria-label="Back to main menu"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className="text-base font-medium">Back</span>
+                  </button>
+                ) : (
+                  <div className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
+                    <Image
+                      src={"/icons/logo.svg"}
+                      alt="Bobcares Logo"
+                      width={254}
+                      height={47}
+                      className="h-full w-auto"
+                    />
+                  </div>
+                )}
+                <div className="flex items-center gap-[30px] md:gap-6">
+                  <button className={cn(
+                    "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
+                    "md:border-[#9898982E] bg-[#00000003]"
+                  )}>
+                    <Image
+                      src="/icons/search-icon.svg"
+                      alt="Search"
+                      width={26}
+                      height={26}
+                      className={cn("size-[26px]")}
+                    />
+                  </button>
+                  <button className={cn(
+                    "hidden border border-white/20 border-solid md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
+                    "border-[#9898982E] bg-[#00000003]"
+                  )}>
+                    <Image
+                      src="/icons/phone-icon.svg"
+                      alt="Phone"
+                      width={26}
+                      height={26}
+                      className={cn("size-[26px]")}
+                    />
+                  </button>
+                  <button className={cn(
+                    "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block",
+                    "border-[#FFFFFF2E]"
+                  )}>
+                    <span
+                      className={cn(
+                        "font-medium text-[20px] leading-[22px] text-white truncate"
+                      )}
+                    >
+                      Client Area
+                    </span>
+                  </button>
+                  <button className={cn(
+                    "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block",
+                    "border-[#FFFFFF2E]"
+                  )}>
+                    <span
+                      className={cn(
+                        "font-medium text-[20px] leading-[22px] text-white"
+                      )}
+                    >
+                      Emergency
+                    </span>
+                  </button>
+                  <button
+                    onClick={toggleMenu}
+                    className="md:p-2 hover:opacity-70 transition-opacity"
+                    aria-label="Close menu"
+                  >
+                    <Image
+                      src="/icons/close.svg"
+                      alt="Close"
+                      width={24}
+                      height={24}
+                      className="size-6"
+                    />
+                  </button>
+                </div>
+              </div>
 
               {/* Two-column layout */}
               <div className="flex-1 flex items-start md:gap-[18%] overflow-hidden">
                 {/* Left Column - Primary Navigation */}
-                <div className="w-full md:w-[35%] flex flex-col">
+                {/* Hide on mobile when submenu is selected */}
+                <div className={cn(
+                  "w-full md:w-[35%] flex flex-col",
+                  isMobile && selectedNavItem && "hidden"
+                )}>
                   <nav className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 md:gap-9" data-lenis-prevent>
                     {navigationData.primary.map((item) => {
                       const isActive = selectedNavItem === item.key;
@@ -162,29 +272,40 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                             {...componentProps}
                             className={cn(
                               "w-full pb-6 md:pb-10 flex items-center justify-between text-left transition-colors group",
-                              isActive
-                                ? "text-white"
-                                : "text-gray-400 hover:text-white"
+                              // On mobile, always use gray text (no active state)
+                              isMobile
+                                ? "text-gray-400 hover:text-white"
+                                : isActive
+                                  ? "text-white"
+                                  : "text-gray-400 hover:text-white"
                             )}
                           >
                             <span className={cn(
-                              "font-grotesque relative text-5xl md:text-7xl font-semibold leading-[57px] tracking-[-2px]",
+                              "font-grotesque relative text-5xl md:text-5xl lg:text-7xl font-semibold leading-[57px] tracking-[-2px]",
                             )}>
                               {item.label}
                             </span>
                             <span className={cn(
                               "transition-colors",
-                              isActive ? "text-2xl text-white" : "text-lg text-gray-400 group-hover:text-white"
+                              // On mobile, always use gray (no active state)
+                              isMobile
+                                ? "text-lg text-gray-400 group-hover:text-white"
+                                : isActive ? "text-2xl text-white" : "text-lg text-gray-400 group-hover:text-white"
                             )}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
                                 <path d="M33.6445 27.0831H10.4154C9.82509 27.0831 9.3303 26.8834 8.93099 26.4841C8.53168 26.0848 8.33203 25.59 8.33203 24.9997C8.33203 24.4095 8.53168 23.9147 8.93099 23.5154C9.3303 23.1161 9.82509 22.9164 10.4154 22.9164H33.6445L27.707 16.9789C27.2904 16.5622 27.0907 16.0761 27.1081 15.5206C27.1254 14.965 27.3251 14.4789 27.707 14.0622C28.1237 13.6456 28.6185 13.4286 29.1914 13.4112C29.7643 13.3938 30.2591 13.5935 30.6758 14.0102L40.207 23.5414C40.4154 23.7497 40.5629 23.9754 40.6497 24.2185C40.7365 24.4615 40.7799 24.722 40.7799 24.9997C40.7799 25.2775 40.7365 25.5379 40.6497 25.781C40.5629 26.024 40.4154 26.2497 40.207 26.4581L30.6758 35.9893C30.2591 36.406 29.7643 36.6056 29.1914 36.5883C28.6185 36.5709 28.1237 36.3539 27.707 35.9372C27.3251 35.5206 27.1254 35.0345 27.1081 34.4789C27.0907 33.9233 27.2904 33.4372 27.707 33.0206L33.6445 27.0831Z"
-                                  fill={isActive ? "white" : "#4E4E4E"} />
+                                  fill={isMobile ? "#4E4E4E" : (isActive ? "white" : "#4E4E4E")} />
                               </svg>
                             </span>
                           </Component>
                           <div className="relative">
                             <div className="h-px bg-[#272727]" />
-                            <div className={cn("absolute top-0 left-0 h-1 bg-[#0073EC] w-0 group-hover:w-full transition-all duration-300", isActive && "w-full")} />
+                            {/* Hide active blue line on mobile */}
+                            <div className={cn(
+                              "absolute top-0 left-0 h-1 bg-[#0073EC] w-0 group-hover:w-full transition-all duration-300",
+                              isActive && "w-full",
+                              "hidden md:block"
+                            )} />
                           </div>
                         </div>
                       );
@@ -193,7 +314,11 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                 </div>
 
                 {/* Right Column - Two Types of Submenu */}
-                <div className="flex-1 overflow-y-auto scrollbar-hide max-h-[70dvh]" data-lenis-prevent>
+                {/* On mobile, show full width when submenu is selected */}
+                <div className={cn(
+                  "flex-1 overflow-y-auto scrollbar-hide md:max-h-[70dvh] h-[calc(100dvh-106px)] min-h-0",
+                  isMobile && selectedNavItem && "w-full"
+                )} data-lenis-prevent>
                   {selectedNavItem && currentSubMenu ? (
                     // Type 1: Expandable Sections Submenu (for items with sections that have items)
                     currentSubMenu.sections.length > 0 && currentSubMenu.sections.some(section => section.items && section.items.length > 0) ? (
@@ -326,7 +451,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     )
                   ) : (
                     // Default: Promotional Content when no nav item is selected
-                    <div className="">
+                    <div className="hidden">
                       <div className="mb-12">
                         <Image
                           src={navigationData.promotionalContent.image}
