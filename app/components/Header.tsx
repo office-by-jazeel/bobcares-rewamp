@@ -65,13 +65,13 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               Client Area
             </span>
           </button>
-          <button className={cn(textButtonClasses, "hidden md:block")}>
+          <button className={cn(textButtonClasses, "hidden md:block hover:border-[#D44A4C]")}>
             <span
               className={cn(
                 "font-medium text-[20px] leading-[22px] text-white"
               )}
             >
-              Emergency
+              Emergencys
             </span>
           </button>
           {onClose && (

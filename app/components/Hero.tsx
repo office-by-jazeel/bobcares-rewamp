@@ -27,7 +27,7 @@ export default function Hero() {
   return (
     <section
       id="hero-section"
-      className="relative h-dvh min-h-[720px] w-full overflow-hidden bg-black">
+      className="relative h-dvh min-h-[780px] w-full overflow-hidden bg-black">
 
       {/* ================= BACKGROUND VIDEO ================= */}
       <div className="absolute inset-0 w-full h-full">
@@ -133,7 +133,7 @@ export default function Hero() {
                         // Calculate header height dynamically
                         const header = document.querySelector("header");
                         const headerHeight = header ? (window.innerWidth >= 768 ? 100 : 70) : 0;
-                        
+
                         if (window.lenis) {
                           // Use Lenis for smooth scroll
                           window.lenis.scrollTo(targetElement, {

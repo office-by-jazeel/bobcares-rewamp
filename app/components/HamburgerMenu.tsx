@@ -220,7 +220,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     </span>
                   </button>
                   <button className={cn(
-                    "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block",
+                    "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block hover:border-[#D44A4C]",
                     "border-[#FFFFFF2E]"
                   )}>
                     <span
