@@ -7,19 +7,19 @@
       "clients": [
         {
           "label": "Gullo's Hosting",
-          "logo": "/images/clients/gullos-hosting.png"
+          "logo": "/images/clients_new/gullos-hosting.png"
         },
         {
           "label": "Hostirian",
-          "logo": "/images/clients/hostirian.png"
+          "logo": "/images/clients_new/Hostirian.png"
         },
         {
           "label": "Riscosity",
-          "logo": "/images/clients/riscosity.svg"
+          "logo": "/images/clients_new/Riscosity.png"
         },
         {
           "label": "IMC Digital Universe, Inc",
-          "logo": "/images/clients/imc-digital.png"
+          "logo": "/images/clients_new/imc-digital.png"
         }
       ]
     },
@@ -30,15 +30,15 @@
       "clients": [
         {
           "label": "Besttech Computing",
-          "logo": "/images/clients/besttech-computing.png"
+          "logo": "/images/clients_new/besttech.png"
         },
         {
           "label": "LucaNet Sistemas Ltda.",
-          "logo": "/images/clients/lucanet.png"
+          "logo": "/images/clients_new/lucanet.png"
         },
         {
           "label": "Rand4Dollar",
-          "logo": "/images/clients/rand4dollar.png"
+          "logo": "/images/clients_new/Rand4Dollar.png"
         }
       ]
     },
@@ -53,11 +53,11 @@
         },
         {
           "label": "Freshpage Media",
-          "logo": "/images/clients/freshpage-media.png"
+          "logo": "/images/clients_new/Freshpage Media.png"
         },
         {
           "label": "Creating Digital",
-          "logo": "/images/clients/creatingdig.svg"
+          "logo": "/images/clients_new/Creating Digital.png"
         }
       ]
     },
@@ -68,23 +68,23 @@
       "clients": [
         {
           "label": "Information Management Ltd.",
-          "logo": "/images/clients/imltd.png"
+          "logo": "/images/clients_new/Information Management.png"
         },
         {
           "label": "BoothBook",
-          "logo": "/images/clients/boothbook.webp"
+          "logo": "/images/clients_new/boothbook.png"
         },
         {
           "label": "ReformRx",
-          "logo": "/images/clients/reformrx.png"
+          "logo": "/images/clients_new/reformrx.png"
         },
         {
           "label": "Zut Media",
-          "logo": "/images/clients/zut.svg"
+          "logo": "/images/clients_new/Zut Media.png"
         },
         {
           "label": "Toucan Graphics",
-          "logo": "/images/clients/toucan-graphics.png"
+          "logo": "/images/clients_new/Toucan Graphics.png"
         }
       ]
     },
@@ -106,7 +106,7 @@
       "clients": [
         {
           "label": "Super Domains",
-          "logo": "/images/clients/super-domains.png"
+          "logo": "/images/clients_new/super-domains.png"
         }
       ]
     },
@@ -117,7 +117,7 @@
       "clients": [
         {
           "label": "Chrysalis Digital",
-          "logo": "/images/clients/chrysalis-digital.png"
+          "logo": "/images/clients_new/chrysalis-digital.png"
         }
       ]
     },
@@ -139,7 +139,7 @@
       "clients": [
         {
           "label": "Tuyo Tienda",
-          "logo": "/images/clients/tuyo-tienda.png"
+          "logo": "/images/clients_new/tuyo-tienda.png"
         }
       ]
     },
@@ -150,7 +150,7 @@
       "clients": [
         {
           "label": "eGGSA",
-          "logo": "/images/clients/eggsa.jpg"
+          "logo": "/images/clients_new/EGGSSA - Pro Familia -.png"
         }
       ]
     },
@@ -161,7 +161,7 @@
       "clients": [
         {
           "label": "HLSCC",
-          "logo": "/images/clients/hlscc.png"
+          "logo": "/images/clients_new/hlscc.png"
         }
       ]
     },
@@ -172,7 +172,7 @@
       "clients": [
         {
           "label": "Horecavoordeel",
-          "logo": "/images/clients/horecavoordeel.svg"
+          "logo": "/images/clients_new/Horeca Voordeel.png"
         }
       ]
     },
@@ -194,7 +194,7 @@
       "clients": [
         {
           "label": "PC Patrol",
-          "logo": "/images/clients/pc-patrol.webp"
+          "logo": "/images/clients_new/pc-patrol.png"
         }
       ]
     },
@@ -205,7 +205,7 @@
       "clients": [
         {
           "label": "PROLEGO S.A.S",
-          "logo": "/images/clients/prolego.png"
+          "logo": "/images/clients_new/prolego.png"
         }
       ]
     },
@@ -216,7 +216,7 @@
       "clients": [
         {
           "label": "Smilii",
-          "logo": "/images/clients/smilii.png"
+          "logo": "/images/clients_new/Smilii.png"
         }
       ]
     },
@@ -227,7 +227,7 @@
       "clients": [
         {
           "label": "Toucan Graphics",
-          "logo": "/images/clients/toucan-graphics.png"
+          "logo": "/images/clients_new/Toucan Graphics.png"
         }
       ]
     },
