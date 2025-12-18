@@ -20,10 +20,12 @@ interface Testimonial {
 export default function Testimonials() {
   const { testimonials } = testimonialsData;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollPositionRef = useRef<number>(0);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   // Drag state management
   const [isDragging, setIsDragging] = useState(false);
@@ -37,8 +39,8 @@ export default function Testimonials() {
   // Duplicate testimonials for seamless infinite scroll
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
-  // Check if animation should be paused (hover/touch OR modal open OR dragging)
-  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
+  // Check if animation should be paused (hover/touch OR modal open OR dragging OR not in viewport)
+  const shouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging || !isInViewport;
 
   const handlePlayClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl);
@@ -96,7 +98,7 @@ export default function Testimonials() {
     const minVelocity = 0.5; // Stop when velocity is below this threshold
 
     const animate = () => {
-      const currentShouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging;
+      const currentShouldPause = isPaused || selectedVideo !== null || selectedTestimonial !== null || isDragging || !isInViewport;
 
       if (Math.abs(velocity) < minVelocity || currentShouldPause) {
         cancelMomentum();
@@ -112,7 +114,7 @@ export default function Testimonials() {
     };
 
     momentumAnimationIdRef.current = requestAnimationFrame(animate);
-  }, [cancelMomentum, updateScrollPosition, isPaused, selectedVideo, selectedTestimonial, isDragging]);
+  }, [cancelMomentum, updateScrollPosition, isPaused, selectedVideo, selectedTestimonial, isDragging, isInViewport]);
 
   // Check if target is an interactive element (button, link, etc.)
   const isInteractiveElement = (target: EventTarget | null): boolean => {
@@ -292,6 +294,29 @@ export default function Testimonials() {
     };
   }, []);
 
+  // Intersection Observer to detect when carousel is in viewport
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsInViewport(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when at least 10% of the section is visible
+      }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -360,7 +385,7 @@ export default function Testimonials() {
   }, [shouldPause]);
 
   return (
-    <section className="relative overflow-hidden">
+    <section ref={sectionRef} className="relative overflow-hidden">
       <div className="bg-[#110536] w-full flex flex-col gap-12 lg:gap-20 py-14 lg:py-[140px]">
         <div className="container mx-auto flex flex-col items-center relative">
 
