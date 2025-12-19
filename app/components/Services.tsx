@@ -1,5 +1,6 @@
 import Image from "next/image";
 import servicesData from "../../data/services.json";
+import { cn } from "@/lib/utils";
 
 interface Service {
   id: number;
@@ -55,6 +56,8 @@ export default function Services() {
                   View All Services
                 </button>
               </div>
+
+              <CTACard ctaCard={ctaCard} className={"max-sm:aspect-square mt-10 px-[50px] py-[44px]"} />
             </div>
 
             {/* Desktop grid view */}
@@ -158,16 +161,9 @@ function ServiceCard({ service }: { service: Service }) {
   );
 }
 
-function CTACard({ ctaCard }: { ctaCard: CTACard }) {
+function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string }) {
   return (
-    <div className="
-      bg-[#0073EC] 
-      relative 
-      rounded-2xl 
-      p-8 sm:p-12 lg:p-14 
-      flex flex-col gap-7 sm:gap-8 text-white
-      overflow-hidden
-    ">
+    <div className={cn("bg-[#0073EC] relative rounded-2xl p-8 sm:p-12 lg:p-14 flex flex-col gap-7 sm:gap-8 text-white overflow-hidden", className)}>
       <div className="absolute w-full h-full -right-[20%] -bottom-[5%]">
         <img src="/images/bob.svg" alt="" className="w-full h-full object-cover opacity-20" />
       </div>
@@ -180,19 +176,11 @@ function CTACard({ ctaCard }: { ctaCard: CTACard }) {
           height={40}
         />
 
-        <h3 className="font-grotesque text-[28px] sm:text-[36px] lg:text-[40px] font-bold leading-[1.15]">
+        <h3 className="font-grotesque text-[36px] lg:text-[40px] font-bold leading-[1.15]">
           {ctaCard.title}
         </h3>
 
-        <button className="
-          bg-white text-[#0073ec] 
-          px-6 py-3 sm:px-8 sm:py-4 
-          rounded-[45px] 
-          text-[16px] sm:text-[18px] lg:text-[20px] 
-          font-medium 
-          hover:bg-gray-100 
-          transition
-        ">
+        <button className="bg-white text-[#0073ec] px-6 py-3 sm:px-8 sm:py-4 rounded-[45px] text-[16px] sm:text-[18px] lg:text-[20px] font-medium hover:bg-gray-100 transition">
           {ctaCard.buttonText}
         </button>
       </div>
