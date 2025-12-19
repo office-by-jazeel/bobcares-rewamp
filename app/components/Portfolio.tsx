@@ -7,7 +7,7 @@ export default function Portfolio() {
   return (
     <section id="portfolio">
       <div className="bg-white">
-        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[80px]">
+        <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
           <div className="w-full flex flex-col gap-10 lg:gap-16">
 
             {/* Header */}
@@ -72,13 +72,13 @@ function ProjectCard({ project, className = "" }: {
       <div className="flex flex-col gap-4">
         {/* Category Badge */}
         <div className="inline-flex items-center justify-center px-4 py-2 border border-[#4D4D4D] rounded-full w-fit">
-          <p className="font-normal text-[13px] sm:text-[16px] text-[#171717]">
+          <p className="font-normal text-[13px] sm:text-[16px] text-[#171717] leading-none">
             {project.category}
           </p>
         </div>
 
         {/* Title */}
-        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-2 md:min-h-[88px]" title={project.title}>
+        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-3 md:min-h-[132px]" title={project.title}>
           {project.title}
         </h3>
 
