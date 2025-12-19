@@ -66,7 +66,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
       // Set Solutions as default when opening (desktop only)
       if (!isMobile) {
         setSelectedNavItem("solutions");
-        setExpandedSections(new Set(["Product Engineering"]));
+        setExpandedSections(new Set());
       } else {
         // Mobile: no auto-selection
         setSelectedNavItem(null);
@@ -266,7 +266,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                   "w-full md:w-[35%] flex flex-col",
                   isMobile && selectedNavItem && "hidden"
                 )}>
-                  <nav className="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 md:gap-9" data-lenis-prevent>
+                  <nav className="flex-1 overflow-y-visible flex flex-col gap-6 md:gap-9" data-lenis-prevent>
                     {navigationData.primary.map((item) => {
                       const isActive = selectedNavItem === item.key;
                       const hasHref = "href" in item && item.href;

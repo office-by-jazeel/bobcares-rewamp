@@ -4,12 +4,12 @@
   "ratings": [
     {
       "platform": "Google",
-      "rating": 4.5,
+      "rating": "4.5",
       "icon": "/images/hero/google-icon.png"
     },
     {
       "platform": "Clutch",
-      "rating": 5,
+      "rating": "5.0",
       "icon": "/images/hero/clutch-icon.png"
     }
   ],
@@ -29,7 +29,7 @@
   "backgroundImageCloudinaryId": "bobcares/hero-bg",
   "backgroundVideos": [
     {
-      "src": "/videos/20_SEC_FINAL.mov",
+      "src": "/videos/bobcares-homepage-video.mp4",
       "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/4bf87772a169d477d5f87a931e3bdb28/manifest/video.m3u8",
       "thumbnail": "/images/hero/thumbnail-image.jpg"
     }

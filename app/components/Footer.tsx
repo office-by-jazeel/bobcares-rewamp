@@ -16,7 +16,7 @@ const socialIcons = {
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['Product Engineering']));
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const { newsletter, contact, links, copyright, services } = footerData;
 
   const handleSubmit = (e: React.FormEvent) => {
