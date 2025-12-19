@@ -24,7 +24,7 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
   const topValue = typeof top === "number" ? `${top}px` : top;
   const leftValue = typeof left === "number" ? `${left}px` : left;
   const [isHovered, setIsHovered] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0, isAbove: true });
   const pinRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -38,38 +38,60 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
     const tooltipHeight = tooltipRect.height > 0 ? tooltipRect.height : 100; // Fallback estimate
     const margin = 12; // mb-3 = 12px
 
-    // Calculate initial position: above pin, left-aligned to pin center
-    let tooltipTop = pinRect.top - tooltipHeight - margin;
-    let tooltipLeft = pinRect.left + pinRect.width / 2;
-
     // Viewport boundary checks
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const padding = 16; // Minimum padding from viewport edges
+    const headerHeight = 100; // Header height in pixels
+    const minSafeTop = headerHeight + padding; // Minimum safe top position (116px)
 
-    // Check if tooltip would go above viewport
-    if (tooltipTop < padding) {
-      // Position below pin instead
-      tooltipTop = pinRect.bottom + margin;
+    // Calculate available positions
+    const abovePinTop = pinRect.top - tooltipHeight - margin;
+    const belowPinTop = pinRect.bottom + margin;
+
+    // Determine which position is valid
+    const aboveIsValid = abovePinTop >= minSafeTop && abovePinTop >= padding;
+    const belowIsValid = belowPinTop + tooltipHeight <= viewportHeight - padding;
+
+    // Choose position with priority: above first, then below, else default to bottom
+    let tooltipTop: number;
+    let isAbove: boolean;
+
+    if (aboveIsValid) {
+      tooltipTop = abovePinTop;
+      isAbove = true;
+    } else if (belowIsValid) {
+      tooltipTop = belowPinTop;
+      isAbove = false;
+    } else {
+      // Default to bottom position when neither fits perfectly
+      tooltipTop = Math.min(viewportHeight - padding - tooltipHeight, belowPinTop);
+      isAbove = false;
     }
 
-    // Check if tooltip would go below viewport
-    if (tooltipTop + tooltipHeight > viewportHeight - padding) {
-      // Try to position above pin, or adjust to fit
-      tooltipTop = Math.max(padding, pinRect.top - tooltipHeight - margin);
+    // Calculate pin center X position - this is where the uncurved corner should align
+    const pinCenterX = pinRect.left + pinRect.width / 2;
+
+    // Position tooltip so the uncurved corner aligns with pin center
+    // The uncurved corner is at the tooltip's left edge
+    let tooltipLeft = pinCenterX;
+
+    // Adjust for viewport boundaries while maintaining corner alignment when possible
+    // Only shift if tooltip would be completely off-screen
+    const minTooltipLeft = padding;
+    const maxTooltipLeft = viewportWidth - tooltipWidth - padding;
+
+    // If tooltip would go off left edge, shift it but keep as close to pin as possible
+    if (tooltipLeft < minTooltipLeft) {
+      tooltipLeft = minTooltipLeft;
     }
 
-    // Check if tooltip would go off left edge
-    if (tooltipLeft < padding) {
-      tooltipLeft = padding;
-    }
-
-    // Check if tooltip would go off right edge
+    // If tooltip would go off right edge, shift it but keep as close to pin as possible
     if (tooltipLeft + tooltipWidth > viewportWidth - padding) {
-      tooltipLeft = viewportWidth - tooltipWidth - padding;
+      tooltipLeft = maxTooltipLeft;
     }
 
-    setTooltipPosition({ top: tooltipTop, left: tooltipLeft });
+    setTooltipPosition({ top: tooltipTop, left: tooltipLeft, isAbove });
     setIsHovered(true);
   };
 
@@ -115,7 +137,8 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
         <div
           ref={tooltipRef}
           className={cn(
-            "fixed w-fit flex items-start flex-col gap-2.5 px-6 pt-5 pb-4 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] rounded-bl-none shadow-lg transition-opacity duration-300 pointer-events-none z-9999"
+            "fixed w-fit flex items-start flex-col gap-2.5 px-6 pt-5 pb-4 bg-[#222222] backdrop-blur-[70px] border border-[#FFFFFF2B] rounded-[16px] shadow-lg transition-opacity duration-300 pointer-events-none z-9999",
+            tooltipPosition.isAbove ? "rounded-bl-none" : "rounded-tl-none"
           )}
           style={{
             top: `${tooltipPosition.top}px`,
@@ -199,7 +222,7 @@ export default function Trust() {
             className="w-full object-cover select-none"
             hoverMode="dots"
             dotMaxSize={2500}
-            dotHighlightCount={15}
+            dotHighlightCount={16}
           />
 
           {/* Map Pins - Render pins from data */}

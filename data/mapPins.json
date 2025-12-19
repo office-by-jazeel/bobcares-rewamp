@@ -33,10 +33,6 @@
           "logo": "/images/clients_new/besttech.png"
         },
         {
-          "label": "LucaNet Sistemas Ltda.",
-          "logo": "/images/clients_new/lucanet.png"
-        },
-        {
           "label": "Rand4Dollar",
           "logo": "/images/clients_new/Rand4Dollar.png"
         }
@@ -49,7 +45,7 @@
       "clients": [
         {
           "label": "Matthew Owen LLC",
-          "logo": "/images/clients/matthew-owen.png"
+          "logo": "/images/clients_new/VP Startup.png"
         },
         {
           "label": "Freshpage Media",
@@ -95,7 +91,15 @@
       "clients": [
         {
           "label": "Appraise",
-          "logo": "/images/clients/appraise.png"
+          "logo": "/images/clients_new/HAWK.png"
+        },
+        {
+          "label": "Brad Slater IT",
+          "logo": "/images/clients_new/Brasd Slater IT.png"
+        },
+        {
+          "label": "Barn Light Australia Pty Ltd",
+          "logo": "/images/clients_new/Barn Light Australia Pty Ltd.png"
         }
       ]
     },
@@ -105,8 +109,12 @@
       "left": "81%",
       "clients": [
         {
-          "label": "Super Domains",
-          "logo": "/images/clients_new/super-domains.png"
+          "label": "Crawl Media",
+          "logo": "/images/clients_new/Crawl Media.png"
+        },
+        {
+          "label": "Project 3 IT",
+          "logo": "/images/clients_new/project it.png"
         }
       ]
     },
@@ -128,7 +136,7 @@
       "clients": [
         {
           "label": "Paykini",
-          "logo": "/images/clients/paykini.webp"
+          "logo": "/images/clients_new/EasyPay.png"
         }
       ]
     },
@@ -183,7 +191,7 @@
       "clients": [
         {
           "label": "Oliver Marketing",
-          "logo": "/images/clients/oliver-marketing.png"
+          "logo": "/images/clients_new/MNSI TELECOM.png"
         }
       ]
     },
@@ -228,6 +236,47 @@
         {
           "label": "Toucan Graphics",
           "logo": "/images/clients_new/Toucan Graphics.png"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "top": "44%",
+      "left": "45%",
+      "clients": [
+        {
+          "label": "Ferretería Murgui, S.L",
+          "logo": "/images/clients_new/Toucan Graphics.png"
+        },
+        {
+          "label": "J&S Multi Systems S.L.",
+          "logo": "/images/clients_new/Toucan Graphics.png"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "top": "83%",
+      "left": "81%",
+      "clients": [
+        {
+          "label": "Super Domains",
+          "logo": "/images/clients_new/super-domains.png"
+        },
+        {
+          "label": "Audience Ware",
+          "logo": "/images/clients_new/Audienceware_Logo4_horizontal_blue_01.png"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "top": "74%",
+      "left": "33%",
+      "clients": [
+                {
+          "label": "LucaNet Sistemas Ltda.",
+          "logo": "/images/clients_new/lucanet.png"
         }
       ]
     }

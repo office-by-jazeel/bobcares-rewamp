@@ -32,10 +32,14 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
           />
         </div>
         <div className="flex items-center gap-[30px] md:gap-6">
-          <button className={cn(
-            "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
-            "md:border-[#9898982E] bg-[#00000003]"
-          )}>
+          <a
+            href="https://bobcares.com/semantic?showAll=true"
+            className={cn(
+              "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
+              "md:border-[#9898982E] bg-[#00000003]"
+            )}
+            aria-label="Search"
+          >
             <Image
               src="/icons/search-icon.svg"
               alt="Search"
@@ -43,11 +47,15 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               height={26}
               className={cn("size-[26px]")}
             />
-          </button>
-          <button className={cn(
-            "hidden border border-white/20 border-solid md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-            "border-[#9898982E] bg-[#00000003]"
-          )}>
+          </a>
+          <a
+            href="tel:+18003835193"
+            className={cn(
+              "hidden border border-white/20 border-solid md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
+              "border-[#9898982E] bg-[#00000003]"
+            )}
+            aria-label="Call +18003835193"
+          >
             <Image
               src="/icons/phone-icon.svg"
               alt="Phone"
@@ -55,7 +63,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               height={26}
               className={cn("size-[26px]")}
             />
-          </button>
+          </a>
           <button className={cn(textButtonClasses, "hidden md:block")}>
             <span
               className={cn(
@@ -65,15 +73,18 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               Client Area
             </span>
           </button>
-          <button className={cn(textButtonClasses, "hidden md:block hover:border-[#D44A4C]")}>
+          <a
+            href="https://bobcares.com/emergency-server-support/"
+            className={cn(textButtonClasses, "hidden md:block hover:border-[#D44A4C]")}
+          >
             <span
               className={cn(
                 "font-medium text-[20px] leading-[22px] text-white"
               )}
             >
-              Emergencys
+              Emergency
             </span>
-          </button>
+          </a>
           {onClose && (
             <button
               onClick={onClose}
@@ -111,10 +122,14 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
       </div>
       <div className="flex gap-[30px] items-center justify-end">
         <div className="flex gap-4 items-center">
-          <button className={cn(
-            "backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
-            !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]"
-          )}>
+          <a
+            href="https://bobcares.com/semantic?showAll=true"
+            className={cn(
+              "backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
+              !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]"
+            )}
+            aria-label="Search"
+          >
             <Image
               src="/icons/search-icon.svg"
               alt="Search"
@@ -122,11 +137,15 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               height={26}
               className={cn("size-[26px]", !isHeaderFixed && "-invert brightness-0")}
             />
-          </button>
-          <button className={cn(
-            "backdrop-blur-md border border-white/20 border-solid hidden md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-            !isHeaderFixed && "border-[#9898982E] bg-[#00000003]"
-          )}>
+          </a>
+          <a
+            href="tel:+18003835193"
+            className={cn(
+              "backdrop-blur-md border border-white/20 border-solid hidden md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
+              !isHeaderFixed && "border-[#9898982E] bg-[#00000003]"
+            )}
+            aria-label="Call +18003835193"
+          >
             <Image
               src="/icons/phone-icon.svg"
               alt="Phone"
@@ -134,8 +153,11 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               height={26}
               className={cn("size-[26px]", !isHeaderFixed && "-invert brightness-0")}
             />
-          </button>
-          <button className={cn(textButtonClasses, "hidden md:block", isHeaderFixed && "hover:border-[#D44A4C]")}>
+          </a>
+          <a
+            href="https://bobcares.com/emergency-server-support/"
+            className={cn(textButtonClasses, "hidden md:block", isHeaderFixed && "hover:border-[#D44A4C]")}
+          >
             <span
               className={cn(
                 "font-medium text-[20px] leading-[22px] text-white"
@@ -143,7 +165,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
             >
               Emergency
             </span>
-          </button>
+          </a>
         </div>
         <HamburgerMenu isHeaderFixed={isHeaderFixed} />
       </div>
