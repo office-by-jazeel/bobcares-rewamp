@@ -25,8 +25,8 @@
     },
     {
       "id": 2,
-      "top": "46%",
-      "left": "19.4%",
+      "top": "45%",
+      "left": "18.2%",
       "clients": [
         {
           "label": "Besttech Computing",
@@ -35,6 +35,10 @@
         {
           "label": "Rand4Dollar",
           "logo": "/images/clients_new/Rand4Dollar.png"
+        },
+        {
+          "label": "Code of Grace, LLC.",
+          "logo": "/images/clients_new/code-of-grace.png"
         }
       ]
     },
@@ -54,6 +58,63 @@
         {
           "label": "Creating Digital",
           "logo": "/images/clients_new/Creating Digital.png"
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "top": "37%",
+      "left": "17%",
+      "clients": [
+        {
+          "label": "Otherworlds Inc",
+          "logo": "/images/clients_new/other-worlds.png"
+        },
+        {
+          "label": "Luxury Realty Group LLC",
+          "logo": "/images/clients_new/talega-systems-ai.png"
+        },
+        {
+          "label": "Four Star Host",
+          "logo": "/images/clients_new/four-star-host.webp"
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "top": "39%",
+      "left": "21%",
+      "clients": [
+        {
+          "label": "USHost247",
+          "logo": "/images/clients_new/us-host.png"
+        },
+        {
+          "label": "SCANNING REVOLUTION",
+          "logo": "/images/clients_new/scan-rev.png"
+        },
+        {
+          "label": "FH Packaging LLC",
+          "logo": "/images/clients_new/fh-packaging.svg"
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "top": "45.2%",
+      "left": "22%",
+      "clients": [
+        {
+          "label": "Freedom Footbags",
+          "logo": "/images/clients_new/freedom-footbags.png"
+        },
+        {
+          "label": "Dragon Digital",
+          "logo": "/images/clients_new/dragon-digital.png"
+        },
+        {
+          "label": "IS&T Consulting Group, LLC",
+          "logo": "/images/clients_new/is_t-consulting-group.svg"
         }
       ]
     },
@@ -274,7 +335,7 @@
       "top": "74%",
       "left": "33%",
       "clients": [
-                {
+        {
           "label": "LucaNet Sistemas Ltda.",
           "logo": "/images/clients_new/lucanet.png"
         }
