@@ -78,7 +78,7 @@ function ProjectCard({ project, className = "" }: {
         </div>
 
         {/* Title */}
-        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-3 md:min-h-[132px]">
+        <h3 className="font-grotesque font-semibold text-[32px] lg:text-[40px] leading-[1.1] text-black line-clamp-2 md:min-h-[88px]" title={project.title}>
           {project.title}
         </h3>
 
