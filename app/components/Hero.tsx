@@ -31,7 +31,7 @@ export default function Hero() {
       className="relative h-dvh min-h-[780px] w-full overflow-hidden bg-black">
 
       {/* ================= BACKGROUND VIDEO ================= */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full z-2">
         <VideoCarousel
           videos={videos}
           className="absolute inset-0 w-full h-full object-cover"
@@ -42,14 +42,14 @@ export default function Hero() {
           onDurationsUpdate={setVideoDurations}
         />
 
-        {/* Overlays */}
-        {/* <div className="absolute inset-0 bg-black/40" /> */}
-        <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-b from-black/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-t from-black/80 to-transparent" />
       </div>
 
+      {/* Overlays */}
+      <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-b from-black/80 to-transparent z-3" />
+      <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-t from-black/80 to-transparent z-3" />
+
       {/* ================= CONTENT ================= */}
-      <div className="absolute left-0 bottom-0 w-full">
+      <div className="absolute left-0 bottom-0 w-full z-3">
         <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-16 sm:mb-24 lg:mb-[118px] max-md:gap-8">
           <div className="flex flex-col gap-8 sm:gap-10">
             {/* TITLE */}

@@ -30,7 +30,8 @@
   "backgroundVideos": [
     {
       "src": "/videos/20_SEC_FINAL.mov",
-      "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/4bf87772a169d477d5f87a931e3bdb28/manifest/video.m3u8"
+      "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/4bf87772a169d477d5f87a931e3bdb28/manifest/video.m3u8",
+      "thumbnail": "/images/hero/thumbnail-image.jpg"
     }
   ]
 }

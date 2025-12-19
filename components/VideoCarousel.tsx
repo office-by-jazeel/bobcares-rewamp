@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
 import CloudinaryImage from './CloudinaryImage';
+import { cn } from '@/lib/utils';
 
 interface VideoItem {
   src?: string; // Optional - can be omitted if cloudinaryId is a full URL
@@ -36,21 +37,21 @@ export default function VideoCarousel({
 }: VideoCarouselProps) {
   const [internalIndex, setInternalIndex] = useState(0);
   const currentVideoIndex = controlledIndex !== undefined ? controlledIndex : internalIndex;
-  
+
   const setCurrentVideoIndex = (index: number) => {
     if (controlledIndex === undefined) {
       setInternalIndex(index);
     }
     onVideoChange?.(index);
   };
-  
+
   // Compute video sources from props using useMemo
   const videoSrcs = useMemo(() => {
     return videos.map((video) => {
       if (video.cloudinaryId) {
         // Check if cloudinaryId is a full URL (starts with http:// or https://)
         const isFullUrl = video.cloudinaryId.startsWith('http://') || video.cloudinaryId.startsWith('https://');
-        
+
         if (isFullUrl) {
           // Use the URL directly
           return video.cloudinaryId;
@@ -67,18 +68,91 @@ export default function VideoCarousel({
       return video.src || '';
     });
   }, [videos]);
-  
+
   const [showThumbnail, setShowThumbnail] = useState(true);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const prevVideoIndexRef = useRef(currentVideoIndex);
   const durationsRef = useRef<number[]>([]);
+
+  // Intersection Observer for viewport detection
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let canPlayHandler: (() => void) | null = null;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsInViewport(entry.isIntersecting);
+
+        if (entry.isIntersecting && videoRef.current) {
+          // Video entered viewport - load and play
+          const video = videoRef.current;
+          if (!video.src || video.readyState === 0) {
+            // Only load if not already loaded
+            video.load();
+          }
+          
+          // Wait for video to be ready before playing
+          canPlayHandler = () => {
+            video.play()
+              .then(() => {
+                // Hide thumbnail when video successfully starts playing
+                setShowThumbnail(false);
+              })
+              .catch(() => {
+                // Autoplay might fail, that's okay
+              });
+            if (canPlayHandler) {
+              video.removeEventListener('canplay', canPlayHandler);
+              canPlayHandler = null;
+            }
+          };
+
+          if (video.readyState >= 3) {
+            // Video already has enough data, play immediately
+            video.play()
+              .then(() => {
+                setShowThumbnail(false);
+              })
+              .catch(() => {
+                // Autoplay might fail, that's okay
+              });
+          } else {
+            // Wait for video to be ready
+            video.addEventListener('canplay', canPlayHandler);
+          }
+        } else if (!entry.isIntersecting && videoRef.current) {
+          // Video left viewport - pause to save bandwidth
+          videoRef.current.pause();
+        }
+      },
+      {
+        rootMargin: '50px',
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      // Clean up canplay listener if it exists
+      if (canPlayHandler && videoRef.current) {
+        videoRef.current.removeEventListener('canplay', canPlayHandler);
+      }
+    };
+  }, []);
 
   // Load video durations and handle thumbnail visibility
   useEffect(() => {
     if (videoRef.current && videoSrcs.length > 0) {
       const video = videoRef.current;
-      
+
       // Reset thumbnail visibility when video index changes
       if (prevVideoIndexRef.current !== currentVideoIndex) {
         // Use setTimeout to defer state updates and avoid synchronous setState in effect
@@ -88,7 +162,7 @@ export default function VideoCarousel({
         }, 0);
         prevVideoIndexRef.current = currentVideoIndex;
       }
-      
+
       const handleLoadedMetadata = () => {
         if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
           // Update duration for current video index
@@ -99,13 +173,13 @@ export default function VideoCarousel({
         setIsVideoReady(true);
       };
 
-      const handleCanPlay = () => {
-        // Hide thumbnail when video can start playing
+      const handlePlay = () => {
+        // Hide thumbnail when video actually starts playing
         setShowThumbnail(false);
       };
 
-      const handlePlay = () => {
-        // Hide thumbnail when video starts playing
+      const handlePlaying = () => {
+        // Hide thumbnail when video is actually playing (fired after play event)
         setShowThumbnail(false);
       };
 
@@ -117,14 +191,14 @@ export default function VideoCarousel({
       };
 
       video.addEventListener('loadedmetadata', handleLoadedMetadata);
-      video.addEventListener('canplay', handleCanPlay);
       video.addEventListener('play', handlePlay);
+      video.addEventListener('playing', handlePlaying);
       video.addEventListener('waiting', handleWaiting);
-      
+
       return () => {
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        video.removeEventListener('canplay', handleCanPlay);
         video.removeEventListener('play', handlePlay);
+        video.removeEventListener('playing', handlePlaying);
         video.removeEventListener('waiting', handleWaiting);
       };
     }
@@ -147,6 +221,9 @@ export default function VideoCarousel({
 
   // Handle video end - play next video
   const handleVideoEnd = () => {
+    // Only proceed if video is in viewport
+    if (!isInViewport) return;
+
     // If there's only one video, manually restart it
     if (videos.length === 1 && videoRef.current) {
       videoRef.current.currentTime = 0;
@@ -155,7 +232,7 @@ export default function VideoCarousel({
       });
       return;
     }
-    
+
     const nextIndex = (currentVideoIndex + 1) % videos.length;
     setCurrentVideoIndex(nextIndex);
     setShowThumbnail(true);
@@ -183,7 +260,8 @@ export default function VideoCarousel({
         setInternalIndex(controlledIndex);
         setShowThumbnail(true);
         setIsVideoReady(false);
-        if (videoRef.current) {
+        if (videoRef.current && isInViewport) {
+          // Only load and play if in viewport
           videoRef.current.currentTime = 0;
           videoRef.current.load();
           videoRef.current.play().catch(() => {
@@ -192,7 +270,7 @@ export default function VideoCarousel({
         }
       }, 0);
     }
-  }, [controlledIndex, internalIndex]);
+  }, [controlledIndex, internalIndex, isInViewport]);
 
   // Calculate segment progress for the current video
 
@@ -200,13 +278,28 @@ export default function VideoCarousel({
   const hasThumbnail = currentVideo.thumbnail || currentVideo.thumbnailCloudinaryId;
 
   return (
-    <div className="relative w-full h-full">
-      {/* Thumbnail - shown before video loads */}
-      {showThumbnail && hasThumbnail && (
-        <div 
-          className="absolute inset-0 z-10 transition-opacity duration-300"
+    <div ref={containerRef} className="relative w-full h-full">
+      {/* Video - loads only when in viewport */}
+      <video
+        ref={videoRef}
+        key={currentVideoIndex}
+        src={videoSrcs[currentVideoIndex] || videos[currentVideoIndex].src || ''}
+        className={className}
+        preload="none"
+        muted
+        playsInline
+        onEnded={handleVideoEnd}
+        onError={handleVideoError}
+      />
+
+      {/* Thumbnail - shown before video loads, positioned on top */}
+      {hasThumbnail && (
+        <div
+          className="absolute inset-0 z-10"
           style={{
-            opacity: isVideoReady ? 0 : 1,
+            opacity: showThumbnail ? 1 : 0,
+            visibility: showThumbnail ? 'visible' : 'hidden',
+            pointerEvents: showThumbnail ? 'auto' : 'none',
           }}
         >
           <CloudinaryImage
@@ -219,23 +312,6 @@ export default function VideoCarousel({
           />
         </div>
       )}
-
-      {/* Video */}
-      <video
-        ref={videoRef}
-        key={currentVideoIndex}
-        src={videoSrcs[currentVideoIndex] || videos[currentVideoIndex].src || ''}
-        className={className}
-        autoPlay
-        muted
-        playsInline
-        onEnded={handleVideoEnd}
-        onError={handleVideoError}
-        style={{
-          opacity: showThumbnail && hasThumbnail ? 0 : 1,
-          transition: 'opacity 0.3s ease-in-out',
-        }}
-      />
     </div>
   );
 }

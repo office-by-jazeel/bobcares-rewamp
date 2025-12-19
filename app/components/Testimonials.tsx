@@ -626,8 +626,9 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
       setIsMounted(true);
     });
 
-    // Play video when modal opens
+    // Load and play video when modal opens (streaming only)
     if (videoRef.current) {
+      videoRef.current.load();
       videoRef.current.play();
     }
 
@@ -667,6 +668,7 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
         <video
           ref={videoRef}
           src={videoUrl}
+          preload="none"
           controls
           className="w-full h-auto max-h-[80vh]"
           onEnded={onClose}
