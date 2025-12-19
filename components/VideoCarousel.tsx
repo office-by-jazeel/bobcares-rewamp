@@ -1,15 +1,19 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
+import {
+  getVideoSource,
+  initHlsJs,
+  destroyHlsJs,
+} from '@/lib/video-streaming';
 import CloudinaryImage from './CloudinaryImage';
-import { cn } from '@/lib/utils';
 
 interface VideoItem {
-  src?: string; // Optional - can be omitted if cloudinaryId is a full URL
+  src?: string;
   cloudinaryId?: string | null;
-  thumbnail?: string; // Local thumbnail path
-  thumbnailCloudinaryId?: string | null; // Cloudinary thumbnail ID or full URL
+  thumbnail?: string;
+  thumbnailCloudinaryId?: string | null;
 }
 
 interface VideoCarouselProps {
@@ -20,6 +24,339 @@ interface VideoCarouselProps {
   onVideoChange?: (index: number) => void;
   onTimeUpdate?: (time: number) => void;
   onDurationsUpdate?: (durations: number[]) => void;
+}
+
+interface VideoSource {
+  source: string | null;
+  isHls: boolean;
+  useHlsJs: boolean;
+}
+
+interface VideoState {
+  showThumbnail: boolean;
+  isVideoReady: boolean;
+}
+
+/**
+ * Custom hook to compute video sources asynchronously with memoization
+ */
+function useVideoSources(videos: VideoItem[]): VideoSource[] {
+  const [videoSources, setVideoSources] = useState<VideoSource[]>([]);
+
+  useEffect(() => {
+    const computeSources = async () => {
+      const sources = await Promise.all(
+        videos.map(async (video) => {
+          const isFullUrl = video.cloudinaryId?.startsWith('http://') ||
+            video.cloudinaryId?.startsWith('https://');
+
+          let cloudinaryId = video.cloudinaryId;
+          if (!isFullUrl && video.cloudinaryId && isCloudinaryConfigured()) {
+            try {
+              cloudinaryId = getVideoUrl(video.cloudinaryId, video.src || '');
+            } catch {
+              cloudinaryId = null;
+            }
+          }
+
+          return await getVideoSource(cloudinaryId || null, video.src || null);
+        })
+      );
+      setVideoSources(sources);
+    };
+
+    computeSources();
+  }, [videos]);
+
+  return videoSources;
+}
+
+/**
+ * Custom hook to manage viewport observer and viewport-based playback
+ */
+function useViewportObserver(
+  containerRef: React.RefObject<HTMLDivElement | null>,
+  videoRef: React.RefObject<HTMLVideoElement | null>,
+  hlsInstanceRef: React.MutableRefObject<any>,
+  onPlay: () => void
+) {
+  const [isInViewport, setIsInViewport] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const video = videoRef.current;
+    if (!container || !video) return;
+
+    const playVideo = () => {
+      if (!video) return;
+      video.play()
+        .then(() => {
+          onPlay();
+        })
+        .catch((err) => {
+          console.debug('Autoplay prevented:', err);
+        });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsInViewport(entry.isIntersecting);
+
+        if (entry.isIntersecting && video) {
+          const needsLoad = video.readyState === 0 ||
+            (!video.src && !hlsInstanceRef.current);
+
+          if (needsLoad) {
+            video.load();
+          }
+
+          if (video.readyState >= 3) {
+            playVideo();
+          } else {
+            const canPlayHandler = () => {
+              playVideo();
+              video.removeEventListener('canplay', canPlayHandler);
+            };
+            const loadedDataHandler = () => {
+              playVideo();
+              video.removeEventListener('loadeddata', loadedDataHandler);
+            };
+            video.addEventListener('canplay', canPlayHandler);
+            video.addEventListener('loadeddata', loadedDataHandler);
+          }
+        } else if (!entry.isIntersecting && video) {
+          video.pause();
+        }
+      },
+      {
+        rootMargin: '50px',
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(container);
+
+    // Check initial intersection state
+    const checkInitialIntersection = () => {
+      if (container && video) {
+        const rect = container.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight + 50 &&
+          rect.bottom > -50 &&
+          rect.left < window.innerWidth + 50 &&
+          rect.right > -50;
+        if (isVisible) {
+          setIsInViewport(true);
+          if (video.readyState === 0 || (!video.src && !hlsInstanceRef.current)) {
+            video.load();
+          }
+          if (video.readyState >= 3) {
+            playVideo();
+          }
+        }
+      }
+    };
+
+    const timeoutId = setTimeout(checkInitialIntersection, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [containerRef, videoRef, hlsInstanceRef, onPlay]);
+
+  return isInViewport;
+}
+
+/**
+ * Custom hook to manage video player, HLS, and source switching
+ */
+function useVideoPlayer(
+  videoRef: React.RefObject<HTMLVideoElement | null>,
+  videos: VideoItem[],
+  videoSources: VideoSource[],
+  currentVideoIndex: number,
+  isInViewport: boolean,
+  onFallback: () => void,
+  hlsInstanceRef: React.MutableRefObject<any>
+) {
+  const hasTriedFallbackRef = useRef(false);
+
+  // Setup video source and HLS when video index changes
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || videoSources.length === 0) return;
+
+    const currentSource = videoSources[currentVideoIndex];
+    const currentVideo = videos[currentVideoIndex];
+
+    // Reset fallback flag when video changes
+    hasTriedFallbackRef.current = false;
+
+    // Clean up previous HLS instance
+    if (hlsInstanceRef.current) {
+      destroyHlsJs(hlsInstanceRef.current);
+      hlsInstanceRef.current = null;
+    }
+
+    // Clear video src first to ensure clean state
+    video.src = '';
+
+    const applyFallback = () => {
+      const fallbackSrc = currentVideo.src;
+      if (fallbackSrc && !hasTriedFallbackRef.current) {
+        hasTriedFallbackRef.current = true;
+        if (hlsInstanceRef.current) {
+          destroyHlsJs(hlsInstanceRef.current);
+          hlsInstanceRef.current = null;
+        }
+        video.src = fallbackSrc;
+        video.load();
+        if (isInViewport) {
+          video.play().catch(() => { });
+        }
+      }
+    };
+
+    // Determine video source
+    if (currentSource.source) {
+      if (currentSource.isHls && currentSource.useHlsJs) {
+        // Use HLS.js for non-native browsers
+        initHlsJs(
+          video,
+          currentSource.source,
+          (error) => {
+            console.warn('HLS.js error, falling back to MP4:', error);
+            applyFallback();
+          }
+        ).then((hls) => {
+          if (hls) {
+            hlsInstanceRef.current = hls;
+            if (isInViewport) {
+              video.load();
+            }
+          }
+        }).catch((error) => {
+          console.error('Failed to initialize HLS.js:', error);
+          applyFallback();
+        });
+      } else {
+        // Native HLS or regular video
+        video.src = currentSource.source;
+        if (isInViewport) {
+          video.load();
+        }
+      }
+    } else {
+      // No source available, use fallback
+      video.src = currentVideo.src || '';
+      if (isInViewport) {
+        video.load();
+      }
+    }
+  }, [currentVideoIndex, videoSources, videos, isInViewport, videoRef]);
+
+  // Handle video error - fallback to local MP4
+  const handleVideoError = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const currentVideo = videos[currentVideoIndex];
+    const fallbackSrc = currentVideo.src || '';
+
+    if (!hasTriedFallbackRef.current && fallbackSrc && video.src !== fallbackSrc) {
+      hasTriedFallbackRef.current = true;
+
+      if (hlsInstanceRef.current) {
+        destroyHlsJs(hlsInstanceRef.current);
+        hlsInstanceRef.current = null;
+      }
+
+      video.src = fallbackSrc;
+      video.load();
+
+      if (isInViewport) {
+        video.play().catch(() => { });
+      }
+      onFallback();
+    }
+  }, [currentVideoIndex, videos, isInViewport, videoRef, onFallback]);
+
+  // Cleanup HLS instance on unmount
+  useEffect(() => {
+    return () => {
+      if (hlsInstanceRef.current) {
+        destroyHlsJs(hlsInstanceRef.current);
+        hlsInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return { handleVideoError };
+}
+
+/**
+ * Custom hook to manage video metadata, durations, and thumbnail visibility
+ */
+function useVideoMetadata(
+  videoRef: React.RefObject<HTMLVideoElement | null>,
+  videoSources: VideoSource[],
+  currentVideoIndex: number,
+  onDurationsUpdate?: (durations: number[]) => void
+) {
+  const [videoState, setVideoState] = useState<VideoState>({
+    showThumbnail: true,
+    isVideoReady: false,
+  });
+  const durationsRef = useRef<number[]>([]);
+  const prevVideoIndexRef = useRef(currentVideoIndex);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || videoSources.length === 0) return;
+
+    // Reset thumbnail visibility when video index changes
+    if (prevVideoIndexRef.current !== currentVideoIndex) {
+      setVideoState({ showThumbnail: true, isVideoReady: false });
+      prevVideoIndexRef.current = currentVideoIndex;
+    }
+
+    const handleLoadedMetadata = () => {
+      if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+        durationsRef.current[currentVideoIndex] = video.duration;
+        onDurationsUpdate?.([...durationsRef.current]);
+      }
+      setVideoState(prev => ({ ...prev, isVideoReady: true }));
+    };
+
+    const handlePlay = () => {
+      setVideoState(prev => ({ ...prev, showThumbnail: false }));
+    };
+
+    const handlePlaying = () => {
+      setVideoState(prev => ({ ...prev, showThumbnail: false }));
+    };
+
+    const handleWaiting = () => {
+      if (!video.readyState || video.readyState < 3) {
+        setVideoState(prev => ({ ...prev, showThumbnail: true }));
+      }
+    };
+
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('playing', handlePlaying);
+    video.addEventListener('waiting', handleWaiting);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('waiting', handleWaiting);
+    };
+  }, [videoSources, currentVideoIndex, onDurationsUpdate, videoRef]);
+
+  return videoState;
 }
 
 /**
@@ -38,171 +375,70 @@ export default function VideoCarousel({
   const [internalIndex, setInternalIndex] = useState(0);
   const currentVideoIndex = controlledIndex !== undefined ? controlledIndex : internalIndex;
 
-  const setCurrentVideoIndex = (index: number) => {
+  const setCurrentVideoIndex = useCallback((index: number) => {
     if (controlledIndex === undefined) {
       setInternalIndex(index);
     }
     onVideoChange?.(index);
-  };
+  }, [controlledIndex, onVideoChange]);
 
-  // Compute video sources from props using useMemo
-  const videoSrcs = useMemo(() => {
-    return videos.map((video) => {
-      if (video.cloudinaryId) {
-        // Check if cloudinaryId is a full URL (starts with http:// or https://)
-        const isFullUrl = video.cloudinaryId.startsWith('http://') || video.cloudinaryId.startsWith('https://');
+  // Compute video sources
+  const videoSources = useVideoSources(videos);
 
-        if (isFullUrl) {
-          // Use the URL directly
-          return video.cloudinaryId;
-        } else if (isCloudinaryConfigured()) {
-          // It's a Cloudinary public ID, generate the URL
-          try {
-            return getVideoUrl(video.cloudinaryId, video.src || '');
-          } catch {
-            return video.src || '';
-          }
-        }
-      }
-      // Fallback to src if available, otherwise empty string
-      return video.src || '';
-    });
-  }, [videos]);
-
-  const [showThumbnail, setShowThumbnail] = useState(true);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [isInViewport, setIsInViewport] = useState(false);
+  // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const prevVideoIndexRef = useRef(currentVideoIndex);
-  const durationsRef = useRef<number[]>([]);
 
-  // Intersection Observer for viewport detection
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  // Video state management
+  const [videoState, setVideoState] = useState<VideoState>({
+    showThumbnail: true,
+    isVideoReady: false,
+  });
 
-    let canPlayHandler: (() => void) | null = null;
+  // Create hlsInstanceRef that will be shared between hooks
+  const hlsInstanceRef = useRef<any>(null);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        setIsInViewport(entry.isIntersecting);
-
-        if (entry.isIntersecting && videoRef.current) {
-          // Video entered viewport - load and play
-          const video = videoRef.current;
-          if (!video.src || video.readyState === 0) {
-            // Only load if not already loaded
-            video.load();
-          }
-          
-          // Wait for video to be ready before playing
-          canPlayHandler = () => {
-            video.play()
-              .then(() => {
-                // Hide thumbnail when video successfully starts playing
-                setShowThumbnail(false);
-              })
-              .catch(() => {
-                // Autoplay might fail, that's okay
-              });
-            if (canPlayHandler) {
-              video.removeEventListener('canplay', canPlayHandler);
-              canPlayHandler = null;
-            }
-          };
-
-          if (video.readyState >= 3) {
-            // Video already has enough data, play immediately
-            video.play()
-              .then(() => {
-                setShowThumbnail(false);
-              })
-              .catch(() => {
-                // Autoplay might fail, that's okay
-              });
-          } else {
-            // Wait for video to be ready
-            video.addEventListener('canplay', canPlayHandler);
-          }
-        } else if (!entry.isIntersecting && videoRef.current) {
-          // Video left viewport - pause to save bandwidth
-          videoRef.current.pause();
-        }
-      },
-      {
-        rootMargin: '50px',
-        threshold: 0.1,
-      }
-    );
-
-    observer.observe(container);
-
-    return () => {
-      observer.disconnect();
-      // Clean up canplay listener if it exists
-      if (canPlayHandler && videoRef.current) {
-        videoRef.current.removeEventListener('canplay', canPlayHandler);
-      }
-    };
+  // Handle thumbnail visibility updates from viewport observer
+  const handleVideoPlay = useCallback(() => {
+    setVideoState(prev => ({ ...prev, showThumbnail: false }));
   }, []);
 
-  // Load video durations and handle thumbnail visibility
+  // Handle fallback
+  const handleFallback = useCallback(() => {
+    setVideoState(prev => ({ ...prev, showThumbnail: true, isVideoReady: false }));
+  }, []);
+
+  // Viewport observer (needs hlsInstanceRef)
+  const isInViewport = useViewportObserver(
+    containerRef,
+    videoRef,
+    hlsInstanceRef,
+    handleVideoPlay
+  );
+
+  // Video player management
+  const { handleVideoError } = useVideoPlayer(
+    videoRef,
+    videos,
+    videoSources,
+    currentVideoIndex,
+    isInViewport,
+    handleFallback,
+    hlsInstanceRef
+  );
+
+  // Video metadata
+  const metadataState = useVideoMetadata(
+    videoRef,
+    videoSources,
+    currentVideoIndex,
+    onDurationsUpdate
+  );
+
+  // Merge metadata state with local state
   useEffect(() => {
-    if (videoRef.current && videoSrcs.length > 0) {
-      const video = videoRef.current;
-
-      // Reset thumbnail visibility when video index changes
-      if (prevVideoIndexRef.current !== currentVideoIndex) {
-        // Use setTimeout to defer state updates and avoid synchronous setState in effect
-        setTimeout(() => {
-          setShowThumbnail(true);
-          setIsVideoReady(false);
-        }, 0);
-        prevVideoIndexRef.current = currentVideoIndex;
-      }
-
-      const handleLoadedMetadata = () => {
-        if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
-          // Update duration for current video index
-          durationsRef.current[currentVideoIndex] = video.duration;
-          // Create a new array to trigger state update
-          onDurationsUpdate?.([...durationsRef.current]);
-        }
-        setIsVideoReady(true);
-      };
-
-      const handlePlay = () => {
-        // Hide thumbnail when video actually starts playing
-        setShowThumbnail(false);
-      };
-
-      const handlePlaying = () => {
-        // Hide thumbnail when video is actually playing (fired after play event)
-        setShowThumbnail(false);
-      };
-
-      const handleWaiting = () => {
-        // Show thumbnail if video is buffering
-        if (!video.readyState || video.readyState < 3) {
-          setShowThumbnail(true);
-        }
-      };
-
-      video.addEventListener('loadedmetadata', handleLoadedMetadata);
-      video.addEventListener('play', handlePlay);
-      video.addEventListener('playing', handlePlaying);
-      video.addEventListener('waiting', handleWaiting);
-
-      return () => {
-        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        video.removeEventListener('play', handlePlay);
-        video.removeEventListener('playing', handlePlaying);
-        video.removeEventListener('waiting', handleWaiting);
-      };
-    }
-  }, [videoSrcs, currentVideoIndex, onDurationsUpdate]);
+    setVideoState(metadataState);
+  }, [metadataState]);
 
   // Update current time
   useEffect(() => {
@@ -220,70 +456,68 @@ export default function VideoCarousel({
   }, [currentVideoIndex, onTimeUpdate]);
 
   // Handle video end - play next video
-  const handleVideoEnd = () => {
-    // Only proceed if video is in viewport
+  const handleVideoEnd = useCallback(() => {
     if (!isInViewport) return;
 
-    // If there's only one video, manually restart it
     if (videos.length === 1 && videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {
-        // Autoplay might fail, that's okay
-      });
+      videoRef.current.play().catch(() => { });
       return;
     }
 
     const nextIndex = (currentVideoIndex + 1) % videos.length;
     setCurrentVideoIndex(nextIndex);
-    setShowThumbnail(true);
-    setIsVideoReady(false);
-    onVideoChange?.(nextIndex);
-  };
+    setVideoState({ showThumbnail: true, isVideoReady: false });
+  }, [currentVideoIndex, videos.length, isInViewport, setCurrentVideoIndex]);
 
-  // Handle video error - fallback to local
-  const handleVideoError = () => {
-    if (videoRef.current) {
-      const currentVideo = videos[currentVideoIndex];
-      const fallbackSrc = currentVideo.src || '';
-      if (videoRef.current.src !== fallbackSrc && fallbackSrc) {
-        videoRef.current.src = fallbackSrc;
-        videoRef.current.load();
-      }
-    }
-  };
-
-  // Sync with controlled index - when parent changes the index, update the video
+  // Sync with controlled index
   useEffect(() => {
     if (controlledIndex !== undefined && controlledIndex !== internalIndex) {
-      // Use setTimeout to defer state updates and avoid synchronous setState in effect
-      setTimeout(() => {
-        setInternalIndex(controlledIndex);
-        setShowThumbnail(true);
-        setIsVideoReady(false);
-        if (videoRef.current && isInViewport) {
-          // Only load and play if in viewport
-          videoRef.current.currentTime = 0;
-          videoRef.current.load();
-          videoRef.current.play().catch(() => {
-            // Autoplay might fail, that's okay
-          });
-        }
-      }, 0);
+      setInternalIndex(controlledIndex);
+      setVideoState({ showThumbnail: true, isVideoReady: false });
+
+      if (videoRef.current && isInViewport) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.load();
+        videoRef.current.play().catch(() => { });
+      }
     }
   }, [controlledIndex, internalIndex, isInViewport]);
 
-  // Calculate segment progress for the current video
+  // Preload thumbnail when video index changes
+  useEffect(() => {
+    const currentVideo = videos[currentVideoIndex];
+    if (!currentVideo) return;
 
-  const currentVideo = videos[currentVideoIndex];
-  const hasThumbnail = currentVideo.thumbnail || currentVideo.thumbnailCloudinaryId;
+    if (currentVideo.thumbnail || currentVideo.thumbnailCloudinaryId) {
+      const img = new Image();
+      const thumbnailSrc = currentVideo.thumbnail || '/images/videothumbnail.png';
+      img.src = thumbnailSrc;
+    }
+  }, [currentVideoIndex, videos]);
+
+  // Memoized computed values
+  const currentVideo = useMemo(() => videos[currentVideoIndex], [videos, currentVideoIndex]);
+  const hasThumbnail = useMemo(
+    () => currentVideo.thumbnail || currentVideo.thumbnailCloudinaryId,
+    [currentVideo]
+  );
+  const currentSource = useMemo(
+    () => videoSources[currentVideoIndex],
+    [videoSources, currentVideoIndex]
+  );
+  const videoSrc = useMemo(() => {
+    return currentSource && !currentSource.useHlsJs
+      ? (currentSource.source || currentVideo.src || '')
+      : '';
+  }, [currentSource, currentVideo]);
 
   return (
     <div ref={containerRef} className="relative w-full h-full">
-      {/* Video - loads only when in viewport */}
       <video
         ref={videoRef}
         key={currentVideoIndex}
-        src={videoSrcs[currentVideoIndex] || videos[currentVideoIndex].src || ''}
+        src={videoSrc || undefined}
         className={className}
         preload="none"
         muted
@@ -292,14 +526,13 @@ export default function VideoCarousel({
         onError={handleVideoError}
       />
 
-      {/* Thumbnail - shown before video loads, positioned on top */}
       {hasThumbnail && (
         <div
           className="absolute inset-0 z-10"
           style={{
-            opacity: showThumbnail ? 1 : 0,
-            visibility: showThumbnail ? 'visible' : 'hidden',
-            pointerEvents: showThumbnail ? 'auto' : 'none',
+            opacity: videoState.showThumbnail ? 1 : 0,
+            visibility: videoState.showThumbnail ? 'visible' : 'hidden',
+            pointerEvents: videoState.showThumbnail ? 'auto' : 'none',
           }}
         >
           <CloudinaryImage
@@ -315,4 +548,3 @@ export default function VideoCarousel({
     </div>
   );
 }
-
