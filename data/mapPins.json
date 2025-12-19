@@ -137,6 +137,10 @@
         {
           "label": "Paykini",
           "logo": "/images/clients_new/EasyPay.png"
+        },
+        {
+          "label": "Feynman Technology Sn Bhd",
+          "logo": "/images/clients_new/feymen.png"
         }
       ]
     },
@@ -191,7 +195,11 @@
       "clients": [
         {
           "label": "Oliver Marketing",
-          "logo": "/images/clients_new/MNSI TELECOM.png"
+          "logo": "/images/clients_new/olive-mar.png"
+        },
+        {
+          "label": "IPIS IT Consulting",
+          "logo": "/images/clients_new/ipconsulting.png"
         }
       ]
     },
@@ -246,11 +254,11 @@
       "clients": [
         {
           "label": "Ferretería Murgui, S.L",
-          "logo": "/images/clients_new/Toucan Graphics.png"
+          "logo": "/images/clients_new/Ferretería.png"
         },
         {
           "label": "J&S Multi Systems S.L.",
-          "logo": "/images/clients_new/Toucan Graphics.png"
+          "logo": "/images/clients_new/nivelz.png"
         }
       ]
     },
@@ -277,7 +285,163 @@
                 {
           "label": "LucaNet Sistemas Ltda.",
           "logo": "/images/clients_new/lucanet.png"
+        },
+        {
+          "label": "Rubfy Serviços de Internet",
+          "logo": "/images/clients_new/Rubfyf6.png"
         }
+      ]
+    },
+    {
+      "id": 30,
+      "top": "58%",
+      "left": "69%",
+      "clients": [
+        {
+          "label": "Infobahn Technologies",
+          "logo": "/images/clients_new/infobun.png"
+        },
+        {
+          "label": "Serverspa",
+          "logo": "/images/clients_new/serverspa-1.png"
+        },
+        {
+          "label": "Techlightz Infosystems",
+          "logo": "/images/clients_new/gurusoft.png"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "top": "35%",
+      "left": "44%",
+      "clients": [
+        {
+          "label": "Limerick City College",
+          "logo": "/images/clients_new/limerick-1.png"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "top": "86%",
+      "left": "29%",
+      "clients": [
+        {
+          "label": "Duplika",
+          "logo": "/images/clients_new/duplika-1.png"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "top": "65%",
+      "left": "79%",
+      "clients": [
+        {
+          "label": "TITB",
+          "logo": "/images/clients_new/titb.png"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "top": "30%",
+      "left": "16%",
+      "clients": [
+        {
+          "label": "One Motion Technologies Inc.",
+          "logo": "/images/clients_new/1motion.png"
+        },
+        {
+          "label": "AlSalwa Publishers",
+          "logo": "/images/clients_new/alsalwa.png"
+        },
+        {
+          "label": "MIHKL",
+          "logo": "/images/clients_new/MIHKL.png"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "top": "28%",
+      "left": "50%",
+      "clients": [
+        {
+          "label": "Energiakademiet",
+          "logo": "/images/clients_new/energika.png"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "top": "35%",
+      "left": "57%",
+      "clients": [
+        {
+          "label": "Creative Management Kft",
+          "logo": "/images/clients_new/cm-designs.png"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "top": "61%",
+      "left": "22%",
+      "clients": [
+        {
+          "label": "Proton Mail",
+          "logo": "/images/clients_new/proton.png"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "top": "63%",
+      "left": "82%",
+      "clients": [
+        {
+          "label": "Lattice Systems, Inc",
+          "logo": "/images/clients_new/latticesystmes.png"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "top": "48%",
+      "left": "61%",
+      "clients": [
+        {
+          "label": "Burgerizzr",
+          "logo": "/images/clients_new/burgerrizr.png"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "top": "65%",
+      "left": "70%",
+      "clients": [
+        {
+          "label": "SL Web Creations",
+          "logo": "/images/clients_new/slweb.png"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "top": "38%",
+      "left": "47%",
+      "clients": [
+       {
+        "label": "SINSPEED AUTO SUPPLIES LIMITED",
+        "logo": "/images/clients_new/sinspeed-1.png"
+       },
+       {
+        "label": "Mindbodism",
+        "logo": "/images/clients_new/mind.png"
+       }
       ]
     }
   ]
