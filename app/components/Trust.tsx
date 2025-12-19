@@ -152,7 +152,7 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
                 <CloudinaryImage
                   src={client.logo}
                   alt={'label' in client && client.label ? client.label : "Client logo"}
-                  className="object-contain h-6 w-fit greyscale"
+                  className="object-contain h-6 w-fit grayscale"
                 />
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" width="129" height="24" viewBox="0 0 129 24" fill="none">
