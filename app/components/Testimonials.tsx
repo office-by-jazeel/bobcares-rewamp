@@ -634,9 +634,17 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
 
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
+    // Stop Lenis smooth scroll when modal is open
+    if (window.lenis) {
+      window.lenis.stop();
+    }
 
     return () => {
       document.body.style.overflow = 'unset';
+      // Resume Lenis smooth scroll when modal is closed
+      if (window.lenis) {
+        window.lenis.start();
+      }
     };
   }, []);
 
@@ -691,9 +699,17 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
 
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
+    // Stop Lenis smooth scroll when modal is open
+    if (window.lenis) {
+      window.lenis.stop();
+    }
 
     return () => {
       document.body.style.overflow = 'unset';
+      // Resume Lenis smooth scroll when modal is closed
+      if (window.lenis) {
+        window.lenis.start();
+      }
     };
   }, []);
 
