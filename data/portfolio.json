@@ -2,78 +2,75 @@
   "projects": [
     {
       "id": 1,
-      "title": "Riscosity - Secure and Manage API Data Flows Effortlessly",
-      "category": "Server Management",
+      "title": "The Riscosity Transformation: End-to-End API Data Control for Secure Scalable Integration.",
+      "category": "Product Engineering",
       "image": "/images/port1.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/reform-rx-complete-platform-support-engineering-renewal/"
+    },
+    {
+      "id": 2,
+      "title": "Riscosity Deployment Securing API Data Flows Across Complex Ecosystems",
+      "category": "Digital Transformation",
+      "image": "/images/port2.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/riscosity-secure-and-manage-api-data-flows-effortlessly/"
     },
     {
-      "id": 2,
-      "title": "Reform RX - Story of a Unified Fitness Experience",
-      "category": "Web Development",
-      "image": "/images/port2.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link": "https://bobcares.com/case-study/reform-rx-story-of-a-unified-fitness-experience/"
-    },
-    {
       "id": 3,
-      "title": "End-to-End Digital Transformation for Paykini: Strengthening Security, Performance, and Mobile Accessibility",
-      "category": "Financial Services / Online Payments",
+      "title": "End-to-End Digital Transformation for Paykini Strong Security Performance and Mobile UX",
+      "category": "Infrastructure Management & Optimization",
       "image": "/images/port3.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/paykini-end-to-end-digital-transformation-security-performance-mobile-accessibility/"
     },
     {
       "id": 4,
-      "title": "AI-based Churn Application",
-      "category": "Web Development",
-      "description": "Enterprise-grade API security and management platform",
+      "title": "Transforming Customer Loyalty With Predictive Intelligence Driving Scalable Growth AI Data",
+      "category": "AI Services",
       "image": "/images/port4.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/transforming-customer-loyalty-with-predictive-intelligence/"
     },
     {
       "id": 5,
-      "title": "Appraise – Ensuring Reliability and Performance for Cloud Hosting",
-      "category": "Server Management",
-      "description": "Next-generation fitness web application with real-time analytics",
+      "title": "Performance-Focused Cloud Hosting Infrastructure Upgrade for Appraise",
+      "category": "Infrastructure Management & Optimization",
       "image": "/images/port5.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/appraise-ensuring-reliability-and-performance-for-cloud-hosting/"
     },
     {
       "id": 6,
-      "title": "Enhancing Server Performance and Security for Nexnova s.n.c.",
-      "category": "Server Management",
-      "description": "Mobile-first financial services platform with advanced security",
+      "title": "Optimizing Nexnova’s Server Performance and Security to Achieve 99% Uptime",
+      "category": "Cybersecurity & Compliance Services",
       "image": "/images/port6.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/enhancing-server-performance-and-security-for-nexnova-s-n-c/"
     },
     {
       "id": 7,
-      "title": "Streamlining Support for GH1 Web Hosting: Enhancing Efficiency and Customer Satisfaction",
-      "category": "Affordable Support",
-      "description": "Scalable API infrastructure for modern applications",
+      "title": "Optimizing Cloud Operations With Intelligent Automation and Predictive Insights",
+      "category": "AI Services",
       "image": "/images/port7.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link" : "https://bobcares.com/case-study/streamlining-support-for-gh1-web-hosting-enhancing-efficiency-and-customer-satisfaction/"
+      "link": "https://bobcares.com/case-study/aiops-ecosystem-transformation-success-story/"
     },
     {
       "id": 8,
-      "title": "Building a Self-Healing Cloud: Inside an AIOps-Driven Ops Transformation",
-      "category": "Web Development",
-      "description": "Integrated fitness ecosystem with personalized coaching",
+      "title": "Fixing Fragmented CI/CD Pipelines That Caused Slow, and Risky Deployments",
+      "category": "DevOps & Automation Services",
       "image": "/images/port8.png",
-      "imageCloudinaryId": "bobcares/portfolio/portfolio-1"
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/unifying-ci-cd-pipelines-for-zero-downtime-deployments-in-fitness-tech/"
     },
     {
       "id": 9,
-      "title": "Scalable SaaS for Hotel Solutions on AWS",
-      "category": "Web Development",
-      "description": "Our client, operating in the hospitality industry, specializes in developing advanced technology solutions to enhance operational efficiency for hotels. Their goal was to create a scalable Software-as-a-Service (SaaS) platform capable of managing hotel operations seamlessly. To achieve this, they partnered with Bobcares for web development, ensuring a robust, user-friendly, and scalable solution that optimizes hotel management processes effectively.",
+      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy and OWASP",
+      "category": "DevOps & Automation Services",
       "image": "/images/port9.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link": "https://bobcares.com/case-study/scalable-saas-for-hotel-solutions-on-aws/"
+      "link": "https://bobcares.com/case-study/securing-docker-deployments-on-azure-with-trivy-and-owasp-dependency-check/"
     }
   ]
 }
