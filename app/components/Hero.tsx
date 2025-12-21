@@ -53,12 +53,12 @@ export default function Hero() {
         <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-16 sm:mb-24 lg:mb-[118px] max-md:gap-8">
           <div className="flex flex-col gap-8 sm:gap-10">
             {/* TITLE */}
-            <h1 className="font-grotesque text-white font-bold tracking-[-0.02em] whitespace-pre-wrap text-[36px] leading-[0.95] sm:text-[48px] md:text-[64px] lg:text-[96px] lg:leading-[0.85] lg:max-w-[750px]">
+            <h1 className="font-grotesque text-white font-bold tracking-[-0.02em] whitespace-pre-wrap text-[64px] leading-[0.95] lg:text-[96px] lg:leading-[0.85] lg:max-w-[750px]">
               {title}
             </h1>
 
             {/* DESCRIPTION */}
-            <p className="text-white w-full md:w-[600px] text-[15px] sm:text-[17px] md:text-[20px] leading-relaxed whitespace-pre-wrap lg:max-w-[750px]">
+            <p className="text-white w-full md:w-[600px] text-[14px] md:text-[20px] leading-relaxed whitespace-pre-wrap lg:max-w-[750px]">
               {description}
             </p>
 
