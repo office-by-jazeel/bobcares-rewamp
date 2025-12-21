@@ -542,7 +542,7 @@ function TestimonialCard({
 
           {/* Quote with gradient fade */}
           <div className="min-h-[104px] relative overflow-hidden">
-            <p className="font-semibold leading-[1.3] text-[16px] sm:text-[18px] lg:text-[20px] text-black w-full line-clamp-4">
+            <p className="font-grotesque font-semibold leading-none text-[26px] lg:text-[40px] text-black w-full line-clamp-4">
               {testimonial.quote}
             </p>
             {/* Gradient fade overlay - fades text from black to transparent */}
@@ -573,7 +573,7 @@ function TestimonialCard({
               )}
             </div>
             <div className="flex flex-1 flex-col gap-0.5 text-black">
-              <p className="font-semibold text-[16px] sm:text-[18px]">{testimonial.author}</p>
+              <p className="font-semibold text-[16px] sm:text-[18px] line-clamp-1">{testimonial.author}</p>
               <p className="line-clamp-1 font-normal text-[14px] sm:text-[16px] text-[#4d4d4d]" title={testimonial.role}>{testimonial.role}</p>
             </div>
           </div>
@@ -725,11 +725,11 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
 
   return (
     <div
-      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto transition-opacity duration-200 ${isMounted ? 'opacity-100' : 'opacity-0'
+      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${isMounted ? 'opacity-100' : 'opacity-0'
         }`}
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden my-8">
+      <div className="relative w-full max-w-4xl max-h-[calc(100vh-2rem)] bg-white rounded-2xl overflow-hidden my-4 sm:my-8 flex flex-col">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -741,7 +741,7 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
           </svg>
         </button>
 
-        <div className="flex flex-col lg:flex-row gap-8 p-8 lg:p-12">
+        <div className="flex flex-col lg:flex-row gap-8 p-8 lg:p-12 overflow-y-auto" data-lenis-prevent>
           {/* Left Content */}
           <div className="flex flex-1 flex-col gap-6">
             {/* Category Tag */}
