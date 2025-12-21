@@ -266,17 +266,14 @@ export default function Footer() {
             </div>
 
             {/* Large background logo - appears after all content */}
-            <div className="w-full lg:pt-12 lg:mt-12">
-              <div className="relative w-full flex items-center justify-center opacity-5">
+            <div className="w-full lg:mt-8">
+              <div className="relative w-full flex items-center justify-center">
                 <Image
                   src="/images/bobcares.svg"
                   alt="Bobcares Logo"
                   width={1200}
                   height={400}
-                  className="w-full h-auto object-contain max-w-[90%]"
-                  style={{
-                    filter: 'brightness(0) invert(1)',
-                  }}
+                  className="w-full h-auto object-contain"
                 />
               </div>
             </div>
