@@ -56,7 +56,7 @@ function ProjectCard({ project, className = "" }: {
   className?: string;
 }) {
   return (
-    <div className={`group relative flex flex-col cursor-pointer ${className}`}>
+    <div className={`group relative flex flex-col ${className}`}>
       {/* Image Container */}
       <div className="relative w-full aspect-square overflow-hidden rounded-2xl mb-6">
         <CloudinaryImage
