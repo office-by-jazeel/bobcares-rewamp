@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import navigationData from "../../data/navigation.json";
+import HeaderLinks from "./header/HeaderLinks";
 
 interface HamburgerMenuProps {
   isHeaderFixed?: boolean;
@@ -183,65 +184,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                   </div>
                 )}
                 <div className="flex items-center gap-[30px] md:gap-6">
-                  <a
-                    href="https://bobcares.com/semantic?showAll=true"
-                    className={cn(
-                      "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-colors",
-                      "md:border-[#9898982E] bg-[#00000003]"
-                    )}
-                    aria-label="Search"
-                  >
-                    <Image
-                      src="/icons/search-icon.svg"
-                      alt="Search"
-                      width={26}
-                      height={26}
-                      className={cn("size-[26px]")}
-                    />
-                  </a>
-                  <a
-                    href="tel:+18003835193"
-                    className={cn(
-                      "hidden border border-white/20 border-solid md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-colors",
-                      "border-[#9898982E] bg-[#00000003]"
-                    )}
-                    aria-label="Call +18003835193"
-                  >
-                    <Image
-                      src="/icons/phone-icon.svg"
-                      alt="Phone"
-                      width={26}
-                      height={26}
-                      className={cn("size-[26px]")}
-                    />
-                  </a>
-                  <button className={cn(
-                    "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block",
-                    "border-[#FFFFFF2E]"
-                  )}>
-                    <span
-                      className={cn(
-                        "font-medium text-[20px] leading-[22px] text-white truncate"
-                      )}
-                    >
-                      Client Area
-                    </span>
-                  </button>
-                  <a
-                    href="https://bobcares.com/emergency-server-support/"
-                    className={cn(
-                      "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors hidden md:block hover:border-[#D44A4C]",
-                      "border-[#FFFFFF2E]"
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "font-medium text-[20px] leading-[22px] text-white"
-                      )}
-                    >
-                      Emergency
-                    </span>
-                  </a>
+                  <HeaderLinks variant="menu" />
                   <button
                     onClick={toggleMenu}
                     className="md:p-2 hover:opacity-70 transition-opacity"

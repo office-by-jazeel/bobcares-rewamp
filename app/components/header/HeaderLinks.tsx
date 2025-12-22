@@ -1,0 +1,123 @@
+
+"use client";
+
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+
+const SEARCH_URL = "https://bobcares.com/semantic?showAll=true";
+const PHONE_URL = "tel:+18003835193";
+const EMERGENCY_URL = "https://bobcares.com/emergency-server-support/";
+
+type HeaderVariant = "default" | "menu";
+
+interface HeaderLinksProps {
+    isHeaderFixed?: boolean;
+    variant?: HeaderVariant;
+    className?: string;
+}
+
+export default function HeaderLinks({
+    isHeaderFixed = false,
+    variant = "default",
+    className,
+}: HeaderLinksProps) {
+    const isMenu = variant === "menu";
+
+    const textButtonClasses = [
+        "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors",
+        isMenu
+            ? "border-[#FFFFFF2E]"
+            : isHeaderFixed
+                ? "border-[#FFFFFF2E] hover:bg-black/10"
+                : "border-[#0073EC] bg-[#0073EC] hover:bg-[#0045D9]",
+    ].join(" ");
+
+    const clientAreaButtonClasses = cn(
+        textButtonClasses,
+        "hidden md:block transition-shadow",
+        // Theme blue glow effect on hover (#0073EC)
+        "hover:shadow-[0_0_10px_rgba(0,115,236,0.4)]"
+    );
+
+    const emergencyLinkClasses = cn(
+        textButtonClasses,
+        "hidden md:block transition-all",
+        (isMenu || isHeaderFixed) && "hover:border-[#D44A4C]",
+        // Subtle base glow + brighter hover glow for emergency
+        "shadow-[0_0_6px_rgba(212,74,76,0.18)] hover:shadow-[0_0_12px_rgba(212,74,76,0.42)]"
+    );
+
+    const searchLinkClasses = cn(
+        isMenu
+            ? "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all md:border-[#9898982E] bg-[#00000003]"
+            : "backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all",
+        !isMenu && !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]",
+        // Rainbow glow effect on hover
+        "hover:shadow-[0_0_8px_rgba(255,0,0,0.3),0_0_12px_rgba(255,165,0,0.2),0_0_16px_rgba(0,255,0,0.2),0_0_20px_rgba(0,0,255,0.2)]"
+    );
+
+    const phoneLinkClasses = cn(
+        "backdrop-blur-md border border-white/20 border-solid hidden md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-all",
+        isMenu && "border-[#9898982E] bg-[#00000003]",
+        !isMenu && !isHeaderFixed && "border-[#9898982E] bg-[#00000003]",
+        // WhatsApp green glow effect on hover (#25D366)
+        "hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+    );
+
+    const iconClasses = cn(
+        "size-[26px]",
+        !isMenu && !isHeaderFixed && "-invert brightness-0"
+    );
+
+    return (
+        <div
+            className={cn(
+                "flex items-center",
+                isMenu ? "gap-[30px] md:gap-6" : "gap-4",
+                className
+            )}
+        >
+            <a href={SEARCH_URL} className={searchLinkClasses} aria-label="Search">
+                <Image
+                    src="/icons/search-icon.svg"
+                    alt="Search"
+                    width={26}
+                    height={26}
+                    className={iconClasses}
+                />
+            </a>
+
+            <a
+                href={PHONE_URL}
+                className={phoneLinkClasses}
+                aria-label="Call +18003835193"
+            >
+                <Image
+                    src="/icons/phone-icon.svg"
+                    alt="Phone"
+                    width={26}
+                    height={26}
+                    className={iconClasses}
+                />
+            </a>
+
+            {isMenu && (
+                <button className={clientAreaButtonClasses}>
+                    <span className="font-medium text-[20px] leading-[22px] text-white truncate">
+                        Client Area
+                    </span>
+                </button>
+            )}
+
+            <a
+                href={EMERGENCY_URL}
+                className={emergencyLinkClasses}
+            >
+                <span className="font-medium text-[20px] leading-[22px] text-white">
+                    Emergency
+                </span>
+            </a>
+        </div>
+    );
+}
+
