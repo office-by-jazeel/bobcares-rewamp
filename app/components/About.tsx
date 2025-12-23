@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import aboutData from "../../data/about.json";
+import { cn } from "@/lib/utils";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -31,6 +32,9 @@ export default function About() {
           <div className="relative z-10 w-full">
             <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-32 items-center">
 
+              {/* Tagline */}
+              <Tagline className="block md:hidden" />
+
               {/* Left Section - Team Photo */}
               <div className="w-full lg:w-1/2 shrink-0">
                 <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
@@ -52,13 +56,10 @@ export default function About() {
                 </p> */}
 
                 {/* Tagline */}
-                <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] lg:text-[72px] tracking-[-1px] -mt-4">
-                  <span className="text-white">We love technology, giving</span>{' '}
-                  <span className="text-[#6e6e6e]">back, and great experiences.</span>
-                </h2>
+                <Tagline className="hidden md:block" />
 
                 {/* Statistics Grid */}
-                <div className="grid grid-cols-2 gap-y-5 md:gap-20 mt-6 sm:mt-8">
+                <div className="grid grid-cols-2 gap-y-14 md:gap-20 mt-0 sm:mt-8">
                   {stats.map((stat) => (
                     <StatItem key={stat.id} stat={stat} />
                   ))}
@@ -69,6 +70,15 @@ export default function About() {
         </div>
       </div>
     </section>
+  );
+}
+
+function Tagline({ className }: { className?: string }) {
+  return (
+    <h2 className={cn("font-grotesque font-semibold md:leading-[1.05] leading-none  text-[48px] lg:text-[72px] tracking-[-1px]", className)}>
+      <span className="text-white">We love technology, giving</span>{' '}
+      <span className="text-[#6e6e6e]">back, and great experiences.</span>
+    </h2>
   );
 }
 
@@ -131,9 +141,9 @@ function StatItem({ stat }: { stat: { value: string; label: string } }) {
   }, [stat.value]);
 
   return (
-    <div className="flex flex-col gap-4 relative md:pl-8">
+    <div className="flex flex-col gap-1 md:gap-4 relative pl-5 md:pl-8">
       {/* Blue accent line */}
-      <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#133DE2] hidden md:block"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-1 md:w-[3px] bg-[#133DE2]"></div>
 
       {/* Stat value */}
       <p

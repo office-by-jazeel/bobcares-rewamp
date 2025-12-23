@@ -116,7 +116,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="h-3 w-10 relative flex flex-col justify-center items-center gap-1.5 z-50"
+        className="h-3 md:w-10 relative flex flex-col justify-center items-center gap-1.5 z-50"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
@@ -125,7 +125,12 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
             "transition-all duration-300 origin-center",
           )}
         >
-          <svg width="40" height="15" viewBox="0 0 40 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="block md:hidden">
+            <path d="M0 1H28" stroke="white" stroke-width="2" />
+            <path d="M0 11H28" stroke="white" stroke-width="2" />
+          </svg>
+
+          <svg width="40" height="15" viewBox="0 0 40 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="hidden md:block">
             <line x1="1.5" y1="1.5" x2="38.5" y2="1.5" stroke={isHeaderFixed && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
             <line x1="1.5" y1="13.5" x2="38.5" y2="13.5" stroke={isHeaderFixed && !isOpen ? "white" : isOpen ? "white" : "currentColor"} strokeWidth="3" strokeLinecap="round" />
           </svg>
@@ -183,7 +188,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     />
                   </div>
                 )}
-                <div className="flex items-center gap-[30px] md:gap-6">
+                <div className="flex items-center gap-4 md:gap-[30px]">
                   <HeaderLinks variant="menu" />
                   <button
                     onClick={toggleMenu}

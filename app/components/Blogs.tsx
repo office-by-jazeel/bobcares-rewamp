@@ -7,7 +7,7 @@ export default function Blogs() {
     <section>
       <div className="bg-white">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
-          <div className="w-full flex flex-col gap-12 lg:gap-16">
+          <div className="w-full flex flex-col gap-10 lg:gap-16">
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 w-full">

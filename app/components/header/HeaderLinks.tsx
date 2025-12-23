@@ -24,45 +24,54 @@ export default function HeaderLinks({
     const isMenu = variant === "menu";
 
     const textButtonClasses = [
-        "backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors",
+        "md:backdrop-blur-md border border-solid flex items-center justify-center px-8 py-[18px] rounded-[45px] transition-colors",
         isMenu
             ? "border-[#FFFFFF2E]"
             : isHeaderFixed
-                ? "border-[#FFFFFF2E] hover:bg-black/10"
+                ? "border-[#FFFFFF2E] md:hover:bg-black/10"
                 : "border-[#0073EC] bg-[#0073EC] hover:bg-[#0045D9]",
     ].join(" ");
 
     const clientAreaButtonClasses = cn(
         textButtonClasses,
         "hidden md:block transition-shadow",
-        // Theme blue glow effect on hover (#0073EC)
-        "hover:shadow-[0_0_10px_rgba(0,115,236,0.4)]"
+        // Theme blue glow effect on hover (#0073EC) - desktop only
+        "md:hover:shadow-[0_0_10px_rgba(0,115,236,0.4)]"
     );
 
     const emergencyLinkClasses = cn(
         textButtonClasses,
         "hidden md:block transition-all",
         (isMenu || isHeaderFixed) && "hover:border-[#D44A4C]",
-        // Subtle base glow + brighter hover glow for emergency
-        "shadow-[0_0_6px_rgba(212,74,76,0.18)] hover:shadow-[0_0_12px_rgba(212,74,76,0.42)]"
+        // Subtle base glow + brighter hover glow for emergency - desktop only
+        "md:shadow-[0_0_6px_rgba(212,74,76,0.18)] md:hover:shadow-[0_0_12px_rgba(212,74,76,0.42)]"
     );
 
     const searchLinkClasses = cn(
         isMenu
-            ? "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all md:border-[#9898982E] bg-[#00000003]"
-            : "backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all",
+            ? "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all md:border-[#9898982E] bg-[#00000003]"
+            : "md:backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all",
         !isMenu && !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]",
-        // Rainbow glow effect on hover
-        "hover:shadow-[0_0_8px_rgba(255,0,0,0.3),0_0_12px_rgba(255,165,0,0.2),0_0_16px_rgba(0,255,0,0.2),0_0_20px_rgba(0,0,255,0.2)]"
+        // Rainbow glow effect on hover - desktop only
+        "md:hover:shadow-[0_0_8px_rgba(255,0,0,0.3),0_0_12px_rgba(255,165,0,0.2),0_0_16px_rgba(0,255,0,0.2),0_0_20px_rgba(0,0,255,0.2)]"
     );
 
     const phoneLinkClasses = cn(
-        "backdrop-blur-md border border-white/20 border-solid hidden md:flex items-center justify-center p-5 rounded-[45px] size-[60px] hover:bg-black/10 transition-all",
-        isMenu && "border-[#9898982E] bg-[#00000003]",
-        !isMenu && !isHeaderFixed && "border-[#9898982E] bg-[#00000003]",
-        // WhatsApp green glow effect on hover (#25D366)
-        "hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+        isMenu
+            ? "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all md:border-[#9898982E] bg-[#00000003]"
+            : "md:backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all",
+        !isMenu && !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]",
+        // Rainbow glow effect on hover - desktop only
+        "md:hover:shadow-[0_0_8px_rgba(255,0,0,0.3),0_0_12px_rgba(255,165,0,0.2),0_0_16px_rgba(0,255,0,0.2),0_0_20px_rgba(0,0,255,0.2)]"
     );
+
+    // const phoneLinkClasses = cn(
+    //     "md:backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] md:hover:bg-black/10 transition-all",
+    //     isMenu && "border-[#9898982E] bg-[#00000003]",
+    //     !isMenu && !isHeaderFixed && "border-[#9898982E] bg-[#00000003]",
+    //     // WhatsApp green glow effect on hover (#25D366) - desktop only
+    //     "md:hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
+    // );
 
     const iconClasses = cn(
         "size-[26px]",
@@ -73,7 +82,7 @@ export default function HeaderLinks({
         <div
             className={cn(
                 "flex items-center",
-                isMenu ? "gap-[30px] md:gap-6" : "gap-4",
+                isMenu ? "gap-4 md:gap-[30px]" : "gap-4",
                 className
             )}
         >
