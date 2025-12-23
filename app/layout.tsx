@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Darker_Grotesque, Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+import SupportBoard from "./components/SupportBoard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
       >
         <SmoothScroll />
         {children}
+        <SupportBoard />
       </body>
     </html>
   );
