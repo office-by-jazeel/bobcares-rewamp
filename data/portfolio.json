@@ -2,7 +2,7 @@
   "projects": [
     {
       "id": 1,
-      "title": "Riscosity – Secure and Manage API Data Flows Effortlessly",
+      "title": "Riscosity Deployment Securing API Data Flows Across Complex Ecosystems",
       "category": "Digital Transformation",
       "image": "/images/portfolio/1.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -18,7 +18,7 @@
     },
     {
       "id": 3,
-      "title": "How Bobcares Transformed Paykini’s Financial Services Accessibility and Revenue",
+      "title": "End-to-End Digital Transformation for Paykini Strong Security Performance and Mobile UX",
       "category": "Mobile App Development",
       "image": "/images/portfolio/3.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -26,7 +26,7 @@
     },
     {
       "id": 4,
-      "title": "From Guesswork to Clarity: An AI-Driven Approach to Customer Retention",
+      "title": "Transforming Customer Loyalty With Predictive Intelligence Driving Scalable Growth AI Data",
       "category": "AI Services",
       "image": "/images/portfolio/4.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -42,7 +42,7 @@
     },
     {
       "id": 6,
-      "title": "Appraise – Ensuring Reliability and Performance for Cloud Hosting",
+      "title": "Performance-Focused Cloud Hosting Infrastructure Upgrade for Appraise",
       "category": "Web Development",
       "image": "/images/portfolio/6.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -50,7 +50,7 @@
     },
     {
       "id": 7,
-      "title": "Building a Self-Healing Cloud: Inside an AIOps-Driven Ops Transformation",
+      "title": "Optimizing Cloud Operations With Intelligent Automation and Predictive Insights",
       "category": "AIOps Services",
       "image": "/images/portfolio/7.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -58,7 +58,7 @@
     },
     {
       "id": 8,
-      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy & OWASP",
+      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy and OWASP",
       "category": "DevOps Management",
       "image": "/images/portfolio/8.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -66,7 +66,7 @@
     },
     {
       "id": 9,
-      "title": "Enhancing Server Performance and Security for Nexnova s.n.c.",
+      "title": "Optimizing Nexnova’s Server Performance and Security to Achieve 99% Uptime",
       "category": "Server Management",
       "image": "/images/portfolio/9.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
