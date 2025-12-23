@@ -288,8 +288,8 @@
     },
     {
       "id": 25,
-      "top": "10%",
-      "left": "80%",
+      "top": "44%",
+      "left": "55%",
       "clients": [
         {
           "label": "Smilii",
@@ -495,14 +495,14 @@
       "top": "38%",
       "left": "47%",
       "clients": [
-       {
-        "label": "SINSPEED AUTO SUPPLIES LIMITED",
-        "logo": "/images/clients_new/sinspeed-1.png"
-       },
-       {
-        "label": "Mindbodism",
-        "logo": "/images/clients_new/mind.png"
-       }
+        {
+          "label": "SINSPEED AUTO SUPPLIES LIMITED",
+          "logo": "/images/clients_new/sinspeed-1.png"
+        },
+        {
+          "label": "Mindbodism",
+          "logo": "/images/clients_new/mind.png"
+        }
       ]
     }
   ]

@@ -40,7 +40,7 @@ export default function Blogs() {
   );
 }
 
-function BlogCard({ post }: { post: { id: number; category: string; title: string; image: string; imageCloudinaryId?: string } }) {
+function BlogCard({ post }: { post: { id: number; category: string; title: string; image: string; imageCloudinaryId?: string; link?: string } }) {
   return (
     <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10 items-start w-full">
       {/* Image */}
@@ -70,7 +70,7 @@ function BlogCard({ post }: { post: { id: number; category: string; title: strin
 
         {/* Learn More Link */}
         <a
-          href="#"
+          href={post.link}
           className="font-medium text-[16px] sm:text-[18px] text-[#0073ec] md:text-black tracking-[-0.5px] underline underline-offset-4 hover:text-[#0073ec] transition-colors"
         >
           Learn More
