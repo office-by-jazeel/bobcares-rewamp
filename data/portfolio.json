@@ -2,8 +2,8 @@
   "projects": [
     {
       "id": 1,
-      "title": "Riscosity Deployment Securing API Data Flows Across Complex Ecosystems",
-      "category": "Product Engineering",
+      "title": "Riscosity – Secure and Manage API Data Flows Effortlessly",
+      "category": "Digital Transformation",
       "image": "/images/portfolio/1.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/riscosity-secure-and-manage-api-data-flows-effortlessly/"
@@ -11,22 +11,22 @@
     {
       "id": 2,
       "title": "The Reform RX Turnaround: A Complete Platform and Engineering Renewal",
-      "category": "Digital Transformation",
+      "category": "Product Management",
       "image": "/images/portfolio/2.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/reform-rx-complete-platform-support-engineering-renewal"
     },
     {
       "id": 3,
-      "title": "End-to-End Digital Transformation for Paykini Strong Security Performance and Mobile UX",
-      "category": "Infrastructure Management & Optimization",
+      "title": "How Bobcares Transformed Paykini’s Financial Services Accessibility and Revenue",
+      "category": "Mobile App Development",
       "image": "/images/portfolio/3.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/paykini-end-to-end-digital-transformation-security-performance-mobile-accessibility/"
     },
     {
       "id": 4,
-      "title": "Transforming Customer Loyalty With Predictive Intelligence Driving Scalable Growth AI Data",
+      "title": "From Guesswork to Clarity: An AI-Driven Approach to Customer Retention",
       "category": "AI Services",
       "image": "/images/portfolio/4.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
@@ -34,43 +34,43 @@
     },
     {
       "id": 5,
-      "title": "Optimizing Nexnova’s Server Performance and Security to Achieve 99% Uptime",
-      "category": "Cybersecurity & Compliance Services",
+      "title": "Fixing Fragmented CI/CD Pipelines That Caused Slow, and Risky Deployments",
+      "category": "CI/CD Transformation",
       "image": "/images/portfolio/5.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link": "https://bobcares.com/case-study/enhancing-server-performance-and-security-for-nexnova-s-n-c/"
+      "link": "https://bobcares.com/case-study/unifying-ci-cd-pipelines-for-zero-downtime-deployments-in-fitness-tech/"
     },
     {
       "id": 6,
-      "title": "Performance-Focused Cloud Hosting Infrastructure Upgrade for Appraise",
-      "category": "Infrastructure Management & Optimization",
+      "title": "Appraise – Ensuring Reliability and Performance for Cloud Hosting",
+      "category": "Web Development",
       "image": "/images/portfolio/6.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/appraise-ensuring-reliability-and-performance-for-cloud-hosting/"
     },
     {
       "id": 7,
-      "title": "Optimizing Cloud Operations With Intelligent Automation and Predictive Insights",
-      "category": "AI Services",
+      "title": "Building a Self-Healing Cloud: Inside an AIOps-Driven Ops Transformation",
+      "category": "AIOps Services",
       "image": "/images/portfolio/7.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
       "link": "https://bobcares.com/case-study/aiops-ecosystem-transformation-success-story/"
     },
     {
       "id": 8,
-      "title": "Fixing Fragmented CI/CD Pipelines That Caused Slow, and Risky Deployments",
-      "category": "DevOps & Automation Services",
+      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy & OWASP",
+      "category": "DevOps Management",
       "image": "/images/portfolio/8.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link": "https://bobcares.com/case-study/unifying-ci-cd-pipelines-for-zero-downtime-deployments-in-fitness-tech/"
+      "link": "https://bobcares.com/case-study/securing-docker-deployments-on-azure-with-trivy-and-owasp-dependency-check/"
     },
     {
       "id": 9,
-      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy and OWASP",
-      "category": "DevOps & Automation Services",
+      "title": "Enhancing Server Performance and Security for Nexnova s.n.c.",
+      "category": "Server Management",
       "image": "/images/portfolio/9.png",
       "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
-      "link": "https://bobcares.com/case-study/securing-docker-deployments-on-azure-with-trivy-and-owasp-dependency-check/"
+      "link": "https://bobcares.com/case-study/enhancing-server-performance-and-security-for-nexnova-s-n-c/"
     }
   ]
 }
