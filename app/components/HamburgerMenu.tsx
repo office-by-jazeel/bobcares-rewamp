@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -178,7 +179,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     <span className="text-base font-medium">Back</span>
                   </button>
                 ) : (
-                  <div className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
+                  <Link href="/" className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
                     <Image
                       src="/_next/icons/logo.svg"
                       alt="Bobcares Logo"
@@ -187,7 +188,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                       className="h-full w-auto"
                       style={{ width: "auto" }}
                     />
-                  </div>
+                  </Link>
                 )}
                 <div className="flex items-center gap-4 md:gap-[30px]">
                   <HeaderLinks variant="menu" />
