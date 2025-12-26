@@ -25,6 +25,7 @@
       "sections": [
         {
           "title": "Product Engineering",
+          "href": "https://bobcares.com/product-engineering/",
           "items": [
             {
               "label": "Web Development",
@@ -70,6 +71,7 @@
         },
         {
           "title": "Digital Transformation",
+          "href": "https://bobcares.com/digital-transformation/",
           "items": [
             {
               "label": "Legacy Modernization",
@@ -100,6 +102,7 @@
         },
         {
           "title": "AI Services",
+          "href": "https://bobcares.com/ai-services/",
           "items": [
             {
               "label": "AI & Machine Learning",
@@ -130,6 +133,7 @@
         },
         {
           "title": "Infrastructure Management & Optimization",
+          "href": "https://bobcares.com/infrastructure-management/",
           "items": [
             {
               "label": "Cloud Setup",
@@ -170,6 +174,7 @@
         },
         {
           "title": "DevOps & Automation Services",
+          "href": "https://bobcares.com/devops-services/",
           "items": [
             {
               "label": "CI/CD Setup & Pipeline Automation",
@@ -200,6 +205,7 @@
         },
         {
           "title": "Cybersecurity & Compliance Services",
+          "href": "https://bobcares.com/cybersecurity-services/",
           "items": [
             {
               "label": "Security Hardening & Monitoring",

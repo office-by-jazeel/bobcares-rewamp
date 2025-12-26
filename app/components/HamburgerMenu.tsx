@@ -298,19 +298,39 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                               )}
                               <div className={cn("border-b", isExpanded ? "border-white" : "border-[#1C1C1C] py-5", index === currentSubMenu.sections.length - 1 && "border-0")}>
                                 <div
-                                  onClick={() => toggleSection(section.title)}
+                                  onClick={() => {
+                                    // Only toggle if no href is present
+                                    if (!("href" in section && section.href)) {
+                                      toggleSection(section.title);
+                                    }
+                                  }}
                                   className={cn(
-                                    "w-full flex items-center justify-between cursor-pointer"
+                                    "w-full flex items-center justify-between",
+                                    "href" in section && section.href ? "" : "cursor-pointer"
                                   )}
                                 >
                                   <div>
-                                    <div className={cn(
-                                      isExpanded
-                                        ? "text-white text-[32px] font-semibold leading-normal tracking-[-0.32px]"
-                                        : "text-[#808080] text-[20px] font-medium leading-normal tracking-[-0.1px]"
-                                    )}>
-                                      {section.title}
-                                    </div>
+                                    {"href" in section && section.href ? (
+                                      <a
+                                        href={section.href}
+                                        className={cn(
+                                          "block hover:opacity-80 transition-opacity",
+                                          isExpanded
+                                            ? "text-white text-[32px] font-semibold leading-normal tracking-[-0.32px]"
+                                            : "text-[#808080] text-[20px] font-medium leading-normal tracking-[-0.1px]"
+                                        )}
+                                      >
+                                        {section.title}
+                                      </a>
+                                    ) : (
+                                      <div className={cn(
+                                        isExpanded
+                                          ? "text-white text-[32px] font-semibold leading-normal tracking-[-0.32px]"
+                                          : "text-[#808080] text-[20px] font-medium leading-normal tracking-[-0.1px]"
+                                      )}>
+                                        {section.title}
+                                      </div>
+                                    )}
                                   </div>
                                   <button
                                     onClick={(e) => {
