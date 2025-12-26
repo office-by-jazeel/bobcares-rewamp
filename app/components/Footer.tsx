@@ -14,6 +14,12 @@ const socialIcons = {
   Whatsapp: "/_next/icons/social/whatsapp.svg"
 };
 
+const socialLinks = {
+  Facebook: "https://www.facebook.com/Bobcares",
+  Twitter: "https://twitter.com/BobCaresTweets",
+  LinkedIn: "https://www.linkedin.com/company/bobcares"
+};
+
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
@@ -263,10 +269,12 @@ export default function Footer() {
 
               {/* Social Media Icons */}
               <div className="flex gap-4 sm:gap-6 items-center">
-                {['Facebook', 'Instagram', 'Whatsapp', 'Twitter', 'LinkedIn'].map((name) => (
+                {['Facebook', 'Twitter', 'LinkedIn'].map((name) => (
                   <a
                     key={name}
-                    href="#"
+                    href={socialLinks[name as keyof typeof socialLinks]}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="relative shrink-0 size-6 hover:opacity-70 transition-opacity"
                   >
                     <Image
