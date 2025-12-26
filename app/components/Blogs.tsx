@@ -1,5 +1,6 @@
 import CloudinaryImage from "@/components/CloudinaryImage";
 import blogsData from "../../data/blogs.json";
+import Link from "next/link";
 
 export default function Blogs() {
   const { blogs } = blogsData;
@@ -15,11 +16,11 @@ export default function Blogs() {
                 <span className="text-black">Trending</span>
                 <span className="text-[#0073ec]"> blogs</span>
               </h2>
-              <button className="hidden border border-black border-solid md:flex items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
+              <Link href={"https://bobcares.com/blog/"} className="hidden border border-black border-solid md:flex items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
                 <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] tracking-[-1px]">
                   View All
                 </span>
-              </button>
+              </Link>
             </div>
 
             {/* Blog Cards Grid */}
