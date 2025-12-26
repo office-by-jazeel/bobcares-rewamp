@@ -29,34 +29,37 @@
             {
               "label": "Web Development",
               "icon": "/_next/icons/services/web.svg",
-              "href": "https://bobcares.com/web-development/"
+              "href": "https://bobcares.com/product-engineering#web-development"
             },
             {
               "label": "Microservices Architecture",
-              "icon": "/_next/icons/services/micro.svg"
+              "icon": "/_next/icons/services/micro.svg",
+              "href": "https://bobcares.com/product-engineering#microservices-architecture"
             },
             {
               "label": "Mobile Apps",
               "icon": "/_next/icons/services/mobile.svg",
-              "href": "https://bobcares.com/mobile-application-development/"
+              "href": "https://bobcares.com/product-engineering#mobile-apps"
             },
             {
               "label": "UI/UX Design",
               "icon": "/_next/icons/services/uiux.svg",
-              "href": "https://bobcares.com/ui-ux-design/"
+              "href": "https://bobcares.com/product-engineering#ui-ux-design"
             },
             {
               "label": "MVP to Scale Builds",
-              "icon": "/_next/icons/services/MVP.svg"
+              "icon": "/_next/icons/services/MVP.svg",
+              "href": "https://bobcares.com/product-engineering#mvp-to-scale-builds"
             },
             {
               "label": "Agile & Dev Team Augmentation",
-              "icon": "/_next/icons/services/Agile.svg"
+              "icon": "/_next/icons/services/Agile.svg",
+              "href": "https://bobcares.com/product-engineering#agile-and-dev-team-augmentation"
             },
             {
               "label": "Ecommerce",
               "icon": "/_next/icons/services/Ecommerce.svg",
-              "href": "https://bobcares.com/ecommerce-development/"
+              "href": "https://bobcares.com/product-engineering#ecommerce"
             },
             {
               "label": "QA and Test Automation",
@@ -69,29 +72,29 @@
           "title": "Digital Transformation",
           "items": [
             {
-              "label": "Digital Transformation",
-              "icon": "/_next/icons/services/Automation.svg",
-              "href": "https://bobcares.com/digital-transformation/"
-            },
-            {
               "label": "Legacy Modernization",
-              "icon": "/_next/icons/services/Legacy Modernization.svg"
+              "icon": "/_next/icons/services/Legacy Modernization.svg",
+              "href": "https://bobcares.com/digital-transformation#legacy-modernization"
             },
             {
               "label": "Workflow Automation",
-              "icon": "/_next/icons/services/Workflow.svg"
+              "icon": "/_next/icons/services/Workflow.svg",
+              "href": "https://bobcares.com/digital-transformation#workflow-automation"
             },
             {
               "label": "Data-Driven Dashboards",
-              "icon": "/_next/icons/services/Data-Driven Dashboards.svg"
+              "icon": "/_next/icons/services/Data-Driven Dashboards.svg",
+              "href": "https://bobcares.com/digital-transformation#data-driven-dashboards"
             },
             {
               "label": "CRM/ERP Integration",
-              "icon": "/_next/icons/services/CRM.svg"
+              "icon": "/_next/icons/services/CRM.svg",
+              "href": "https://bobcares.com/digital-transformation#crm-erp-integration"
             },
             {
               "label": "Business Process Reengineering",
-              "icon": "/_next/icons/services/Business Process.svg"
+              "icon": "/_next/icons/services/Business Process.svg",
+              "href": "https://bobcares.com/digital-transformation#business-process-reengineering"
             }
           ]
         },
@@ -101,24 +104,27 @@
             {
               "label": "AI & Machine Learning",
               "icon": "/_next/icons/services/AI & Machine Learning.svg",
-              "href": "https://bobcares.com/ai-development-services/"
+              "href": "https://bobcares.com/ai-services#ai-and-machine-learning"
             },
             {
               "label": "AIOps",
               "icon": "/_next/icons/services/AIOps.svg",
-              "href": "https://bobcares.com/aiops-services/"
+              "href": "https://bobcares.com/ai-services#aiops"
             },
             {
               "label": "Intelligent Automation",
-              "icon": "/_next/icons/services/Intelligent Automation.svg"
+              "icon": "/_next/icons/services/Intelligent Automation.svg",
+              "href": "https://bobcares.com/ai-services#intelligent-automation"
             },
             {
               "label": "Business Intelligence and Analytics",
-              "icon": "/_next/icons/services/Business Intelligence.svg"
+              "icon": "/_next/icons/services/Business Intelligence.svg",
+              "href": "https://bobcares.com/ai-services#business-intelligence-and-analytics"
             },
             {
               "label": "AI Installation & Compute DataCenter Support",
-              "icon": "/_next/icons/services/AI Installation.svg"
+              "icon": "/_next/icons/services/AI Installation.svg",
+              "href": "https://bobcares.com/ai-services#ai-installation-and-compute-datacenter-support"
             }
           ]
         },
@@ -127,33 +133,38 @@
           "items": [
             {
               "label": "Cloud Setup",
-              "icon": "/_next/icons/services/Cloud Setup.svg"
+              "icon": "/_next/icons/services/Cloud Setup.svg",
+              "href": "https://bobcares.com/infrastructure-management#cloud-setup"
             },
             {
               "label": "Cloud Migration",
-              "icon": "/_next/icons/services/Cloud Migration.svg"
+              "icon": "/_next/icons/services/Cloud Migration.svg",
+              "href": "https://bobcares.com/infrastructure-management#cloud-migration"
             },
             {
               "label": "Managed Cloud Services",
               "icon": "/_next/icons/services/Managed Cloud Services.svg",
-              "href": "https://bobcares.com/cloud-management/"
+              "href": "https://bobcares.com/infrastructure-management#managed-cloud-services"
             },
             {
               "label": "Server & Hosting Management",
               "icon": "/_next/icons/services/Server & Hosting Management.svg",
-              "href": "https://bobcares.com/server-management/"
+              "href": "https://bobcares.com/infrastructure-management#server-and-hosting-management"
             },
             {
               "label": "Cost Optimization & Monitoring",
-              "icon": "/_next/icons/services/Cost Optimization & Monitoring.svg"
+              "icon": "/_next/icons/services/Cost Optimization & Monitoring.svg",
+              "href": "https://bobcares.com/infrastructure-management#cost-optimization-and-monitoring"
             },
             {
               "label": "Performance Optimization & Monitoring",
-              "icon": "/_next/icons/services/Performance Optimization.svg"
+              "icon": "/_next/icons/services/Performance Optimization.svg",
+              "href": "https://bobcares.com/infrastructure-management#performance-optimization-and-monitoring"
             },
             {
               "label": "Outsourced Support Services",
-              "icon": "/_next/icons/services/Support Services.svg"
+              "icon": "/_next/icons/services/Support Services.svg",
+              "href": "https://bobcares.com/outsourced-support/"
             }
           ]
         },
@@ -162,23 +173,28 @@
           "items": [
             {
               "label": "CI/CD Setup & Pipeline Automation",
-              "icon": "/_next/icons/services/CD.svg"
+              "icon": "/_next/icons/services/CD.svg",
+              "href": "https://bobcares.com/devops-services#ci-cd-setup-and-pipeline-automation"
             },
             {
               "label": "Kubernetes & Docker Management",
-              "icon": "/_next/icons/services/Kubernetes.svg"
+              "icon": "/_next/icons/services/Kubernetes.svg",
+              "href": "https://bobcares.com/devops-services#kubernetes-and-docker-management"
             },
             {
               "label": "Infrastructure as Code (IaC)",
-              "icon": "/_next/icons/services/Infrastructure.svg"
+              "icon": "/_next/icons/services/Infrastructure.svg",
+              "href": "https://bobcares.com/devops-services#infrastructure-as-code"
             },
             {
               "label": "Cloud-Native Migration",
-              "icon": "/_next/icons/services/Native Migration.svg"
+              "icon": "/_next/icons/services/Native Migration.svg",
+              "href": "https://bobcares.com/devops-services#cloud-native-migration"
             },
             {
               "label": "DevSecOps",
-              "icon": "/_next/icons/services/DevSecOps.svg"
+              "icon": "/_next/icons/services/DevSecOps.svg",
+              "href": "https://bobcares.com/devops-services#devsecops"
             }
           ]
         },
@@ -187,19 +203,23 @@
           "items": [
             {
               "label": "Security Hardening & Monitoring",
-              "icon": "/_next/icons/services/Security.svg"
+              "icon": "/_next/icons/services/Security.svg",
+              "href": "https://bobcares.com/cybersecurity-services#security-hardening-and-monitoring"
             },
             {
               "label": "Vulnerability Assessment & Penetration Testing (VAPT)",
-              "icon": "/_next/icons/services/VAPT.svg"
+              "icon": "/_next/icons/services/VAPT.svg",
+              "href": "https://bobcares.com/cybersecurity-services#vulnerability-assessment-and-penetration-testing"
             },
             {
               "label": "Incident Response Management",
-              "icon": "/_next/icons/services/incident.svg"
+              "icon": "/_next/icons/services/incident.svg",
+              "href": "https://bobcares.com/cybersecurity-services#incident-response-management"
             },
             {
               "label": "Backup & Disaster Recovery Services",
-              "icon": "/_next/icons/services/backup.svg"
+              "icon": "/_next/icons/services/backup.svg",
+              "href": "https://bobcares.com/cybersecurity-services#backup-and-disaster-recovery-services"
             }
           ]
         }
