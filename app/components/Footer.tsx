@@ -116,17 +116,20 @@ export default function Footer() {
               <div className="hidden lg:grid lg:grid-cols-6 gap-12">
                 {services.map((service) => (
                   <div key={service.title} className="flex flex-col gap-12">
-                    <h3 className="font-medium text-[16px] text-white uppercase leading-[1.54] tracking-normal min-h-[50px] line-clamp-2">
+                    <a
+                      href={service.href || "#"}
+                      className="font-medium text-[16px] text-white uppercase leading-[1.54] tracking-normal min-h-[50px] line-clamp-2 hover:text-[#0073ec] transition-colors"
+                    >
                       {service.title}
-                    </h3>
+                    </a>
                     <div className="flex flex-col gap-[32px]">
                       {service.items.map((item, index) => (
                         <a
                           key={index}
-                          href="#"
+                          href={typeof item === 'string' ? '#' : item.href}
                           className="font-light text-[18px] text-[#a4a4a4] leading-normal tracking-[-0.18px] hover:text-white transition-colors"
                         >
-                          {item}
+                          {typeof item === 'string' ? item : item.label}
                         </a>
                       ))}
                     </div>
@@ -152,14 +155,27 @@ export default function Footer() {
                         className="w-full flex items-center justify-between"
                         aria-label={isExpanded ? `Collapse ${service.title}` : `Expand ${service.title}`}
                       >
-                        <h3
-                          className={cn(
-                            "font-medium text-[16px] uppercase leading-[1.1] tracking-normal text-left",
-                            isExpanded ? "text-[#e6e6e6]" : "text-[#8a8a8a]"
-                          )}
-                        >
-                          {service.title}
-                        </h3>
+                        {service.href ? (
+                          <a
+                            href={service.href}
+                            onClick={(e) => e.stopPropagation()}
+                            className={cn(
+                              "font-medium text-[16px] uppercase leading-[1.1] tracking-normal text-left hover:text-[#0073ec] transition-colors",
+                              isExpanded ? "text-[#e6e6e6]" : "text-[#8a8a8a]"
+                            )}
+                          >
+                            {service.title}
+                          </a>
+                        ) : (
+                          <h3
+                            className={cn(
+                              "font-medium text-[16px] uppercase leading-[1.1] tracking-normal text-left",
+                              isExpanded ? "text-[#e6e6e6]" : "text-[#8a8a8a]"
+                            )}
+                          >
+                            {service.title}
+                          </h3>
+                        )}
                         <div className="relative shrink-0 size-6">
                           {isExpanded ? (
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -192,10 +208,10 @@ export default function Footer() {
                                 {service.items.slice(0, Math.ceil(service.items.length / 2)).map((item, itemIndex) => (
                                   <a
                                     key={itemIndex}
-                                    href="#"
+                                    href={typeof item === 'string' ? '#' : item.href}
                                     className="font-light text-[14px] text-[#a4a4a4] leading-normal tracking-[-0.14px] hover:text-white transition-colors"
                                   >
-                                    {item}
+                                    {typeof item === 'string' ? item : item.label}
                                   </a>
                                 ))}
                               </div>
@@ -203,10 +219,10 @@ export default function Footer() {
                                 {service.items.slice(Math.ceil(service.items.length / 2)).map((item, itemIndex) => (
                                   <a
                                     key={itemIndex}
-                                    href="#"
+                                    href={typeof item === 'string' ? '#' : item.href}
                                     className="font-light text-[14px] text-[#a4a4a4] leading-normal tracking-[-0.14px] hover:text-white transition-colors"
                                   >
-                                    {item}
+                                    {typeof item === 'string' ? item : item.label}
                                   </a>
                                 ))}
                               </div>
