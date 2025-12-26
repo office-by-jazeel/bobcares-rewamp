@@ -23,6 +23,8 @@ interface InlineSvgProps {
   dotHighlightCount?: number;
   /** Maximum distance to search for dots (in SVG units). When omitted, calculated based on SVG viewBox. */
   dotMaxDistance?: number;
+  /** Callback fired when SVG is loaded and rendered */
+  onLoad?: () => void;
 }
 
 /**
@@ -40,12 +42,15 @@ export default function InlineSvg({
   dotMaxSize = 2500,
   dotHighlightCount = 8,
   dotMaxDistance,
+  onLoad,
 }: InlineSvgProps) {
   const [svgMarkup, setSvgMarkup] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const onLoadCalledRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
+    onLoadCalledRef.current = false; // Reset when src changes
 
     async function load() {
       const res = await fetch(src);
@@ -96,7 +101,7 @@ export default function InlineSvg({
     return () => {
       cancelled = true;
     };
-  }, [src, className, ariaLabel]);
+  }, [src, className, ariaLabel, onLoad]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -104,6 +109,15 @@ export default function InlineSvg({
 
     const svg = container.querySelector('svg');
     if (!svg) return;
+
+    // Call onLoad when SVG is rendered in DOM (only once)
+    if (onLoad && !onLoadCalledRef.current) {
+      onLoadCalledRef.current = true;
+      // Use requestAnimationFrame to ensure SVG is fully rendered
+      requestAnimationFrame(() => {
+        onLoad();
+      });
+    }
 
     const selector = 'path,polygon,rect,circle,ellipse';
 
@@ -403,7 +417,7 @@ export default function InlineSvg({
       svgEl.removeEventListener('pointerleave', clear);
       clear();
     };
-  }, [svgMarkup, hoverMode, clusterCount, clusterRadius, dotMaxSize, dotHighlightCount, dotMaxDistance]);
+  }, [svgMarkup, hoverMode, clusterCount, clusterRadius, dotMaxSize, dotHighlightCount, dotMaxDistance, onLoad]);
 
   if (!svgMarkup) return null;
 

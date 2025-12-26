@@ -1,10 +1,17 @@
 'use client';
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import InlineSvg from "@/components/InlineSvg";
 import mapPinsData from "../../data/mapPins.json";
 import { cn } from "@/lib/utils";
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Client interface for map pins
 interface Client {
@@ -18,20 +25,32 @@ interface MapPinProps {
   left: string | number;
   clients: Client[];
   onClick?: () => void;
+  pinRef?: React.RefObject<HTMLDivElement>;
+  setPinRef?: (el: HTMLDivElement | null) => void;
 }
 
-function MapPin({ top, left, clients, onClick }: MapPinProps) {
+function MapPin({ top, left, clients, onClick, pinRef: externalPinRef, setPinRef }: MapPinProps) {
   const topValue = typeof top === "number" ? `${top}px` : top;
   const leftValue = typeof left === "number" ? `${left}px` : left;
   const [isHovered, setIsHovered] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0, isAbove: true });
-  const pinRef = useRef<HTMLDivElement>(null);
+  const internalPinRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseEnter = () => {
-    if (!pinRef.current || !tooltipRef.current) return;
+  // Use callback ref if provided, otherwise use internal ref
+  const pinRefCallback = (el: HTMLDivElement | null) => {
+    if (setPinRef) {
+      setPinRef(el);
+    }
+    internalPinRef.current = el;
+  };
 
-    const pinRect = pinRef.current.getBoundingClientRect();
+  const pinRef = setPinRef ? pinRefCallback : (externalPinRef || internalPinRef);
+
+  const handleMouseEnter = () => {
+    if (!internalPinRef.current || !tooltipRef.current) return;
+
+    const pinRect = internalPinRef.current.getBoundingClientRect();
     const tooltipWidth = 250; // w-[250px]
     // Get tooltip height - it should be available even when opacity is 0
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
@@ -187,8 +206,68 @@ function MapPin({ top, left, clients, onClick }: MapPinProps) {
 }
 
 export default function Trust() {
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Store pin elements using a Map with callback refs
+  const pinElementsMap = useRef<Map<number | string, HTMLDivElement>>(new Map());
+
+  const setPinRef = (pinId: number | string) => (el: HTMLDivElement | null) => {
+    if (el) {
+      pinElementsMap.current.set(pinId, el);
+    } else {
+      pinElementsMap.current.delete(pinId);
+    }
+  };
+
+  // GSAP ScrollTrigger animation for pins
+  useEffect(() => {
+    if (!isMapLoaded || !sectionRef.current) return;
+
+    let scrollTrigger: ScrollTrigger | null = null;
+
+    // Wait for next frame to ensure all pins are rendered
+    requestAnimationFrame(() => {
+      const pinElements = Array.from(pinElementsMap.current.values());
+
+      if (pinElements.length === 0) return;
+
+      // Set initial state: pins hidden with scale 0
+      gsap.set(pinElements, {
+        scale: 0,
+        opacity: 0,
+      });
+
+      scrollTrigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 80%",
+        onEnter: () => {
+          // Animate pins one by one with staggered delay
+          gsap.to(pinElements, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.6,
+            ease: "back.out(1.7)",
+            stagger: 0.1, // 0.1s delay between each pin
+          });
+        },
+      });
+    });
+
+    return () => {
+      if (scrollTrigger) {
+        scrollTrigger.kill();
+      }
+    };
+  }, [isMapLoaded]);
+
+  const handleMapLoad = () => {
+    setIsMapLoaded(true);
+  };
+
   return (
-    <section className="bg-black overflow-hidden relative">
+    <section ref={sectionRef} className="bg-black overflow-hidden relative">
       <div className="container mx-auto flex flex-col lg:flex-row items-start h-full w-full py-14 lg:py-[140px] gap-12 lg:gap-16">
         <div className="flex flex-col gap-8 sm:gap-12 items-start w-full lg:w-[40%]">
           <div className="flex flex-col gap-1 items-start w-full">
@@ -212,7 +291,13 @@ export default function Trust() {
         </div>
 
         {/* World Map Graphic */}
-        <div className="relative flex-1 w-full hidden md:block isolate">
+        <div 
+          ref={mapContainerRef}
+          className={cn(
+            "relative flex-1 w-full hidden md:block isolate",
+            !isMapLoaded && "opacity-0"
+          )}
+        >
           <InlineSvg
             src="/_next/images/world-map.svg"
             ariaLabel="World map showing global clients"
@@ -220,15 +305,17 @@ export default function Trust() {
             hoverMode="dots"
             dotMaxSize={2500}
             dotHighlightCount={16}
+            onLoad={handleMapLoad}
           />
 
           {/* Map Pins - Render pins from data */}
-          {mapPinsData.mapPins.map((pin) => (
+          {isMapLoaded && mapPinsData.mapPins.map((pin) => (
             <MapPin
               key={pin.id}
               top={pin.top}
               left={pin.left}
               clients={pin.clients}
+              setPinRef={setPinRef(pin.id)}
             />
           ))}
         </div>
