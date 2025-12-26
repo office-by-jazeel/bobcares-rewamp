@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 import footerData from "../../data/footer.json";
 
 const socialIcons = {
-  Facebook: "/icons/facebook.svg",
-  Twitter: "/icons/x.svg",
-  LinkedIn: "/icons/link.svg",
-  Instagram: "/icons/instagram.svg",
-  Whatsapp: "/icons/whatsapp.svg"
+  Facebook: "/icons/social/facebook.svg",
+  Twitter: "/icons/social/x.svg",
+  LinkedIn: "/icons/social/link.svg",
+  Instagram: "/icons/social/instagram.svg",
+  Whatsapp: "/icons/social/whatsapp.svg"
 };
 
 export default function Footer() {
@@ -75,7 +75,7 @@ export default function Footer() {
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
                   <div className="relative shrink-0 size-12 sm:size-16">
                     <Image
-                      src="/icons/mail.svg"
+                      src="/icons/navigation/mail.svg"
                       alt="Email"
                       width={32}
                       height={32}
@@ -93,7 +93,7 @@ export default function Footer() {
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
                   <div className="relative shrink-0 size-12 sm:size-16">
                     <Image
-                      src="/icons/call.svg"
+                      src="/icons/navigation/call.svg"
                       alt="Phone"
                       width={32}
                       height={32}
@@ -269,7 +269,7 @@ export default function Footer() {
             <div className="w-full lg:mt-8">
               <div className="relative w-full flex items-center justify-center">
                 <Image
-                  src="/images/bobcares.svg"
+                  src="/icons/bobcares.svg"
                   alt="Bobcares Logo"
                   width={1200}
                   height={400}

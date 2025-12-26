@@ -18,7 +18,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
       <div className="flex items-center justify-between py-5">
         <div className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
           <Image
-            src={"/icons/logo.svg"}
+            src="/icons/logo.svg"
             alt="Bobcares Logo"
             width={254}
             height={47}
@@ -34,7 +34,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               aria-label="Close menu"
             >
               <Image
-                src="/icons/close.svg"
+                src="/icons/navigation/close.svg"
                 alt="Close"
                 width={24}
                 height={24}

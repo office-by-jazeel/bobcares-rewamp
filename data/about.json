@@ -21,8 +21,8 @@
       "label": "Projects Handled"
     }
   ],
-  "teamImage": "/images/technology-image.png",
+  "teamImage": "/images/about/technology-image.png",
   "teamImageCloudinaryId": "bobcares/about-team",
-  "backgroundImage": "/images/about-tunnel-bg.jpg",
+  "backgroundImage": "/images/about/about-tunnel-bg.jpg",
   "backgroundImageCloudinaryId": "bobcares/about-tunnel-bg"
 }

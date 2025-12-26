@@ -491,7 +491,7 @@ export default function VideoCarousel({
 
     if (currentVideo.thumbnail || currentVideo.thumbnailCloudinaryId) {
       const img = new Image();
-      const thumbnailSrc = currentVideo.thumbnail || '/images/videothumbnail.png';
+      const thumbnailSrc = currentVideo.thumbnail || '/images/hero/videothumbnail.png';
       img.src = thumbnailSrc;
     }
   }, [currentVideoIndex, videos]);
@@ -536,7 +536,7 @@ export default function VideoCarousel({
           }}
         >
           <CloudinaryImage
-            src={currentVideo.thumbnail || '/images/videothumbnail.png'}
+            src={currentVideo.thumbnail || '/images/hero/videothumbnail.png'}
             cloudinaryId={currentVideo.thumbnailCloudinaryId}
             alt="Video thumbnail"
             fill
