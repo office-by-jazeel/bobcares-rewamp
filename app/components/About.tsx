@@ -13,22 +13,11 @@ if (typeof window !== "undefined") {
 }
 
 export default function About() {
-  const { stats, teamImage, teamImageCloudinaryId, backgroundImage, backgroundImageCloudinaryId } = aboutData;
+  const { stats, teamImage, teamImageCloudinaryId } = aboutData;
   return (
     <section className="relative overflow-hidden">
       <div className="bg-black">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px] relative">
-          {/* Background with subtle grid pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <CloudinaryImage
-              src={backgroundImage}
-              cloudinaryId={backgroundImageCloudinaryId}
-              alt="Background"
-              fill
-              className="object-cover"
-            />
-          </div>
-
           <div className="relative z-10 w-full">
             <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-32 items-center">
 
