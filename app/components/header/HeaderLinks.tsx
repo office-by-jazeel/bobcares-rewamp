@@ -112,13 +112,11 @@ export default function HeaderLinks({
                 />
             </a>
 
-            {isMenu && (
-                <button className={clientAreaButtonClasses}>
-                    <span className="font-medium text-[20px] leading-[22px] text-white truncate">
-                        Client Area
-                    </span>
-                </button>
-            )}
+            <button className={clientAreaButtonClasses}>
+                <span className="font-medium text-[20px] leading-[22px] text-white truncate">
+                    Client Area
+                </span>
+            </button>
 
             <a
                 href={EMERGENCY_URL}
