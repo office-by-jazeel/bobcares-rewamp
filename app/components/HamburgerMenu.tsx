@@ -126,8 +126,8 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
           )}
         >
           <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="block md:hidden">
-            <path d="M0 1H28" stroke="white" strokeWidth="2" />
-            <path d="M0 11H28" stroke="white" strokeWidth="2" />
+            <path d="M0 1H28" stroke={isHeaderFixed ? "white" : "currentColor"} strokeWidth="2" />
+            <path d="M0 11H28" stroke={isHeaderFixed ? "white" : "currentColor"} strokeWidth="2" />
           </svg>
 
           <svg width="40" height="15" viewBox="0 0 40 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="hidden md:block">
