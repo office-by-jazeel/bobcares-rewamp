@@ -214,7 +214,7 @@ export default function Trust() {
         {/* World Map Graphic */}
         <div className="relative flex-1 w-full hidden md:block isolate">
           <InlineSvg
-            src="/images/world-map.svg"
+            src="/_next/images/world-map.svg"
             ariaLabel="World map showing global clients"
             className="w-full object-cover select-none"
             hoverMode="dots"

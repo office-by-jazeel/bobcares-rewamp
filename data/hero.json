@@ -5,12 +5,12 @@
     {
       "platform": "Google",
       "rating": "4.5",
-      "icon": "/images/hero/google-icon.png"
+      "icon": "/_next/images/hero/google-icon.png"
     },
     {
       "platform": "Clutch",
       "rating": "5.0",
-      "icon": "/images/hero/clutch-icon.png"
+      "icon": "/_next/images/hero/clutch-icon.png"
     }
   ],
   "buttons": [
@@ -25,13 +25,13 @@
       "href": "#contact"
     }
   ],
-  "backgroundImage": "/images/hero/hero-bg.jpg",
+  "backgroundImage": "/_next/images/hero/hero-bg.jpg",
   "backgroundImageCloudinaryId": "bobcares/hero-bg",
   "backgroundVideos": [
     {
-      "src": "/videos/bobcares-homepage-video.mp4",
+      "src": "/_next/videos/bobcares-homepage-video.mp4",
       "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/4bf87772a169d477d5f87a931e3bdb28/manifest/video.m3u8",
-      "thumbnail": "/images/hero/thumbnail-image.jpg"
+      "thumbnail": "/_next/images/hero/thumbnail-image.jpg"
     }
   ]
 }

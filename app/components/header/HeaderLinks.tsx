@@ -88,7 +88,7 @@ export default function HeaderLinks({
         >
             <a href={SEARCH_URL} className={searchLinkClasses} aria-label="Search">
                 <Image
-                    src="/icons/navigation/search-icon.svg"
+                    src="/_next/icons/navigation/search-icon.svg"
                     alt="Search"
                     width={26}
                     height={26}
@@ -103,7 +103,7 @@ export default function HeaderLinks({
                 aria-label="Call +18003835193"
             >
                 <Image
-                    src="/icons/navigation/phone-icon.svg"
+                    src="/_next/icons/navigation/phone-icon.svg"
                     alt="Phone"
                     width={26}
                     height={26}

@@ -4,21 +4,21 @@
       "id": 1,
       "category": "Digital Transformation",
       "title": "Sentiment Analysis: The Secret Behind Customer Retention",
-      "image": "/images/blogs/1.png",
+      "image": "/_next/images/blogs/1.png",
       "link": "https://bobcares.com/blog/sentiment-analysis-the-secret-behind-customer-retention/"
     },
     {
       "id": 2,
       "category": "Infrastructure Management & Optimization",
       "title": "Why Payment Platforms Crash & How to Prevent It",
-      "image": "/images/blogs/2.png",
+      "image": "/_next/images/blogs/2.png",
       "link": "https://bobcares.com/blog/why-payment-platforms-crash/"
     },
     {
       "id": 3,
       "category": "DevSecOps",
       "title": "DevSecOps Vs. AppSec: Building Stronger, and Smarter Security",
-      "image": "/images/blogs/3.png",
+      "image": "/_next/images/blogs/3.png",
       "link": "https://bobcares.com/blog/devsecops-vs-appsec-differences-and-integration-guide/"
     }
   ]

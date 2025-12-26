@@ -166,7 +166,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
     <div className={cn("bg-[#0073EC] relative rounded-2xl p-8 sm:p-12 lg:p-14 flex flex-col gap-7 sm:gap-8 text-white overflow-hidden", className)}>
       <div className="absolute w-full h-full -right-[20%] -bottom-[5%]">
         <Image
-          src="/icons/bob.svg"
+          src="/_next/icons/bob.svg"
           alt=""
           fill
           sizes="100vw"
@@ -176,7 +176,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
 
       <div className="relative z-10 flex flex-col items-start gap-7 sm:gap-10">
         <Image
-          src="/icons/services/siren-icon.svg"
+          src="/_next/icons/services/siren-icon.svg"
           alt=""
           width={40}
           height={40}

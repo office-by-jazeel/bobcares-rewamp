@@ -28,39 +28,39 @@
           "items": [
             {
               "label": "Web Development",
-              "icon": "/icons/services/web.svg",
+              "icon": "/_next/icons/services/web.svg",
               "href": "https://bobcares.com/web-development/"
             },
             {
               "label": "Microservices Architecture",
-              "icon": "/icons/services/micro.svg"
+              "icon": "/_next/icons/services/micro.svg"
             },
             {
               "label": "Mobile Apps",
-              "icon": "/icons/services/mobile.svg",
+              "icon": "/_next/icons/services/mobile.svg",
               "href": "https://bobcares.com/mobile-application-development/"
             },
             {
               "label": "UI/UX Design",
-              "icon": "/icons/services/uiux.svg",
+              "icon": "/_next/icons/services/uiux.svg",
               "href": "https://bobcares.com/ui-ux-design/"
             },
             {
               "label": "MVP to Scale Builds",
-              "icon": "/icons/services/MVP.svg"
+              "icon": "/_next/icons/services/MVP.svg"
             },
             {
               "label": "Agile & Dev Team Augmentation",
-              "icon": "/icons/services/Agile.svg"
+              "icon": "/_next/icons/services/Agile.svg"
             },
             {
               "label": "Ecommerce",
-              "icon": "/icons/services/Ecommerce.svg",
+              "icon": "/_next/icons/services/Ecommerce.svg",
               "href": "https://bobcares.com/ecommerce-development/"
             },
             {
               "label": "QA and Test Automation",
-              "icon": "/icons/services/Automation.svg",
+              "icon": "/_next/icons/services/Automation.svg",
               "href": "https://bobcares.com/software-testing-qa-services/"
             }
           ]
@@ -70,28 +70,28 @@
           "items": [
             {
               "label": "Digital Transformation",
-              "icon": "/icons/services/Automation.svg",
+              "icon": "/_next/icons/services/Automation.svg",
               "href": "https://bobcares.com/digital-transformation/"
             },
             {
               "label": "Legacy Modernization",
-              "icon": "/icons/services/Legacy Modernization.svg"
+              "icon": "/_next/icons/services/Legacy Modernization.svg"
             },
             {
               "label": "Workflow Automation",
-              "icon": "/icons/services/Workflow.svg"
+              "icon": "/_next/icons/services/Workflow.svg"
             },
             {
               "label": "Data-Driven Dashboards",
-              "icon": "/icons/services/Data-Driven Dashboards.svg"
+              "icon": "/_next/icons/services/Data-Driven Dashboards.svg"
             },
             {
               "label": "CRM/ERP Integration",
-              "icon": "/icons/services/CRM.svg"
+              "icon": "/_next/icons/services/CRM.svg"
             },
             {
               "label": "Business Process Reengineering",
-              "icon": "/icons/services/Business Process.svg"
+              "icon": "/_next/icons/services/Business Process.svg"
             }
           ]
         },
@@ -100,25 +100,25 @@
           "items": [
             {
               "label": "AI & Machine Learning",
-              "icon": "/icons/services/AI & Machine Learning.svg",
+              "icon": "/_next/icons/services/AI & Machine Learning.svg",
               "href": "https://bobcares.com/ai-development-services/"
             },
             {
               "label": "AIOps",
-              "icon": "/icons/services/AIOps.svg",
+              "icon": "/_next/icons/services/AIOps.svg",
               "href": "https://bobcares.com/aiops-services/"
             },
             {
               "label": "Intelligent Automation",
-              "icon": "/icons/services/Intelligent Automation.svg"
+              "icon": "/_next/icons/services/Intelligent Automation.svg"
             },
             {
               "label": "Business Intelligence and Analytics",
-              "icon": "/icons/services/Business Intelligence.svg"
+              "icon": "/_next/icons/services/Business Intelligence.svg"
             },
             {
               "label": "AI Installation & Compute DataCenter Support",
-              "icon": "/icons/services/AI Installation.svg"
+              "icon": "/_next/icons/services/AI Installation.svg"
             }
           ]
         },
@@ -127,33 +127,33 @@
           "items": [
             {
               "label": "Cloud Setup",
-              "icon": "/icons/services/Cloud Setup.svg"
+              "icon": "/_next/icons/services/Cloud Setup.svg"
             },
             {
               "label": "Cloud Migration",
-              "icon": "/icons/services/Cloud Migration.svg"
+              "icon": "/_next/icons/services/Cloud Migration.svg"
             },
             {
               "label": "Managed Cloud Services",
-              "icon": "/icons/services/Managed Cloud Services.svg",
+              "icon": "/_next/icons/services/Managed Cloud Services.svg",
               "href": "https://bobcares.com/cloud-management/"
             },
             {
               "label": "Server & Hosting Management",
-              "icon": "/icons/services/Server & Hosting Management.svg",
+              "icon": "/_next/icons/services/Server & Hosting Management.svg",
               "href": "https://bobcares.com/server-management/"
             },
             {
               "label": "Cost Optimization & Monitoring",
-              "icon": "/icons/services/Cost Optimization & Monitoring.svg"
+              "icon": "/_next/icons/services/Cost Optimization & Monitoring.svg"
             },
             {
               "label": "Performance Optimization & Monitoring",
-              "icon": "/icons/services/Performance Optimization.svg"
+              "icon": "/_next/icons/services/Performance Optimization.svg"
             },
             {
               "label": "Outsourced Support Services",
-              "icon": "/icons/services/Support Services.svg"
+              "icon": "/_next/icons/services/Support Services.svg"
             }
           ]
         },
@@ -162,23 +162,23 @@
           "items": [
             {
               "label": "CI/CD Setup & Pipeline Automation",
-              "icon": "/icons/services/CD.svg"
+              "icon": "/_next/icons/services/CD.svg"
             },
             {
               "label": "Kubernetes & Docker Management",
-              "icon": "/icons/services/Kubernetes.svg"
+              "icon": "/_next/icons/services/Kubernetes.svg"
             },
             {
               "label": "Infrastructure as Code (IaC)",
-              "icon": "/icons/services/Infrastructure.svg"
+              "icon": "/_next/icons/services/Infrastructure.svg"
             },
             {
               "label": "Cloud-Native Migration",
-              "icon": "/icons/services/Native Migration.svg"
+              "icon": "/_next/icons/services/Native Migration.svg"
             },
             {
               "label": "DevSecOps",
-              "icon": "/icons/services/DevSecOps.svg"
+              "icon": "/_next/icons/services/DevSecOps.svg"
             }
           ]
         },
@@ -187,19 +187,19 @@
           "items": [
             {
               "label": "Security Hardening & Monitoring",
-              "icon": "/icons/services/Security.svg"
+              "icon": "/_next/icons/services/Security.svg"
             },
             {
               "label": "Vulnerability Assessment & Penetration Testing (VAPT)",
-              "icon": "/icons/services/VAPT.svg"
+              "icon": "/_next/icons/services/VAPT.svg"
             },
             {
               "label": "Incident Response Management",
-              "icon": "/icons/services/incident.svg"
+              "icon": "/_next/icons/services/incident.svg"
             },
             {
               "label": "Backup & Disaster Recovery Services",
-              "icon": "/icons/services/backup.svg"
+              "icon": "/_next/icons/services/backup.svg"
             }
           ]
         }
@@ -219,7 +219,7 @@
     }
   },
   "promotionalContent": {
-    "image": "/images/about/aboutus.jpg",
+    "image": "/_next/images/about/aboutus.jpg",
     "headline": "We're passionate about tech, support, and experiences.",
     "description": "In 1999, as maintainers of an eCommerce website, we waited 4 days for our Web Host to fix our website.",
     "buttonText": "Know More",

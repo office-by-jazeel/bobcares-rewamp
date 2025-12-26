@@ -44,7 +44,7 @@ export function cloudinaryLoader({
 
 /**
  * Helper function to create image src with Cloudinary support
- * @param localPath - Local path to the image (e.g., "/images/hero-bg.jpg")
+ * @param localPath - Local path to the image (e.g., "/_next/images/hero-bg.jpg")
  * @param cloudinaryId - Optional Cloudinary public ID (e.g., "bobcares/hero-bg")
  * @returns Image src string
  */

@@ -133,7 +133,7 @@ export function getCloudinaryVideoUrl(
 /**
  * Get asset URL with Cloudinary fallback to local
  * @param cloudinaryId - Cloudinary public ID (e.g., "bobcares/hero-bg")
- * @param localPath - Local path (e.g., "/images/hero-bg.jpg")
+ * @param localPath - Local path (e.g., "/_next/images/hero-bg.jpg")
  * @param options - Cloudinary transformation options
  * @returns URL string
  */

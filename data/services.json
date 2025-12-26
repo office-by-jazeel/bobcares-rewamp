@@ -2,49 +2,49 @@
   "services": [
     {
       "id": 1,
-      "icon": "/icons/services/endtoend.png",
+      "icon": "/_next/icons/services/endtoend.png",
       "title": "End-to-End product Engineering",
       "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
     },
     {
       "id": 2,
-      "icon": "/icons/services/digitaltr.png",
+      "icon": "/_next/icons/services/digitaltr.png",
       "title": "Digital transformation",
       "description": "We modernize your business systems with streamlined processes, upgraded technology, and smarter digital workflows that improve efficiency and performance."
     },
     {
       "id": 3,
-      "icon": "/icons/services/artificial.png",
+      "icon": "/_next/icons/services/artificial.png",
       "title": "Artificial intelligence services",
       "description": "We develop intelligent AI solutions that improve decision-making, automate operations, and create new opportunities across your organization."
     },
     {
       "id": 4,
-      "icon": "/icons/services/infra.png",
+      "icon": "/_next/icons/services/infra.png",
       "title": "Infrastructure optimization",
       "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
     },
     {
       "id": 5,
-      "icon": "/icons/services/devops.png",
+      "icon": "/_next/icons/services/devops.png",
       "title": "DevOps & automation services",
       "description": "We accelerate delivery with automated pipelines, improved deployment workflows, and DevOps practices that enhance stability and operational efficiency."
     },
     {
       "id": 6,
-      "icon": "/icons/services/cyber.png",
+      "icon": "/_next/icons/services/cyber.png",
       "title": "Cybersecurity & compliance services",
       "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization."
     },
     {
       "id": 7,
-      "icon": "/icons/services/qa.png",
+      "icon": "/_next/icons/services/qa.png",
       "title": "QA and test automation",
       "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep."
     },
     {
       "id": 8,
-      "icon": "/icons/services/outsourced.png",
+      "icon": "/_next/icons/services/outsourced.png",
       "title": "Outsourced support services",
       "description": "We provide round-the-clock technical and customer support that keeps your operations running smoothly and ensures a great experience for your users."
     }

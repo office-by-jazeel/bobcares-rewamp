@@ -4,7 +4,7 @@ export default function Collaborate() {
       {/* Background graphic */}
       <div className="absolute left-1/2 w-full h-full top-1/2 -translate-x-1/2 -translate-y-1/2">
         <video
-          src="/videos/cta.mp4"
+          src="/_next/videos/cta.mp4"
           autoPlay
           loop
           muted

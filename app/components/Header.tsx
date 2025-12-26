@@ -18,7 +18,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
       <div className="flex items-center justify-between py-5">
           <div className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
             <Image
-              src="/icons/logo.svg"
+              src="/_next/icons/logo.svg"
               alt="Bobcares Logo"
               width={254}
               height={47}
@@ -35,7 +35,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               aria-label="Close menu"
             >
               <Image
-                src="/icons/navigation/close.svg"
+                src="/_next/icons/navigation/close.svg"
                 alt="Close"
                 width={24}
                 height={24}
@@ -54,7 +54,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
         <div className="flex flex-col items-start pb-1 pt-0 px-1">
           <div className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
             <Image
-              src={isHeaderFixed ? "/icons/logo.svg" : "/icons/logo-white.svg"}
+              src={isHeaderFixed ? "/_next/icons/logo.svg" : "/_next/icons/logo-white.svg"}
               alt="Bobcares Logo"
               width={254}
               height={47}

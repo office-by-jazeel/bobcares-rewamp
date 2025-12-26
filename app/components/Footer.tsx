@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 import footerData from "../../data/footer.json";
 
 const socialIcons = {
-  Facebook: "/icons/social/facebook.svg",
-  Twitter: "/icons/social/x.svg",
-  LinkedIn: "/icons/social/link.svg",
-  Instagram: "/icons/social/instagram.svg",
-  Whatsapp: "/icons/social/whatsapp.svg"
+  Facebook: "/_next/icons/social/facebook.svg",
+  Twitter: "/_next/icons/social/x.svg",
+  LinkedIn: "/_next/icons/social/link.svg",
+  Instagram: "/_next/icons/social/instagram.svg",
+  Whatsapp: "/_next/icons/social/whatsapp.svg"
 };
 
 export default function Footer() {
@@ -75,7 +75,7 @@ export default function Footer() {
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
                   <div className="relative shrink-0 size-12 sm:size-16">
                     <Image
-                      src="/icons/navigation/mail.svg"
+                      src="/_next/icons/navigation/mail.svg"
                       alt="Email"
                       width={32}
                       height={32}
@@ -93,7 +93,7 @@ export default function Footer() {
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
                   <div className="relative shrink-0 size-12 sm:size-16">
                     <Image
-                      src="/icons/navigation/call.svg"
+                      src="/_next/icons/navigation/call.svg"
                       alt="Phone"
                       width={32}
                       height={32}
@@ -269,7 +269,7 @@ export default function Footer() {
             <div className="w-full lg:mt-8">
               <div className="relative w-full flex items-center justify-center">
                 <Image
-                  src="/icons/bobcares.svg"
+                  src="/_next/icons/bobcares.svg"
                   alt="Bobcares Logo"
                   width={1200}
                   height={400}

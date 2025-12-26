@@ -102,7 +102,7 @@ export default function Hero() {
                         </svg>
                       </div>
                       : <CloudinaryImage
-                        src="/images/hero/star-rating.png"
+                        src="/_next/images/hero/star-rating.png"
                         alt="star"
                         width={140}
                         height={24}

@@ -180,7 +180,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                 ) : (
                   <div className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
                     <Image
-                      src="/icons/logo.svg"
+                      src="/_next/icons/logo.svg"
                       alt="Bobcares Logo"
                       width={254}
                       height={47}
@@ -197,7 +197,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     aria-label="Close menu"
                   >
                     <Image
-                      src="/icons/navigation/close.svg"
+                      src="/_next/icons/navigation/close.svg"
                       alt="Close"
                       width={24}
                       height={24}
