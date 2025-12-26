@@ -93,6 +93,7 @@ export default function HeaderLinks({
                     width={26}
                     height={26}
                     className={iconClasses}
+                    style={{ width: "auto", height: "auto" }}
                 />
             </a>
 
@@ -107,6 +108,7 @@ export default function HeaderLinks({
                     width={26}
                     height={26}
                     className={iconClasses}
+                    style={{ width: "auto", height: "auto" }}
                 />
             </a>
 

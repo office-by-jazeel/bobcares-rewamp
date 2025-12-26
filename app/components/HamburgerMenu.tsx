@@ -185,6 +185,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                       width={254}
                       height={47}
                       className="h-full w-auto"
+                      style={{ width: "auto" }}
                     />
                   </div>
                 )}

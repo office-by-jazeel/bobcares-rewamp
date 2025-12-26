@@ -16,15 +16,16 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
   if (variant === "menu") {
     return (
       <div className="flex items-center justify-between py-5">
-        <div className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
-          <Image
-            src="/icons/logo.svg"
-            alt="Bobcares Logo"
-            width={254}
-            height={47}
-            className="h-full w-auto"
-          />
-        </div>
+          <div className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
+            <Image
+              src="/icons/logo.svg"
+              alt="Bobcares Logo"
+              width={254}
+              height={47}
+              className="h-full w-auto"
+              style={{ width: "auto" }}
+            />
+          </div>
         <div className="flex items-center gap-4 md:gap-[30px]">
           <HeaderLinks variant="menu" />
           {onClose && (
@@ -58,6 +59,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
               width={254}
               height={47}
               className="h-full w-auto"
+              style={{ width: "auto" }}
             />
           </div>
         </div>
