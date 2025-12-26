@@ -120,7 +120,7 @@ function MobileServiceItem({ service, isLast }: { service: Service; isLast: bool
 
 function ServiceCard({ service }: { service: Service }) {
   return (
-    <div className="group relative cursor-pointer">
+    <div className="group relative">
 
       {/* Animated top line */}
       <div className="absolute -top-6 left-0 w-full h-px md:h-0.5 overflow-hidden z-20"><div className="bg-black h-full w-0 group-hover:w-full transition-[width] duration-150 ease-out"></div></div>
