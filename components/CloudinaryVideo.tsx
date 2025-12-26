@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import { getVideoUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
+import { createVideoUrl } from '@/lib/video-url';
 
 interface CloudinaryVideoProps {
   src: string; // Local path
@@ -17,6 +18,7 @@ interface CloudinaryVideoProps {
 
 /**
  * Video component with Cloudinary support and automatic fallback
+ * Routes all videos through /api/assets for centralized asset handling
  */
 export default function CloudinaryVideo({
   src,
@@ -34,27 +36,26 @@ export default function CloudinaryVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Compute the video source from props
+  // Route through /api/assets for centralized handling
   const computedSrc = useMemo(() => {
     if (fallbackSrc) {
       return fallbackSrc;
     }
     if (hasError) {
+      // On error, use direct local path (bypass API route)
       return src;
     }
     if (cloudinaryId) {
       const isFullUrl = cloudinaryId.startsWith('http://') || cloudinaryId.startsWith('https://');
       if (isFullUrl) {
+        // Full Cloudinary URL, use directly
         return cloudinaryId;
       }
-      if (isCloudinaryConfigured()) {
-        try {
-          return getVideoUrl(cloudinaryId, src);
-        } catch {
-          return src;
-        }
-      }
+      // Route through /api/assets with cloudinaryId
+      return createVideoUrl(src, cloudinaryId);
     }
-    return src;
+    // No cloudinaryId, but still route through /api/assets
+    return createVideoUrl(src);
   }, [cloudinaryId, src, hasError, fallbackSrc]);
 
   const handleError = () => {
