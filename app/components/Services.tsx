@@ -7,6 +7,7 @@ interface Service {
   icon: string;
   title: string;
   description: string;
+  href: string;
 }
 
 interface CTACard {
@@ -80,38 +81,40 @@ export default function Services() {
 
 function MobileServiceItem({ service, isLast }: { service: Service; isLast: boolean }) {
   return (
-    <div className="py-4">
-      <div className="flex items-center gap-4">
-        {/* Icon */}
-        <div className="relative size-12 shrink-0">
-          <div className="absolute inset-0 bg-[#f7f7f7] rounded-lg" />
-          <div className="absolute inset-2 flex items-center justify-center">
-            {service.icon.startsWith("/") ? (
-              <Image src={service.icon} alt="" width={20} height={20} className="w-5 h-5" />
-            ) : (
-              <span className="text-xl">{service.icon}</span>
-            )}
+    <a href={service.href} className="block">
+      <div className="py-4">
+        <div className="flex items-center gap-4">
+          {/* Icon */}
+          <div className="relative size-12 shrink-0">
+            <div className="absolute inset-0 bg-[#f7f7f7] rounded-lg" />
+            <div className="absolute inset-2 flex items-center justify-center">
+              {service.icon.startsWith("/") ? (
+                <Image src={service.icon} alt="" width={20} height={20} className="w-5 h-5" />
+              ) : (
+                <span className="text-xl">{service.icon}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Title */}
+          <h3 className="flex-1 font-grotesque font-bold text-[22px] leading-[1.2]">
+            {service.title}
+          </h3>
+
+          {/* Chevron */}
+          <div className="size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
+              <path d="M4.175 5.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.275 4.875C6.375 4.975 6.44583 5.08333 6.4875 5.2C6.52917 5.31667 6.55 5.44167 6.55 5.575C6.55 5.70833 6.52917 5.83333 6.4875 5.95C6.44583 6.06667 6.375 6.175 6.275 6.275L1.675 10.875C1.49167 11.0583 1.25833 11.15 0.975 11.15C0.691667 11.15 0.458333 11.0583 0.275 10.875C0.0916667 10.6917 0 10.4583 0 10.175C0 9.89167 0.0916667 9.65833 0.275 9.475L4.175 5.575Z" fill="black" />
+            </svg>
           </div>
         </div>
 
-        {/* Title */}
-        <h3 className="flex-1 font-grotesque font-bold text-[22px] leading-[1.2]">
-          {service.title}
-        </h3>
-
-        {/* Chevron */}
-        <div className="size-6">
-          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
-            <path d="M4.175 5.575L0.275 1.675C0.0916667 1.49167 0 1.25833 0 0.975C0 0.691667 0.0916667 0.458333 0.275 0.275C0.458333 0.0916667 0.691667 0 0.975 0C1.25833 0 1.49167 0.0916667 1.675 0.275L6.275 4.875C6.375 4.975 6.44583 5.08333 6.4875 5.2C6.52917 5.31667 6.55 5.44167 6.55 5.575C6.55 5.70833 6.52917 5.83333 6.4875 5.95C6.44583 6.06667 6.375 6.175 6.275 6.275L1.675 10.875C1.49167 11.0583 1.25833 11.15 0.975 11.15C0.691667 11.15 0.458333 11.0583 0.275 10.875C0.0916667 10.6917 0 10.4583 0 10.175C0 9.89167 0.0916667 9.65833 0.275 9.475L4.175 5.575Z" fill="black" />
-          </svg>
-        </div>
+        {/* Divider */}
+        {!isLast && (
+          <div className="mt-4 border-t border-[#D9D9D9]" />
+        )}
       </div>
-
-      {/* Divider */}
-      {!isLast && (
-        <div className="mt-4 border-t border-[#D9D9D9]" />
-      )}
-    </div>
+    </a>
   );
 }
 
@@ -148,7 +151,7 @@ function ServiceCard({ service }: { service: Service }) {
 
         {/* Link */}
         <a
-          href="#"
+          href={service.href}
           className="
             underline underline-offset-3 text-[16px] sm:text-[18px] font-medium 
             group-hover:text-[#0073ec] transition-colors
