@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 const SEARCH_URL = "https://bobcares.com/semantic?showAll=true";
 const PHONE_URL = "tel:+18003835193";
 const EMERGENCY_URL = "https://bobcares.com/emergency-server-support/";
+const CLIENT_AREA_URL = "https://portal.bobcares.com/";
 
 type HeaderVariant = "default" | "menu";
 
@@ -112,11 +113,16 @@ export default function HeaderLinks({
                 />
             </a>
 
-            <button className={clientAreaButtonClasses}>
+            <a
+                href={CLIENT_AREA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={clientAreaButtonClasses}
+            >
                 <span className="font-medium text-[20px] leading-[22px] text-white truncate">
                     Client Area
                 </span>
-            </button>
+            </a>
 
             <a
                 href={EMERGENCY_URL}
