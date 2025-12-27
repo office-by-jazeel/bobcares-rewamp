@@ -89,6 +89,14 @@ function useViewportObserver(
 
     const playVideo = () => {
       if (!video) return;
+      
+      // Check if video is already playing
+      if (!video.paused && !video.ended) {
+        // Video is already playing, ensure thumbnail is hidden
+        onPlay();
+        return;
+      }
+      
       video.play()
         .then(() => {
           onPlay();
@@ -104,6 +112,13 @@ function useViewportObserver(
         setIsInViewport(entry.isIntersecting);
 
         if (entry.isIntersecting && video) {
+          // Check if video is already playing (scrolled back into view)
+          if (!video.paused && !video.ended) {
+            // Video is already playing, ensure thumbnail is hidden
+            onPlay();
+            return;
+          }
+
           const needsLoad = video.readyState === 0 ||
             (!video.src && !hlsInstanceRef.current);
 
@@ -122,8 +137,13 @@ function useViewportObserver(
               playVideo();
               video.removeEventListener('loadeddata', loadedDataHandler);
             };
+            const playingHandler = () => {
+              onPlay();
+              video.removeEventListener('playing', playingHandler);
+            };
             video.addEventListener('canplay', canPlayHandler);
             video.addEventListener('loadeddata', loadedDataHandler);
+            video.addEventListener('playing', playingHandler);
           }
         } else if (!entry.isIntersecting && video) {
           video.pause();
@@ -147,11 +167,16 @@ function useViewportObserver(
           rect.right > -50;
         if (isVisible) {
           setIsInViewport(true);
-          if (video.readyState === 0 || (!video.src && !hlsInstanceRef.current)) {
-            video.load();
-          }
-          if (video.readyState >= 3) {
-            playVideo();
+          // Check if video is already playing
+          if (!video.paused && !video.ended) {
+            onPlay();
+          } else {
+            if (video.readyState === 0 || (!video.src && !hlsInstanceRef.current)) {
+              video.load();
+            }
+            if (video.readyState >= 3) {
+              playVideo();
+            }
           }
         }
       }
@@ -321,12 +346,26 @@ function useVideoMetadata(
       prevVideoIndexRef.current = currentVideoIndex;
     }
 
+    // Check current playing state when hook initializes or video changes
+    // This handles the case when scrolling back into view with an already-loaded video
+    const checkPlayingState = () => {
+      if (video && !video.paused && !video.ended && video.readyState >= 3) {
+        setVideoState(prev => ({ ...prev, showThumbnail: false }));
+      }
+    };
+
+    // Check immediately and after a short delay to catch async state changes
+    checkPlayingState();
+    const checkTimeout = setTimeout(checkPlayingState, 100);
+
     const handleLoadedMetadata = () => {
       if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
         durationsRef.current[currentVideoIndex] = video.duration;
         onDurationsUpdate?.([...durationsRef.current]);
       }
       setVideoState(prev => ({ ...prev, isVideoReady: true }));
+      // Check playing state after metadata is loaded
+      checkPlayingState();
     };
 
     const handlePlay = () => {
@@ -335,6 +374,17 @@ function useVideoMetadata(
 
     const handlePlaying = () => {
       setVideoState(prev => ({ ...prev, showThumbnail: false }));
+    };
+
+    const handlePause = () => {
+      // Only show thumbnail if video is paused and not at the end
+      // This handles the case when scrolling out of view
+      if (video.ended) {
+        // Don't show thumbnail if video ended (will be handled by video end handler)
+        return;
+      }
+      // When paused (scrolled out of view), show thumbnail
+      setVideoState(prev => ({ ...prev, showThumbnail: true }));
     };
 
     const handleWaiting = () => {
@@ -346,12 +396,15 @@ function useVideoMetadata(
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('play', handlePlay);
     video.addEventListener('playing', handlePlaying);
+    video.addEventListener('pause', handlePause);
     video.addEventListener('waiting', handleWaiting);
 
     return () => {
+      clearTimeout(checkTimeout);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('pause', handlePause);
       video.removeEventListener('waiting', handleWaiting);
     };
   }, [videoSources, currentVideoIndex, onDurationsUpdate, videoRef]);
@@ -439,6 +492,18 @@ export default function VideoCarousel({
   useEffect(() => {
     setVideoState(metadataState);
   }, [metadataState]);
+
+  // Synchronize thumbnail state when viewport changes
+  // This ensures thumbnail is hidden when video is playing after scrolling back into view
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isInViewport && !video.paused && !video.ended && video.readyState >= 3) {
+      // Video is in viewport and playing, ensure thumbnail is hidden
+      setVideoState(prev => ({ ...prev, showThumbnail: false }));
+    }
+  }, [isInViewport, videoRef]);
 
   // Update current time
   useEffect(() => {
