@@ -1,6 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import servicesData from "../../data/services.json";
 import { cn } from "@/lib/utils";
+import { openSupportBoard } from "@/lib/support-board";
 
 interface Service {
   id: number;
@@ -165,6 +168,15 @@ function ServiceCard({ service }: { service: Service }) {
 }
 
 function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string }) {
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    
+    // Check if button text is "Free Consultation"
+    if (ctaCard.buttonText === "Free Consultation") {
+      await openSupportBoard();
+    }
+  };
+
   return (
     <div className={cn("bg-[#0073EC] relative rounded-2xl p-8 sm:p-12 lg:p-14 flex flex-col gap-7 sm:gap-8 text-white overflow-hidden", className)}>
       <div className="absolute w-full h-full -right-[20%] -bottom-[5%]">
@@ -189,7 +201,10 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
           {ctaCard.title}
         </h3>
 
-        <button className="bg-white text-[#0073ec] px-6 py-3 sm:px-8 sm:py-4 rounded-[45px] text-[16px] sm:text-[18px] lg:text-[20px] font-medium hover:bg-gray-100 transition">
+        <button 
+          onClick={handleButtonClick}
+          className="bg-white text-[#0073ec] px-6 py-3 sm:px-8 sm:py-4 rounded-[45px] text-[16px] sm:text-[18px] lg:text-[20px] font-medium hover:bg-gray-100 transition"
+        >
           {ctaCard.buttonText}
         </button>
       </div>

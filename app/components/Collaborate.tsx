@@ -1,4 +1,13 @@
+'use client';
+
+import { openSupportBoard } from '@/lib/support-board';
+
 export default function Collaborate() {
+  const handleConsultationClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    await openSupportBoard();
+  };
+
   return (
     <section className="bg-black overflow-hidden relative">
       {/* Background graphic */}
@@ -25,7 +34,10 @@ export default function Collaborate() {
           </p>
         </div>
         <div className="flex items-start">
-          <button className="border border-solid border-white flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-white text-white hover:text-[#0073EC] transition-colors">
+          <button 
+            onClick={handleConsultationClick}
+            className="border border-solid border-white flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-white text-white hover:text-[#0073EC] transition-colors"
+          >
             <span className="font-medium text-[18px] sm:text-[20px] tracking-[-1px]">Book My Free Consultation</span>
           </button>
         </div>

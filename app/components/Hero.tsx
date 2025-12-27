@@ -6,6 +6,7 @@ import VideoTimeline from "@/components/VideoTimeline";
 import heroData from "../../data/hero.json";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import { cn } from "@/lib/utils";
+import { openSupportBoard } from "@/lib/support-board";
 
 // Type for video items to match the JSON structure
 type VideoItem = {
@@ -119,8 +120,15 @@ export default function Hero() {
             {/* BUTTONS */}
             <div className="flex flex-col sm:flex-row gap-4">
               {buttons.map((btn, index) => {
-                const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+                const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
+                  
+                  // Check if this is the "Free Consultation" button
+                  if (btn.text === "Free Consultation") {
+                    await openSupportBoard();
+                    return;
+                  }
+                  
                   if (btn.href) {
                     if (btn.href.startsWith("#")) {
                       // Handle anchor links with smooth scroll
