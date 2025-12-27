@@ -62,17 +62,9 @@ export default function HeaderLinks({
             ? "md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all md:border-[#9898982E] bg-[#00000003]"
             : "md:backdrop-blur-md md:border md:border-white/20 md:border-solid flex items-center justify-center md:p-5 md:rounded-[45px] md:size-[60px] md:hover:bg-black/10 transition-all",
         !isMenu && !isHeaderFixed && "md:border-[#9898982E] bg-[#00000003]",
-        // Rainbow glow effect on hover - desktop only
-        "md:hover:shadow-[0_0_8px_rgba(255,0,0,0.3),0_0_12px_rgba(255,165,0,0.2),0_0_16px_rgba(0,255,0,0.2),0_0_20px_rgba(0,0,255,0.2)]"
+        // WhatsApp green glow effect on hover (#25D366) - desktop only
+        "md:hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
     );
-
-    // const phoneLinkClasses = cn(
-    //     "md:backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-5 rounded-[45px] size-[60px] md:hover:bg-black/10 transition-all",
-    //     isMenu && "border-[#9898982E] bg-[#00000003]",
-    //     !isMenu && !isHeaderFixed && "border-[#9898982E] bg-[#00000003]",
-    //     // WhatsApp green glow effect on hover (#25D366) - desktop only
-    //     "md:hover:shadow-[0_0_10px_rgba(37,211,102,0.4)]"
-    // );
 
     const iconClasses = cn(
         "size-[26px]",
