@@ -16,3 +16,24 @@ export function getPublicAssetPath(path: string): string {
   return `/_next/${cleanPath}`;
 }
 
+/**
+ * Base outline button styles - reusable across components
+ */
+export const outlineButtonBase = "w-full px-6 py-4 border-2 rounded-[45px] font-medium text-lg text-center transition-colors";
+
+/**
+ * Outline button style variants
+ */
+export const outlineButtonVariants = {
+  primary: cn(
+    outlineButtonBase,
+    "border-[#0073EC] text-[#0073EC] hover:bg-[#0073EC] hover:text-white",
+    "shadow-[0_0_10px_rgba(0,115,236,0.4)]"
+  ),
+  emergency: cn(
+    outlineButtonBase,
+    "border-[#D44A4C] text-[#D44A4C] hover:bg-[#D44A4C] hover:text-white",
+    "shadow-[0_0_12px_rgba(212,74,76,0.42)]"
+  ),
+} as const;
+

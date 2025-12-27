@@ -3,11 +3,7 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-
-const SEARCH_URL = "https://bobcares.com/semantic?showAll=true";
-const PHONE_URL = "tel:+18003835193";
-const EMERGENCY_URL = "https://bobcares.com/emergency-server-support/";
-const CLIENT_AREA_URL = "https://portal.bobcares.com/";
+import { SEARCH_URL, PHONE_URL, EMERGENCY_URL, CLIENT_AREA_URL } from "@/lib/urls";
 
 type HeaderVariant = "default" | "menu";
 

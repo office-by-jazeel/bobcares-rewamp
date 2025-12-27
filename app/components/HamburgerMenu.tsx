@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, outlineButtonVariants } from "@/lib/utils";
 import navigationData from "../../data/navigation.json";
 import HeaderLinks from "./header/HeaderLinks";
+import { EMERGENCY_URL, CLIENT_AREA_URL } from "@/lib/urls";
 
 interface HamburgerMenuProps {
   isHeaderFixed?: boolean;
@@ -272,6 +273,28 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                       );
                     })}
                   </nav>
+
+                  {/* Emergency & Client Area Buttons - Mobile Only */}
+                  {isMobile && !selectedNavItem && (
+                    <div className="flex flex-col gap-4 mt-6">
+                      <a
+                        href={EMERGENCY_URL}
+                        className={outlineButtonVariants.emergency}
+                        aria-label="Emergency Server Support"
+                      >
+                        Emergency
+                      </a>
+                      <a
+                        href={CLIENT_AREA_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={outlineButtonVariants.primary}
+                        aria-label="Client Area"
+                      >
+                        Client Area
+                      </a>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right Column - Two Types of Submenu */}
