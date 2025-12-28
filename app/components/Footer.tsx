@@ -90,7 +90,7 @@ export default function Footer() {
                   </div>
                   <a
                     href={`mailto:${contact.email}`}
-                    className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] hover:text-[#0073ec] transition-colors"
+                    className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] transition-colors"
                   >
                     {contact.email}
                   </a>
@@ -108,7 +108,7 @@ export default function Footer() {
                   </div>
                   <a
                     href={`tel:${contact.phone}`}
-                    className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] hover:text-[#0073ec] transition-colors"
+                    className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] transition-colors"
                   >
                     {contact.phone}
                   </a>
@@ -124,7 +124,7 @@ export default function Footer() {
                   <div key={service.title} className="flex flex-col gap-12">
                     <a
                       href={service.href || "#"}
-                      className="font-medium text-[16px] text-white uppercase leading-[1.54] tracking-normal min-h-[50px] line-clamp-2 hover:text-[#0073ec] transition-colors"
+                      className="font-medium text-[16px] text-white uppercase leading-[1.54] tracking-normal min-h-[50px] line-clamp-2 transition-colors"
                     >
                       {service.title}
                     </a>
