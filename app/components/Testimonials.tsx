@@ -491,7 +491,7 @@ export default function Testimonials() {
 
       {/* Testimonial Detail Modal */}
       {selectedTestimonial && (
-        <TestimonialDetailModal testimonial={selectedTestimonial} onClose={closeTestimonialModal} />
+        <TestimonialDetailModal testimonial={selectedTestimonial} onClose={closeTestimonialModal} onPlayClick={handlePlayClick} />
       )}
     </section>
   );
@@ -675,7 +675,7 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
         }`}
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden">
+      <div className={`relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden transition-all duration-300 ${isMounted ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -703,8 +703,9 @@ function VideoModal({ videoUrl, onClose }: { videoUrl: string; onClose: () => vo
   );
 }
 
-function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimonial; onClose: () => void }) {
+function TestimonialDetailModal({ testimonial, onClose, onPlayClick }: { testimonial: Testimonial; onClose: () => void; onPlayClick: (videoUrl: string) => void }) {
   const [isMounted, setIsMounted] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     // Trigger fade-in animation after mount
@@ -728,9 +729,17 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
     };
   }, []);
 
+  const handleClose = () => {
+    setIsClosing(true);
+    // Wait for animation to complete before actually closing
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      handleClose();
     }
   };
 
@@ -738,16 +747,18 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
   const showPlayButton = testimonial.type === "text-image-video" && testimonial.videoUrl;
   const hasImage = testimonial.image && testimonial.image.trim() !== "";
 
+  const isVisible = isMounted && !isClosing;
+
   return (
     <div
-      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${isMounted ? 'opacity-100' : 'opacity-0'
+      className={`fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-4xl max-h-[calc(100vh-2rem)] bg-white rounded-2xl overflow-hidden my-4 sm:my-8 flex flex-col">
+      <div className={`relative w-full max-w-4xl max-h-[calc(100vh-2rem)] bg-white rounded-2xl overflow-hidden my-4 sm:my-8 flex flex-col transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-4 right-4 z-10 bg-black/20 hover:bg-black/30 rounded-full p-2 transition-colors"
           aria-label="Close modal"
         >
@@ -805,8 +816,11 @@ function TestimonialDetailModal({ testimonial, onClose }: { testimonial: Testimo
               {showPlayButton && testimonial.videoUrl && (
                 <button
                   onClick={() => {
-                    onClose();
-                    // You can trigger video modal here if needed
+                    handleClose();
+                    // Add transition delay to allow detail modal to close smoothly
+                    setTimeout(() => {
+                      onPlayClick(testimonial.videoUrl!);
+                    }, 300);
                   }}
                   className="absolute bottom-4 right-4 bg-white/90 rounded-full p-4 hover:bg-white transition-colors cursor-pointer z-10"
                   aria-label="Play video"
