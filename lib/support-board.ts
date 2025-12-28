@@ -14,18 +14,18 @@ const INITIALIZATION_DELAY = 300;
  */
 function isSupportBoardReady(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     // Check if scripts are marked as ready
     if (window.supportBoardReady) {
         return true;
     }
-    
+
     // Check for jQuery (required dependency)
     const hasJQuery = typeof (window as any).jQuery !== 'undefined' || typeof (window as any).$ !== 'undefined';
     if (!hasJQuery) {
         return false;
     }
-    
+
     // Check for SBChat (primary API)
     return !!(window as any).SBChat;
 }
@@ -35,7 +35,7 @@ function isSupportBoardReady(): boolean {
  */
 function attemptOpenSupportBoard(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     // Primary method: SBChat.open()
     if ((window as any).SBChat?.open) {
         try {
@@ -50,17 +50,17 @@ function attemptOpenSupportBoard(): boolean {
             }
         }
     }
-    
+
     // Fallback: Try alternative methods if SBChat is not available
     const $ = (window as any).jQuery || (window as any).$;
-    
+
     // Fallback 1: Alternative global objects
     const fallbacks = [
         () => (window as any).SupportBoard?.open?.(),
         () => (window as any).supportBoard?.open?.(),
         () => typeof (window as any).openSupportBoard === 'function' && (window as any).openSupportBoard(),
     ];
-    
+
     for (const fallback of fallbacks) {
         try {
             if (fallback()) {
@@ -73,7 +73,7 @@ function attemptOpenSupportBoard(): boolean {
             // Continue to next fallback
         }
     }
-    
+
     // Fallback 2: Try clicking widget button if jQuery is available
     if ($) {
         const selectors = [
@@ -82,7 +82,7 @@ function attemptOpenSupportBoard(): boolean {
             '.support-board-widget',
             '[data-support-board]',
         ];
-        
+
         for (const selector of selectors) {
             try {
                 const element = $(selector);
@@ -98,11 +98,11 @@ function attemptOpenSupportBoard(): boolean {
             }
         }
     }
-    
+
     if (process.env.NODE_ENV === 'development') {
         console.warn('Support Board: Could not open widget. SBChat may not be initialized yet.');
     }
-    
+
     return false;
 }
 
@@ -112,7 +112,7 @@ function attemptOpenSupportBoard(): boolean {
 function waitForSupportBoardAndOpen(): Promise<boolean> {
     return new Promise((resolve) => {
         const startTime = Date.now();
-        
+
         // Check if already ready
         if (isSupportBoardReady()) {
             setTimeout(() => {
@@ -120,25 +120,25 @@ function waitForSupportBoardAndOpen(): Promise<boolean> {
             }, INITIALIZATION_DELAY);
             return;
         }
-        
+
         // Set up event listener for when Support Board becomes ready
         const handleReady = () => {
             setTimeout(() => {
                 resolve(attemptOpenSupportBoard());
             }, INITIALIZATION_DELAY);
         };
-        
+
         window.addEventListener('supportBoardReady', handleReady, { once: true });
-        
+
         // Poll as a fallback (in case event doesn't fire)
         const pollInterval = setInterval(() => {
             const elapsed = Date.now() - startTime;
-            
+
             // Timeout check
             if (elapsed >= MAX_WAIT_TIME) {
                 clearInterval(pollInterval);
                 window.removeEventListener('supportBoardReady', handleReady);
-                
+
                 if (process.env.NODE_ENV === 'development') {
                     console.warn('Support Board: Timeout waiting for scripts to load');
                 }
@@ -148,7 +148,7 @@ function waitForSupportBoardAndOpen(): Promise<boolean> {
                 }, INITIALIZATION_DELAY);
                 return;
             }
-            
+
             // Check if ready
             if (isSupportBoardReady() || window.supportBoardReady) {
                 clearInterval(pollInterval);
@@ -174,7 +174,7 @@ export async function openSupportBoard(): Promise<boolean> {
         }
         return false;
     }
-    
+
     // Check if Support Board URL is configured
     const supportBoardUrl = process.env.NEXT_PUBLIC_SUPPORT_BOARD_URL;
     if (!supportBoardUrl) {
@@ -183,16 +183,45 @@ export async function openSupportBoard(): Promise<boolean> {
         }
         return false;
     }
-    
-    // If already ready, try to open immediately (with small delay for initialization)
-    if (isSupportBoardReady() || window.supportBoardReady) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(attemptOpenSupportBoard());
-            }, INITIALIZATION_DELAY);
-        });
+
+    // Set loading cursor by adding a class to html element
+    // This ensures it overrides all cursor styles including button/link cursor-pointer
+    const htmlElement = document.documentElement;
+    htmlElement.classList.add('support-board-loading');
+
+    // Inject a style tag to ensure cursor override works globally
+    let styleElement = document.getElementById('support-board-cursor-style') as HTMLStyleElement;
+    if (!styleElement) {
+        styleElement = document.createElement('style');
+        styleElement.id = 'support-board-cursor-style';
+        document.head.appendChild(styleElement);
     }
-    
-    // Otherwise, wait for it to load
-    return waitForSupportBoardAndOpen();
+    styleElement.textContent = `
+        html.support-board-loading *,
+        html.support-board-loading *::before,
+        html.support-board-loading *::after {
+            cursor: wait !important;
+        }
+    `;
+
+    try {
+        // If already ready, try to open immediately (with small delay for initialization)
+        if (isSupportBoardReady() || window.supportBoardReady) {
+            const result = await new Promise<boolean>((resolve) => {
+                setTimeout(() => {
+                    resolve(attemptOpenSupportBoard());
+                }, INITIALIZATION_DELAY);
+            });
+            return result;
+        }
+
+        // Otherwise, wait for it to load
+        return await waitForSupportBoardAndOpen();
+    } finally {
+        // Remove the class and style element
+        htmlElement.classList.remove('support-board-loading');
+        if (styleElement && styleElement.parentNode) {
+            styleElement.parentNode.removeChild(styleElement);
+        }
+    }
 }
