@@ -65,7 +65,7 @@ export default function Services() {
             </div>
 
             {/* Desktop grid view */}
-            <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-14 lg:gap-24 lg:gap-y-32">
+            <div className="hidden md:grid grid-cols-2 xl:grid-cols-3 gap-10 sm:gap-14 xl:gap-x-24 xl:gap-y-32">
               {services.slice(0, 8).map((service, index) => (
                 <ServiceCard key={index} service={service} />
               ))}
@@ -185,7 +185,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-20"
+          className="object-contain opacity-20"
         />
       </div>
 
