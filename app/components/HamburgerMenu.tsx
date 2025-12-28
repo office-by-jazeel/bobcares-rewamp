@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn, outlineButtonVariants } from "@/lib/utils";
 import navigationData from "../../data/navigation.json";
@@ -18,6 +18,8 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const prevIsMobileRef = useRef<boolean>(false);
+  const selectedNavItemRef = useRef<string | null>(null);
 
   // Lock body scroll and stop Lenis when menu is open
   useEffect(() => {
@@ -53,12 +55,52 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
+  // Keep ref in sync with state
+  useEffect(() => {
+    selectedNavItemRef.current = selectedNavItem;
+  }, [selectedNavItem]);
+
   // Detect mobile and tablet viewport
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const newIsMobile = window.innerWidth < 1024;
+      const prevIsMobile = prevIsMobileRef.current;
+      const currentSelectedNavItem = selectedNavItemRef.current;
+
+      // Detect transition from large to medium
+      if (!prevIsMobile && newIsMobile) {
+        // Large → Medium: Reset to main menu if submenu is active
+        if (currentSelectedNavItem !== null) {
+          setSelectedNavItem(null);
+          setExpandedSections(new Set());
+        }
+      }
+
+      // Detect transition from medium to large
+      if (prevIsMobile && !newIsMobile) {
+        // Medium → Large: Set to "solutions" if not already active (including when null)
+        if (currentSelectedNavItem !== "solutions") {
+          setSelectedNavItem("solutions");
+          // Auto-expand first section if it exists
+          const subMenu = navigationData.subMenus.solutions;
+          if (subMenu?.sections.length > 0) {
+            setExpandedSections(new Set([subMenu.sections[0].title]));
+          } else {
+            setExpandedSections(new Set());
+          }
+        }
+      }
+
+      // Update state and ref
+      setIsMobile(newIsMobile);
+      prevIsMobileRef.current = newIsMobile;
     };
-    checkMobile();
+
+    // Initialize on mount
+    const initialIsMobile = window.innerWidth < 1024;
+    prevIsMobileRef.current = initialIsMobile;
+    setIsMobile(initialIsMobile);
+
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
@@ -161,7 +203,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
               }
             }}
           >
-            <div className="container mx-auto h-full flex flex-col gap-10 md:gap-[72px]">
+            <div className="container mx-auto h-full flex flex-col gap-10 lg:gap-[72px]">
               {/* Header within menu */}
               <div className="flex items-center justify-between py-5">
                 {/* Mobile: Show back button when submenu is selected, otherwise show logo */}
@@ -233,7 +275,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                           <Component
                             {...componentProps}
                             className={cn(
-                              "w-full pb-6 md:pb-10 flex items-center justify-between text-left transition-colors group",
+                              "w-full pb-6 lg:pb-10 flex items-center justify-between text-left transition-colors group",
                               // On mobile, always use gray text (no active state)
                               isMobile
                                 ? "text-gray-400 hover:text-white"
