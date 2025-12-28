@@ -320,7 +320,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                                   {selectedNavItem.toUpperCase()}
                                 </div>
                               )}
-                              <div className={cn("border-b", isExpanded ? "border-white" : "border-[#1C1C1C] py-5", index === currentSubMenu.sections.length - 1 && "border-0")}>
+                              <div className={cn("border-b py-5", isExpanded ? "border-white" : "border-[#1C1C1C]", index === currentSubMenu.sections.length - 1 && "border-0")}>
                                 <div
                                   onClick={() => {
                                     // Only toggle if no href is present
@@ -335,25 +335,44 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                                 >
                                   <div>
                                     {"href" in section && section.href ? (
-                                      <a
+                                      <motion.a
                                         href={section.href}
+                                        animate={{
+                                          fontSize: isExpanded ? "32px" : "20px",
+                                          color: isExpanded ? "#FFFFFF" : "#808080",
+                                          fontWeight: isExpanded ? 600 : 500,
+                                          letterSpacing: isExpanded ? "-0.32px" : "-0.1px",
+                                        }}
+                                        transition={{
+                                          type: "spring",
+                                          mass: 0.8,
+                                          stiffness: 200,
+                                          damping: 25,
+                                        }}
                                         className={cn(
-                                          "block hover:opacity-80 transition-opacity",
-                                          isExpanded
-                                            ? "text-white text-[32px] font-semibold leading-normal tracking-[-0.32px]"
-                                            : "text-[#808080] text-[20px] font-medium leading-normal tracking-[-0.1px]"
+                                          "block hover:opacity-80 transition-opacity leading-normal will-change-[font-size,color]"
                                         )}
                                       >
                                         {section.title}
-                                      </a>
+                                      </motion.a>
                                     ) : (
-                                      <div className={cn(
-                                        isExpanded
-                                          ? "text-white text-[32px] font-semibold leading-normal tracking-[-0.32px]"
-                                          : "text-[#808080] text-[20px] font-medium leading-normal tracking-[-0.1px]"
-                                      )}>
+                                      <motion.div
+                                        animate={{
+                                          fontSize: isExpanded ? "32px" : "20px",
+                                          color: isExpanded ? "#FFFFFF" : "#808080",
+                                          fontWeight: isExpanded ? 600 : 500,
+                                          letterSpacing: isExpanded ? "-0.32px" : "-0.1px",
+                                        }}
+                                        transition={{
+                                          type: "spring",
+                                          mass: 0.8,
+                                          stiffness: 200,
+                                          damping: 25,
+                                        }}
+                                        className="leading-normal will-change-[font-size,color]"
+                                      >
                                         {section.title}
-                                      </div>
+                                      </motion.div>
                                     )}
                                   </div>
                                   <button
@@ -376,16 +395,18 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                                 <AnimatePresence>
                                   {isExpanded && hasItems && (
                                     <motion.div
+                                      key={section.title}
+                                      layout
                                       initial={{ height: 0, opacity: 0 }}
                                       animate={{ height: "auto", opacity: 1 }}
                                       exit={{ height: 0, opacity: 0 }}
                                       transition={{
                                         type: "spring",
-                                        mass: 1,
-                                        stiffness: 300,
-                                        damping: 20,
+                                        mass: 0.8,
+                                        stiffness: 200,
+                                        damping: 25,
                                       }}
-                                      className="overflow-hidden"
+                                      className="overflow-hidden will-change-[height,opacity]"
                                     >
                                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-8 gap-x-14 mt-8 mb-10">
                                         {section.items.map((item, itemIndex) => {
