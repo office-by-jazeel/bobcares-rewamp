@@ -145,6 +145,11 @@ export default function Testimonials() {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Always set paused when mouse is over container (handles case where mouse is already there on load)
+    if (!isPaused) {
+      setIsPaused(true);
+    }
+
     if (!isDragging) return;
 
     e.preventDefault();
@@ -331,6 +336,39 @@ export default function Testimonials() {
       observer.disconnect();
     };
   }, []);
+
+  // Check if mouse is already over carousel when it becomes visible
+  useEffect(() => {
+    if (!isInViewport) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Check if mouse is currently over the container on next mousemove
+    const handleInitialMouseCheck = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const isOverContainer =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (isOverContainer) {
+        setIsPaused(true);
+      }
+
+      // Remove listener after first check
+      document.removeEventListener('mousemove', handleInitialMouseCheck);
+    };
+
+    // Add a one-time mousemove listener to check initial position
+    // This handles the case where mouse is already over the element when page loads
+    document.addEventListener('mousemove', handleInitialMouseCheck, { once: true });
+
+    return () => {
+      document.removeEventListener('mousemove', handleInitialMouseCheck);
+    };
+  }, [isInViewport]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
