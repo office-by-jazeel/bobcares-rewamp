@@ -835,7 +835,7 @@ function TestimonialDetailModal({ testimonial, onClose, onPlayClick }: { testimo
               </div>
               <div className="flex flex-1 flex-col gap-1 text-black">
                 <p className="font-semibold text-[20px]">{testimonial.author}</p>
-                <p className="font-normal text-[16px] text-[#4d4d4d]">{testimonial.role}</p>
+                <p className="font-normal text-[16px] text-[#4d4d4d] line-clamp-1">{testimonial.role}</p>
               </div>
             </div>
           </div>
