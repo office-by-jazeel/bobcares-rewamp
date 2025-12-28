@@ -25,7 +25,7 @@ export default function Services() {
     <section>
       <div className="bg-white">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px]">
-          <div className="w-full flex flex-col gap-5 lg:gap-20">
+          <div className="w-full flex flex-col gap-5 md:gap-20">
 
             {/* Header */}
             <div className="flex flex-col justify-between items-start gap-3">
@@ -41,7 +41,7 @@ export default function Services() {
 
                 <p className="text-[#4D4D4D] text-[16px] sm:text-[18px] lg:text-[24px] leading-[1.6] max-w-[800px]">
                   Build powerful, scalable digital products with an engineering
-                  approach that takes you from idea to launch—and beyond.
+                  approach that takes you from idea to launch and beyond.
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ function ServiceCard({ service }: { service: Service }) {
 function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string }) {
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
+
     // Check if button text is "Free Consultation"
     if (ctaCard.buttonText === "Free Consultation") {
       await openSupportBoard();
@@ -201,7 +201,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
           {ctaCard.title}
         </h3>
 
-        <button 
+        <button
           onClick={handleButtonClick}
           className="bg-white text-[#0073ec] px-6 py-3 sm:px-8 sm:py-4 rounded-[45px] text-[16px] sm:text-[18px] lg:text-[20px] font-medium hover:bg-gray-100 transition"
         >

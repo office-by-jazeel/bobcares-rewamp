@@ -95,7 +95,7 @@ export default function Footer() {
                     {contact.email}
                   </a>
                 </div>
-                <div className="h-[68px] md:h-10 w-px bg-[#FFFFFF40] shrink-0 mx-auto max-md:mx-8"></div>
+                <div className="h-[68px] md:h-10 w-px bg-[#FFFFFF40] shrink-0 mx-8"></div>
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
                   <div className="relative shrink-0 size-12 sm:size-16">
                     <Image

@@ -34,8 +34,10 @@ function MapPin({ top, left, clients, onClick, pinRef: externalPinRef, setPinRef
   const leftValue = typeof left === "number" ? `${left}px` : left;
   const [isHovered, setIsHovered] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0, isAbove: true });
+  const [isDragging, setIsDragging] = useState(false);
   const internalPinRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Use callback ref if provided, otherwise use internal ref
   const pinRefCallback = (el: HTMLDivElement | null) => {
@@ -48,6 +50,7 @@ function MapPin({ top, left, clients, onClick, pinRef: externalPinRef, setPinRef
   const pinRef = setPinRef ? pinRefCallback : (externalPinRef || internalPinRef);
 
   const handleMouseEnter = () => {
+    if (isDragging) return; // Don't show if dragging
     if (!internalPinRef.current || !tooltipRef.current) return;
 
     const pinRect = internalPinRef.current.getBoundingClientRect();
@@ -118,6 +121,47 @@ function MapPin({ top, left, clients, onClick, pinRef: externalPinRef, setPinRef
     setIsHovered(false);
   };
 
+  const handlePointerLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+    const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+
+    // If movement exceeds threshold, consider it a drag
+    if (deltaX > 5 || deltaY > 5) {
+      setIsDragging(true);
+      setIsHovered(false); // Close popover on drag
+    }
+  };
+
+  const handleTouchEnd = () => {
+    touchStartRef.current = null;
+    setIsDragging(false);
+  };
+
+  // Close popover on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsHovered(false); // Close popover on scroll
+    };
+
+    // Listen to scroll events on window
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <div
@@ -127,6 +171,10 @@ function MapPin({ top, left, clients, onClick, pinRef: externalPinRef, setPinRef
         onClick={onClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onPointerLeave={handlePointerLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Pin dot */}
         <div className="relative z-10">
@@ -209,7 +257,7 @@ export default function Trust() {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  
+
   // Store pin elements using a Map with callback refs
   const pinElementsMap = useRef<Map<number | string, HTMLDivElement>>(new Map());
 
@@ -291,7 +339,7 @@ export default function Trust() {
         </div>
 
         {/* World Map Graphic */}
-        <div 
+        <div
           ref={mapContainerRef}
           className={cn(
             "relative flex-1 w-full hidden md:block isolate",
