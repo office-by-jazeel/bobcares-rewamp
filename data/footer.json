@@ -186,19 +186,19 @@
     "legal": [
       {
         "label": "Privacy Policy",
-        "href": "#"
+        "href": "https://bobcares.com/privacy-policy/"
       },
       {
         "label": "Terms and Service",
-        "href": "#"
+        "href": "https://bobcares.com/tos/"
       },
       {
         "label": "GDPR",
-        "href": "#"
+        "href": "https://bobcares.com/gdpr/"
       },
       {
         "label": "Acceptable Use Policy",
-        "href": "#"
+        "href": "https://bobcares.com/aup/"
       }
     ]
   },

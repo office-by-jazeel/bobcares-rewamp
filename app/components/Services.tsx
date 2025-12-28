@@ -55,11 +55,11 @@ export default function Services() {
               </div>
 
               {/* View All Services button */}
-              <div className="mt-8 flex justify-center">
+              {/* <div className="mt-8 flex justify-center">
                 <button className="border border-black rounded-full px-6 py-3 text-[16px] font-medium hover:bg-gray-50 transition-colors">
                   View All Services
                 </button>
-              </div>
+              </div> */}
 
               <CTACard ctaCard={ctaCard} className={"max-sm:aspect-square mt-10 px-[50px] py-[44px]"} />
             </div>
