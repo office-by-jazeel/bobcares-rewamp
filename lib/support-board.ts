@@ -21,7 +21,7 @@ function isSupportBoardReady(): boolean {
     }
     
     // Check for jQuery (required dependency)
-    const hasJQuery = typeof window.jQuery !== 'undefined' || typeof window.$ !== 'undefined';
+    const hasJQuery = typeof (window as any).jQuery !== 'undefined' || typeof (window as any).$ !== 'undefined';
     if (!hasJQuery) {
         return false;
     }
