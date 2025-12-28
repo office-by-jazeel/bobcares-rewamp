@@ -26,6 +26,7 @@ export default function Testimonials() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
   const [isInViewport, setIsInViewport] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Drag state management
   const [isDragging, setIsDragging] = useState(false);
@@ -294,6 +295,20 @@ export default function Testimonials() {
     };
   }, []);
 
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
   // Intersection Observer to detect when carousel is in viewport
   useEffect(() => {
     const section = sectionRef.current;
@@ -321,7 +336,7 @@ export default function Testimonials() {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const scrollSpeed = 3; // pixels per frame
+    const scrollSpeed = isMobile ? 1.5 : 3; // Slower speed on mobile
     let animationFrameId: number;
     let lastTime = performance.now();
 
@@ -382,7 +397,7 @@ export default function Testimonials() {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [shouldPause]);
+  }, [shouldPause, isMobile]);
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">

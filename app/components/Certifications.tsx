@@ -19,6 +19,7 @@ export default function Certifications() {
   const [isHovering, setIsHovering] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
 
@@ -53,6 +54,20 @@ export default function Certifications() {
     setIsHovering(false);
   };
 
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
   // Initialize scroll position for seamless loop
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -84,7 +99,8 @@ export default function Certifications() {
       if (container.scrollLeft >= oneThird * 2) {
         container.scrollLeft = oneThird + (container.scrollLeft - oneThird * 2);
       } else {
-        container.scrollLeft += 3; // Scroll speed
+        const scrollSpeed = isMobile ? 1.5 : 3; // Slower speed on mobile
+        container.scrollLeft += scrollSpeed;
       }
 
       animationFrameRef.current = requestAnimationFrame(scroll);
@@ -97,7 +113,7 @@ export default function Certifications() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isDragging, isHovering]);
+  }, [isDragging, isHovering, isMobile]);
 
   return (
     <section>
