@@ -19,13 +19,13 @@ export default function About() {
       <div className="bg-black">
         <div className="container mx-auto flex flex-col items-center py-14 lg:py-[140px] relative">
           <div className="relative z-10 w-full">
-            <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-32 items-center">
+            <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 md:gap-16 xl:gap-32 items-center">
 
               {/* Tagline */}
               <Tagline className="block md:hidden" />
 
               {/* Left Section - Team Photo */}
-              <div className="w-full lg:w-1/2 shrink-0">
+              <div className="w-full lg:w-2/5 shrink-0">
                 <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
                   <CloudinaryImage
                     src={teamImage}
@@ -38,7 +38,7 @@ export default function About() {
               </div>
 
               {/* Right Section - Content */}
-              <div className="w-full lg:w-1/2 flex flex-col gap-6 sm:gap-8 lg:gap-10">
+              <div className="w-full lg:w-3/5 flex flex-col gap-6 sm:gap-8 lg:gap-10">
                 {/* Heading */}
                 {/* <p className="font-normal text-[14px] sm:text-[16px] text-[#9e9e9e] uppercase tracking-wide">
                   OUR SUCCESS
