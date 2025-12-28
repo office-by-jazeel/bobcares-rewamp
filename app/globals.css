@@ -123,5 +123,5 @@ a {
 }
 
 .container {
-  @apply max-md:px-5;
+  @apply md:px-10 px-5;
 }

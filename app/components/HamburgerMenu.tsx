@@ -53,10 +53,10 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen]);
 
-  // Detect mobile viewport
+  // Detect mobile and tablet viewport
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -210,11 +210,11 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
               </div>
 
               {/* Two-column layout */}
-              <div className="flex-1 flex items-start md:gap-[18%] overflow-hidden">
+              <div className="flex-1 flex items-start lg:gap-[18%] overflow-hidden">
                 {/* Left Column - Primary Navigation */}
                 {/* Hide on mobile when submenu is selected */}
                 <div className={cn(
-                  "w-full md:w-[35%] flex flex-col",
+                  "w-full lg:w-[35%] flex flex-col",
                   isMobile && selectedNavItem && "hidden"
                 )}>
                   <nav className="flex-1 overflow-y-visible flex flex-col gap-6 md:gap-9" data-lenis-prevent>
@@ -274,7 +274,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     })}
                   </nav>
 
-                  {/* Emergency & Client Area Buttons - Mobile Only */}
+                  {/* Emergency & Client Area Buttons - Mobile and Tablet Only */}
                   {isMobile && !selectedNavItem && (
                     <div className="flex flex-col gap-4 mt-6">
                       <a

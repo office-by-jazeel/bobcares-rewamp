@@ -31,14 +31,14 @@ export default function HeaderLinks({
 
     const clientAreaButtonClasses = cn(
         textButtonClasses,
-        "hidden md:block transition-shadow",
+        "hidden lg:block transition-shadow",
         // Theme blue glow effect on hover (#0073EC) - desktop only
         "md:hover:shadow-[0_0_10px_rgba(0,115,236,0.4)]"
     );
 
     const emergencyLinkClasses = cn(
         textButtonClasses,
-        "hidden md:block transition-all",
+        "hidden lg:block transition-all",
         (isMenu || isHeaderFixed) && "hover:border-[#D44A4C]",
         // Subtle base glow + brighter hover glow for emergency - desktop only
         "md:shadow-[0_0_6px_rgba(212,74,76,0.18)] md:hover:shadow-[0_0_12px_rgba(212,74,76,0.42)]"
