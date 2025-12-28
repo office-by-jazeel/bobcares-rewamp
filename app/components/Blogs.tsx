@@ -28,7 +28,7 @@ export default function Blogs() {
               {blogs.map((post) => (
                 <BlogCard key={post.id} post={post} />
               ))}
-              <button className="w-fit mx-auto flex md:hidden border border-black border-solid items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
+              <button className="w-fit mx-auto flex md:hidden sm:col-span-2 border border-black border-solid items-center justify-center px-7 sm:px-[32px] lg:px-[38px] py-3 lg:py-4 rounded-[45px] hover:bg-[#0073EC] hover:text-white hover:border-[#0073EC] transition-colors shrink-0">
                 <span className="font-medium text-[16px] sm:text-[18px] lg:text-[20px] tracking-[-1px]">
                   View All
                 </span>
