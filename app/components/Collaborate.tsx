@@ -23,7 +23,7 @@ export default function Collaborate() {
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto py-14 lg:py-52 flex flex-col gap-10 items-center text-center text-white z-10">
+      <div className="relative container mx-auto py-36 lg:py-52 flex flex-col gap-10 items-center text-center text-white z-10">
         <div className="flex flex-col gap-6 sm:gap-10 items-center text-center text-white w-full">
           <h2 className="font-grotesque font-semibold leading-[1.02] text-[48px] lg:text-[96px] tracking-[-0.96px] max-w-[680px]">
             <span className="text-white">Collaborate with </span>
@@ -34,7 +34,7 @@ export default function Collaborate() {
           </p>
         </div>
         <div className="flex items-start">
-          <button 
+          <button
             onClick={handleConsultationClick}
             className="border border-solid border-white flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-white text-white hover:text-[#0073EC] transition-colors"
           >
