@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { getAssetUrl, isCloudinaryConfigured } from '@/lib/cloudinary';
 
 interface CloudinaryImageProps {
@@ -36,6 +36,14 @@ export default function CloudinaryImage({
 }: CloudinaryImageProps) {
   const [hasError, setHasError] = useState(false);
   const [fallbackSrc, setFallbackSrc] = useState<string | null>(null);
+  const hasAttemptedFallbackRef = useRef(false);
+
+  // Reset fallback state when src or cloudinaryId changes
+  useEffect(() => {
+    hasAttemptedFallbackRef.current = false;
+    setHasError(false);
+    setFallbackSrc(null);
+  }, [src, cloudinaryId]);
 
   // Compute the image source from props
   const computedSrc = useMemo(() => {
@@ -66,24 +74,31 @@ export default function CloudinaryImage({
     return src;
   }, [cloudinaryId, src, width, height, quality, hasError, fallbackSrc]);
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
+    // Prevent multiple error handler calls
+    if (hasAttemptedFallbackRef.current || hasError) {
+      return;
+    }
+
     // If Cloudinary image fails, fallback to local
-    if (computedSrc !== src && !hasError) {
+    // Only attempt fallback if we have a cloudinaryId (meaning we tried Cloudinary first)
+    if (cloudinaryId && !fallbackSrc) {
+      hasAttemptedFallbackRef.current = true;
       setHasError(true);
       setFallbackSrc(src);
       onError?.();
     }
-  };
+  }, [src, cloudinaryId, hasError, fallbackSrc, onError]);
 
   const imageProps = fill
     ? {
-        fill: true,
-        sizes: sizes || '100vw',
-      }
+      fill: true,
+      sizes: sizes || '100vw',
+    }
     : {
-        width: width || 800,
-        height: height || 600,
-      };
+      width: width || 800,
+      height: height || 600,
+    };
 
   return (
     <Image
