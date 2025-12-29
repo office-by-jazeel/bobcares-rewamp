@@ -29,7 +29,7 @@ export default function Footer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Reset message
     setMessage(null);
     setIsLoading(true);
@@ -242,16 +242,17 @@ export default function Footer() {
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.div
+                            layout
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{
                               type: "spring",
-                              mass: 1,
-                              stiffness: 300,
-                              damping: 20,
+                              mass: 0.8,
+                              stiffness: 200,
+                              damping: 25,
                             }}
-                            className="overflow-hidden"
+                            className="overflow-hidden will-change-[height,opacity]"
                           >
                             <div className="flex items-start justify-between gap-8 mt-[32px]">
                               <div className="flex flex-col gap-[32px] flex-1">
