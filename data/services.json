@@ -39,14 +39,14 @@
       "id": 6,
       "icon": "/_next/icons/services/cyber.png",
       "title": "Cybersecurity & compliance services",
-      "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization.",
+      "description": "We strengthen your security posture with continuous monitoring, risk assessments, threat prevention, and compliance support tailored to industry standards.",
       "href": "https://bobcares.com/cybersecurity-services/"
     },
     {
       "id": 7,
       "icon": "/_next/icons/services/qa.png",
       "title": "QA and test automation",
-      "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep.",
+      "description": "We ensure product quality with comprehensive testing, automated validation, and performance checks that maintain reliability across every release cycle.",
       "href": "https://bobcares.com/software-testing-qa-services/"
     },
     {
@@ -62,4 +62,3 @@
     "buttonText": "Free Consultation"
   }
 }
-
