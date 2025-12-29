@@ -75,7 +75,7 @@
           "items": [
             {
               "label": "Legacy Modernization",
-              "icon": "/_next/icons/services/Legacy Modernization.svg",
+              "icon": "/_next/icons/services/legacy-modernization.svg",
               "href": "https://bobcares.com/digital-transformation#legacy-modernization"
             },
             {
@@ -85,7 +85,7 @@
             },
             {
               "label": "Data-Driven Dashboards",
-              "icon": "/_next/icons/services/Data-Driven Dashboards.svg",
+              "icon": "/_next/icons/services/data-driven-dashboards.svg",
               "href": "https://bobcares.com/digital-transformation#data-driven-dashboards"
             },
             {
@@ -95,7 +95,7 @@
             },
             {
               "label": "Business Process Reengineering",
-              "icon": "/_next/icons/services/Business Process.svg",
+              "icon": "/_next/icons/services/business-process.svg",
               "href": "https://bobcares.com/digital-transformation#business-process-reengineering"
             }
           ]
@@ -106,7 +106,7 @@
           "items": [
             {
               "label": "AI & Machine Learning",
-              "icon": "/_next/icons/services/AI & Machine Learning.svg",
+              "icon": "/_next/icons/services/ai-machine-learning.svg",
               "href": "https://bobcares.com/ai-services#ai-and-machine-learning"
             },
             {
@@ -116,17 +116,17 @@
             },
             {
               "label": "Intelligent Automation",
-              "icon": "/_next/icons/services/Intelligent Automation.svg",
+              "icon": "/_next/icons/services/intelligent-automation.svg",
               "href": "https://bobcares.com/ai-services#intelligent-automation"
             },
             {
               "label": "Business Intelligence and Analytics",
-              "icon": "/_next/icons/services/Business Intelligence.svg",
+              "icon": "/_next/icons/services/business-intelligence.svg",
               "href": "https://bobcares.com/ai-services#business-intelligence-and-analytics"
             },
             {
               "label": "AI Installation & Compute DataCenter Support",
-              "icon": "/_next/icons/services/AI Installation.svg",
+              "icon": "/_next/icons/services/ai-installation.svg",
               "href": "https://bobcares.com/ai-services#ai-installation-and-compute-datacenter-support"
             }
           ]
@@ -137,37 +137,37 @@
           "items": [
             {
               "label": "Cloud Setup",
-              "icon": "/_next/icons/services/Cloud Setup.svg",
+              "icon": "/_next/icons/services/cloud-setup.svg",
               "href": "https://bobcares.com/infrastructure-management#cloud-setup"
             },
             {
               "label": "Cloud Migration",
-              "icon": "/_next/icons/services/Cloud Migration.svg",
+              "icon": "/_next/icons/services/cloud-migration.svg",
               "href": "https://bobcares.com/infrastructure-management#cloud-migration"
             },
             {
               "label": "Managed Cloud Services",
-              "icon": "/_next/icons/services/Managed Cloud Services.svg",
+              "icon": "/_next/icons/services/managed-cloud-services.svg",
               "href": "https://bobcares.com/infrastructure-management#managed-cloud-services"
             },
             {
               "label": "Server & Hosting Management",
-              "icon": "/_next/icons/services/Server & Hosting Management.svg",
+              "icon": "/_next/icons/services/server-hosting-management.svg",
               "href": "https://bobcares.com/infrastructure-management#server-and-hosting-management"
             },
             {
               "label": "Cost Optimization & Monitoring",
-              "icon": "/_next/icons/services/Cost Optimization & Monitoring.svg",
+              "icon": "/_next/icons/services/cost-optimization-monitoring.svg",
               "href": "https://bobcares.com/infrastructure-management#cost-optimization-and-monitoring"
             },
             {
               "label": "Performance Optimization & Monitoring",
-              "icon": "/_next/icons/services/Performance Optimization.svg",
+              "icon": "/_next/icons/services/performance-optimization.svg",
               "href": "https://bobcares.com/infrastructure-management#performance-optimization-and-monitoring"
             },
             {
               "label": "Outsourced Support Services",
-              "icon": "/_next/icons/services/Support Services.svg",
+              "icon": "/_next/icons/services/support-services.svg",
               "href": "https://bobcares.com/outsourced-support/"
             }
           ]
@@ -193,7 +193,7 @@
             },
             {
               "label": "Cloud-Native Migration",
-              "icon": "/_next/icons/services/Native Migration.svg",
+              "icon": "/_next/icons/services/native-migration.svg",
               "href": "https://bobcares.com/devops-services#cloud-native-migration"
             },
             {
