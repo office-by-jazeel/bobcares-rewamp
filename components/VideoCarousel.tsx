@@ -24,6 +24,7 @@ interface VideoCarouselProps {
   onVideoChange?: (index: number) => void;
   onTimeUpdate?: (time: number) => void;
   onDurationsUpdate?: (durations: number[]) => void;
+  muted?: boolean;
 }
 
 interface VideoSource {
@@ -398,6 +399,7 @@ export default function VideoCarousel({
   onVideoChange,
   onTimeUpdate,
   onDurationsUpdate,
+  muted = true,
 }: VideoCarouselProps) {
   const [internalIndex, setInternalIndex] = useState(0);
   const currentVideoIndex = controlledIndex !== undefined ? controlledIndex : internalIndex;
@@ -548,6 +550,14 @@ export default function VideoCarousel({
       : '';
   }, [currentSource, currentVideo]);
 
+  // Sync muted prop to video element
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = muted;
+    }
+  }, [muted]);
+
   return (
     <div ref={containerRef} className="relative w-full h-full">
       <video
@@ -556,7 +566,7 @@ export default function VideoCarousel({
         src={videoSrc || undefined}
         className={className}
         preload="none"
-        muted
+        muted={muted}
         playsInline
         loop
         onEnded={handleVideoEnd}

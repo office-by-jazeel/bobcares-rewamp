@@ -25,6 +25,7 @@ export default function Hero() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [videoDurations, setVideoDurations] = useState<number[]>([]);
+  const [isMuted, setIsMuted] = useState(true);
 
   return (
     <section
@@ -41,6 +42,7 @@ export default function Hero() {
           onVideoChange={setCurrentVideoIndex}
           onTimeUpdate={setCurrentTime}
           onDurationsUpdate={setVideoDurations}
+          muted={isMuted}
         />
 
       </div>
@@ -48,6 +50,48 @@ export default function Hero() {
       {/* Overlays */}
       <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-b from-black/80 to-transparent z-3" />
       <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-t from-black/80 to-transparent z-3" />
+
+      {/* Mute/Unmute Toggle Button */}
+      <button
+        onClick={() => setIsMuted(!isMuted)}
+        className="absolute bottom-6 right-24 z-10 backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-[26px]"
+          >
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-[26px]"
+          >
+            <path d="M11 5L6 9H2v6h4l5 4V5z" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+        )}
+      </button>
 
       {/* ================= CONTENT ================= */}
       <div className="absolute left-0 bottom-0 w-full z-3">
@@ -122,13 +166,13 @@ export default function Hero() {
               {buttons.map((btn, index) => {
                 const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
-                  
+
                   // Check if this is the "Free Consultation" button
                   if (btn.text === "Free Consultation") {
                     await openSupportBoard();
                     return;
                   }
-                  
+
                   if (btn.href) {
                     if (btn.href.startsWith("#")) {
                       // Handle anchor links with smooth scroll
