@@ -21,6 +21,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/api/assets/:path*',
+    '/api/newsletter/:path*',
     // Add other paths if needed
   ],
 };

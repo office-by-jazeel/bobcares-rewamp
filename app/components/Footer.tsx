@@ -22,14 +22,42 @@ const socialLinks = {
 
 export default function Footer() {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const { newsletter, contact, links, copyright, services } = footerData;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter submission
-    console.log('Newsletter signup:', email);
-    setEmail('');
+    
+    // Reset message
+    setMessage(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({ type: 'success', text: data.message || 'Successfully subscribed!' });
+        setEmail('');
+        // Clear message after 5 seconds
+        setTimeout(() => setMessage(null), 5000);
+      } else {
+        setMessage({ type: 'error', text: data.message || 'Failed to subscribe. Please try again.' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to subscribe. Please try again later.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const toggleSection = (sectionTitle: string) => {
@@ -54,25 +82,41 @@ export default function Footer() {
                 <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] md:text-[72px] xl:text-[96px] text-white tracking-[-1px]">
                   {newsletter.title}
                 </h2>
-                <form onSubmit={handleSubmit} className="flex gap-3 w-full">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
                   <div className="relative w-full flex-1">
                     <input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        // Clear message when user starts typing
+                        if (message) setMessage(null);
+                      }}
                       placeholder={newsletter.placeholder}
-                      className="w-full bg-[#1a1a1a] border border-white/10 rounded-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 text-white text-[15px] sm:text-[18px] lg:text-[20px] placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-colors"
+                      disabled={isLoading}
+                      className="w-full bg-[#1a1a1a] border border-white/10 rounded-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 text-white text-[15px] sm:text-[18px] lg:text-[20px] placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       required
                     />
                     <button
                       type="submit"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0073ec] flex items-center justify-center px-7 sm:px-10 lg:px-[38px] py-3 rounded-full hover:bg-[#005bb5] transition-colors shrink-0"
+                      disabled={isLoading}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0073ec] flex items-center justify-center px-7 sm:px-10 lg:px-[38px] py-3 rounded-full hover:bg-[#005bb5] transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <span className="font-medium text-[15px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
-                        {newsletter.buttonText}
+                        {isLoading ? '...' : newsletter.buttonText}
                       </span>
                     </button>
                   </div>
+                  {message && (
+                    <p
+                      className={cn(
+                        "text-[14px] sm:text-[16px] px-6 sm:px-8 lg:px-10",
+                        message.type === 'success' ? 'text-green-400' : 'text-red-400'
+                      )}
+                    >
+                      {message.text}
+                    </p>
+                  )}
                 </form>
               </div>
 
