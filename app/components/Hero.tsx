@@ -54,7 +54,7 @@ export default function Hero() {
       {/* Mute/Unmute Toggle Button */}
       <button
         onClick={() => setIsMuted(!isMuted)}
-        className="absolute bottom-6 right-24 z-10 backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all"
+        className="absolute bottom-5 right-24 z-10 backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 md:p-5 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all"
         aria-label={isMuted ? "Unmute video" : "Mute video"}
       >
         {isMuted ? (
