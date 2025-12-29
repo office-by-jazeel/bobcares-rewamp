@@ -92,7 +92,7 @@ function useViewportObserver(
 
     const startPlayback = () => {
       if (!video || hasStartedRef.current) return;
-      
+
       const needsLoad = video.readyState === 0 ||
         (!video.src && !hlsInstanceRef.current);
 
@@ -589,6 +589,8 @@ export default function VideoCarousel({
             fill
             className={className}
             priority={currentVideoIndex === 0}
+            quality={90}
+            sizes="100vw"
           />
         </div>
       )}

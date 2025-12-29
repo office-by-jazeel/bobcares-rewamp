@@ -126,13 +126,12 @@ export default function Certifications() {
               <div className="flex flex-col gap-4 lg:gap-1 items-start w-full">
                 {/* <p className="font-medium text-[14px] sm:text-[16px] uppercase">Our Achievements</p> */}
                 <h2 className="font-grotesque font-semibold leading-[0.8] text-[48px] lg:text-[72px] xl:text-[96px] tracking-[-1px]">
-                  <span>Industry-leading </span>
-                  <span className="text-[#133de2]">certifications</span> {' '}
-                  <span>prove our commitment</span>
+                  <span>Proven Expertise Supported by Globally Recognized</span>{' '}
+                  <span className="text-[#133de2]">Certifications</span>
                 </h2>
               </div>
               <p className="font-normal leading-[1.6] text-[15px] sm:text-[18px] lg:text-[20px] hidden md:block">
-                Our certifications reflect our expertise and dedication to delivering trusted, high-quality solutions.
+                Our certifications are a testament to our proven reliability and industry-trusted performance
               </p>
             </div>
 

@@ -40,8 +40,7 @@ export default function Services() {
                 </h2>
 
                 <p className="text-[#4D4D4D] text-[16px] sm:text-[18px] lg:text-[24px] leading-[1.6] max-w-[800px]">
-                  Build powerful, scalable digital products with an engineering
-                  approach that takes you from idea to launch and beyond.
+                  Build the future with powerful digital solutions powered by a holistic end-to-end engineering approach
                 </p>
               </div>
             </div>

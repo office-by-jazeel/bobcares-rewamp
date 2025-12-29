@@ -65,8 +65,8 @@ export default function About() {
 function Tagline({ className }: { className?: string }) {
   return (
     <h2 className={cn("font-grotesque font-semibold leading-[1.05]! text-[48px] lg:text-[72px] tracking-[-1px]", className)}>
-      <span className="text-white">We love technology, giving</span>{' '}
-      <span className="text-[#6e6e6e]">back, and great experiences.</span>
+      <span className="text-white">Our passion for technology, service, and</span>{' '}
+      <span className="text-[#6e6e6e]">excellence drives everything we do.</span>
     </h2>
   );
 }
