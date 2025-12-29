@@ -368,7 +368,7 @@ export default function Trust() {
           ))}
         </div>
 
-        <div className="relative flex-1 w-full md:hidden flex flex-col gap-2.5">
+        {/* <div className="relative flex-1 w-full md:hidden flex flex-col gap-2.5">
           {mapPinsData.mapPins.flatMap((pin) => pin.clients).slice(0, 4).map((client, index) => (
             <div key={`client-${index}`} className="flex items-center justify-between border border-[#FFFFFF2B] bg-[#131313] rounded-[14px] px-4 py-5">
               {client.logo ? (
@@ -403,7 +403,7 @@ export default function Trust() {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

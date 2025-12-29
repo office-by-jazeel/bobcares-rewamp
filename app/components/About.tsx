@@ -25,7 +25,7 @@ export default function About() {
               <Tagline className="block md:hidden" />
 
               {/* Left Section - Team Photo */}
-              <div className="w-full lg:w-2/5 shrink-0">
+              <div className="w-full lg:w-[45%] shrink-0">
                 <div className="relative w-full aspect-square rounded-3xl overflow-hidden">
                   <CloudinaryImage
                     src={teamImage}
@@ -38,7 +38,7 @@ export default function About() {
               </div>
 
               {/* Right Section - Content */}
-              <div className="w-full lg:w-3/5 flex flex-col gap-6 sm:gap-8 lg:gap-10">
+              <div className="w-full lg:w-[55%] flex flex-col gap-6 sm:gap-8 lg:gap-10">
                 {/* Heading */}
                 {/* <p className="font-normal text-[14px] sm:text-[16px] text-[#9e9e9e] uppercase tracking-wide">
                   OUR SUCCESS
@@ -64,7 +64,7 @@ export default function About() {
 
 function Tagline({ className }: { className?: string }) {
   return (
-    <h2 className={cn("font-grotesque font-semibold md:leading-[1.05] leading-none  text-[48px] lg:text-[72px] tracking-[-1px]", className)}>
+    <h2 className={cn("font-grotesque font-semibold leading-[1.05]! text-[48px] lg:text-[72px] tracking-[-1px]", className)}>
       <span className="text-white">We love technology, giving</span>{' '}
       <span className="text-[#6e6e6e]">back, and great experiences.</span>
     </h2>
