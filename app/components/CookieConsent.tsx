@@ -20,6 +20,9 @@ const MOOVE_GDPR_COOKIE = 'gdpr%5Bprivacy_bar%5D';
 // Defaults to 'false' (disabled) if not set - only enabled when explicitly set to 'true'
 const isCookieConsentEnabled = process.env.NEXT_PUBLIC_ENABLE_COOKIE_CONSENT === 'true';
 
+type MainTab = 'consent-management' | 'cookie-settings';
+type SubTab = 'necessary' | 'advertising' | 'analytics' | 'other';
+
 export default function CookieConsent() {
     // Early return if cookie consent is disabled
     if (!isCookieConsentEnabled) {
@@ -29,12 +32,14 @@ export default function CookieConsent() {
     const [shouldRender, setShouldRender] = useState(false);
     const [showPreferenceCenter, setShowPreferenceCenter] = useState(false);
     const [isModalMounted, setIsModalMounted] = useState(false);
-    const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+    const [activeMainTab, setActiveMainTab] = useState<MainTab>('consent-management');
+    const [activeSubTab, setActiveSubTab] = useState<SubTab>('necessary');
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [preferences, setPreferences] = useState<CookiePreferences>({
         necessary: true, // Always enabled
-        statistics: false,
-        marketing: false,
-        security: false,
+        statistics: true, // Default to true based on HTML (checked="checked")
+        marketing: true, // Default to true based on HTML (checked="checked")
+        security: true, // Default to true based on HTML (checked="checked")
     });
 
     useEffect(() => {
@@ -84,6 +89,7 @@ export default function CookieConsent() {
 
     const handleSavePreferences = async () => {
         await savePreferences(preferences);
+        setShowMobileMenu(false);
         setIsModalMounted(false);
         setTimeout(() => {
             setShowPreferenceCenter(false);
@@ -102,18 +108,28 @@ export default function CookieConsent() {
 
     useEffect(() => {
         if (showPreferenceCenter) {
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
             // Trigger fade-in animation after mount
             requestAnimationFrame(() => {
                 setIsModalMounted(true);
             });
         } else {
             setIsModalMounted(false);
+            // Restore body scroll when modal is closed
+            document.body.style.overflow = '';
         }
+
+        // Cleanup function to restore scroll if component unmounts
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [showPreferenceCenter]);
 
     const sendConsentToWordPress = async (prefs: CookiePreferences) => {
         try {
-            // Define cookie arrays for each category
+            // Define cookie arrays for each category - matching HTML input values exactly
+            // These match the checkbox values in the HTML form
             const necessaryCookies = ['PHPSESSID', 'gdpr[consent_types]', 'gdpr[allowed_cookies]'];
             const statisticsCookies = ['_ga', '_gat', '_gid'];
             const marketingCookies = ['IDE', 'test_cookie', '1P_JAR', 'NID', 'DV', 'NID'];
@@ -199,16 +215,18 @@ export default function CookieConsent() {
         }));
     };
 
-    const toggleCategory = (category: string) => {
-        setExpandedCategories((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(category)) {
-                newSet.delete(category);
-            } else {
-                newSet.add(category);
-            }
-            return newSet;
-        });
+    const handleMainTabClick = (tab: MainTab) => {
+        setActiveMainTab(tab);
+        if (tab === 'cookie-settings') {
+            setActiveSubTab('necessary');
+        }
+        setShowMobileMenu(false);
+    };
+
+    const handleSubTabClick = (subTab: SubTab) => {
+        setActiveSubTab(subTab);
+        setActiveMainTab('cookie-settings');
+        setShowMobileMenu(false);
     };
 
     if (!shouldRender) return null;
@@ -247,7 +265,7 @@ export default function CookieConsent() {
                 </div>
             )}
 
-            {/* Privacy Preference Center Modal - centered */}
+            {/* Privacy Preference Center Modal */}
             {showPreferenceCenter && (
                 <>
                     {/* Backdrop overlay */}
@@ -257,192 +275,490 @@ export default function CookieConsent() {
                             isModalMounted ? 'opacity-100' : 'opacity-0'
                         )}
                         onClick={handleClosePreferenceCenter}
+                        data-lenis-prevent
                     />
                     {/* Modal Content */}
                     <div
                         className={cn(
                             'fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none'
                         )}
+                        data-lenis-prevent
                     >
                         <div
                             className={cn(
-                                'relative w-full max-w-4xl max-h-[calc(100vh-2rem)] bg-[#23282d] overflow-hidden flex flex-col transition-all duration-300 pointer-events-auto',
+                                'relative w-full max-w-5xl max-h-[500px] bg-white overflow-hidden flex flex-col transition-all duration-300 pointer-events-auto',
                                 isModalMounted ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
                             )}
                             onClick={(e) => e.stopPropagation()}
+                            style={{ maxHeight: '500px' }}
+                            data-lenis-prevent
                         >
-                            <div className="overflow-y-auto scrollbar-hide">
-                                <div className="container mx-auto px-5 md:px-10 py-6 md:py-8 relative">
-                                    {/* Header */}
-                                    <div className="flex items-center justify-center mb-6">
-                                        <h2 className="text-[22px] font-bold text-white">
-                                            Privacy Preference Center
-                                        </h2>
-                                    </div>
+                            {/* Header */}
+                            <header className="bg-[#23282d] px-6 py-4 flex items-center justify-center relative">
+                                <h3 className="text-white text-lg font-semibold">Privacy Preference Center</h3>
+                                <button
+                                    onClick={handleClosePreferenceCenter}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors"
+                                    aria-label="Close preference center"
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                    </svg>
+                                </button>
+                            </header>
 
-                                    <button
-                                        onClick={handleClosePreferenceCenter}
-                                        className="absolute top-4 right-4 z-10 p-2 transition-all duration-300 hover:scale-130"
-                                        aria-label="Close preference center"
-                                    >
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                                        </svg>
-                                    </button>
+                            {/* Mobile Menu Button */}
+                            <div className="md:hidden bg-[#23282d] px-6 py-2 border-t border-gray-700">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowMobileMenu(!showMobileMenu)}
+                                    className="w-full text-left text-white py-2 px-4 bg-[#32373c] rounded hover:bg-[#3d4145] transition-colors"
+                                >
+                                    Options
+                                </button>
+                            </div>
 
-                                    {/* Options Section */}
-                                    <div className="mb-6">
-                                        <h3 className="text-[16px] md:text-[18px] font-semibold text-white mb-4">
-                                            Options
-                                        </h3>
+                            {/* Mobile Menu Backdrop */}
+                            {showMobileMenu && (
+                                <div
+                                    className="md:hidden fixed inset-0 bg-black/50 z-[102]"
+                                    onClick={() => setShowMobileMenu(false)}
+                                />
+                            )}
 
-                                        {/* Consent Management */}
-                                        <CollapsibleSection
-                                            title="Consent Management"
-                                            isExpanded={expandedCategories.has('consent')}
-                                            onToggle={() => toggleCategory('consent')}
-                                        >
-                                            <p className="text-[14px] text-white mb-4 leading-relaxed">
-                                                When you visit any website, it may store or retrieve information on your browser,
-                                                mostly in the form of cookies. This information might be about you, your preferences
-                                                or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.
-                                            </p>
-                                            <p className="text-[14px] text-white mb-4 leading-relaxed">
-                                                Because we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
-                                            </p>
-                                            <div className="mb-4">
+                            {/* Content Area */}
+                            <div className="flex flex-1 overflow-hidden relative min-h-0">
+                                {/* Left Sidebar - Navigation */}
+                                <div
+                                    className={cn(
+                                        'bg-[#23282d] w-64 shrink-0 border-r border-gray-700 overflow-y-auto scrollbar-hide min-h-0',
+                                        'md:block',
+                                        showMobileMenu ? 'block absolute inset-y-0 left-0 z-103 md:relative md:z-auto' : 'hidden'
+                                    )}
+                                    data-lenis-prevent
+                                >
+                                    <div className="p-4">
+                                        {/* Main Tabs */}
+                                        <ul className="space-y-1">
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleMainTabClick('consent-management')}
+                                                    className={cn(
+                                                        'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors flex items-center justify-between',
+                                                        activeMainTab === 'consent-management' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                    )}
+                                                >
+                                                    <span>Consent Management</span>
+                                                    {activeMainTab === 'consent-management' && (
+                                                        <span className="text-white">→</span>
+                                                    )}
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleMainTabClick('cookie-settings')}
+                                                    className={cn(
+                                                        'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors flex items-center justify-between',
+                                                        activeMainTab === 'cookie-settings' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                    )}
+                                                >
+                                                    <span>Cookie Settings</span>
+                                                    {activeMainTab === 'cookie-settings' && (
+                                                        <span className="text-white">→</span>
+                                                    )}
+                                                </button>
+
+                                                {/* Sub-tabs - Always visible */}
+                                                <ul className="mt-1 ml-4 space-y-1">
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleSubTabClick('necessary')}
+                                                            className={cn(
+                                                                'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors',
+                                                                activeMainTab === 'cookie-settings' && activeSubTab === 'necessary' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                            )}
+                                                        >
+                                                            Necessary
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleSubTabClick('advertising')}
+                                                            className={cn(
+                                                                'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors',
+                                                                activeMainTab === 'cookie-settings' && activeSubTab === 'advertising' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                            )}
+                                                        >
+                                                            Statistics
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleSubTabClick('analytics')}
+                                                            className={cn(
+                                                                'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors',
+                                                                activeMainTab === 'cookie-settings' && activeSubTab === 'analytics' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                            )}
+                                                        >
+                                                            Marketing
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleSubTabClick('other')}
+                                                            className={cn(
+                                                                'w-full text-left px-3 py-2 text-sm text-white rounded transition-colors',
+                                                                activeMainTab === 'cookie-settings' && activeSubTab === 'other' ? 'bg-[#0073aa]' : 'hover:bg-[#32373c]'
+                                                            )}
+                                                        >
+                                                            Security
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                        {/* Privacy Policy Link */}
+                                        <ul className="mt-6 pt-6 border-t border-gray-700">
+                                            <li>
                                                 <a
-                                                    href="https://bobcares.com/gdpr/"
+                                                    href="https://bobcares.com/privacy-policy/"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
+                                                    className="text-white text-sm px-3 py-2 block hover:text-gray-300 transition-colors"
                                                 >
                                                     Privacy Policy
                                                 </a>
-                                            </div>
-                                            <p className="text-[14px] text-white">
-                                                <strong>Required</strong>
-                                            </p>
-                                            <p className="text-[14px] text-white">
-                                                By using this site, you agree to our Privacy Policy.
-                                            </p>
-                                        </CollapsibleSection>
-
-                                        {/* Cookie Settings */}
-                                        <CollapsibleSection
-                                            title="Cookie Settings"
-                                            isExpanded={expandedCategories.has('settings')}
-                                            onToggle={() => toggleCategory('settings')}
-                                        >
-                                            <div className="space-y-6">
-                                                {/* Necessary */}
-                                                <CookieCategoryDetail
-                                                    id="necessary"
-                                                    label="Necessary"
-                                                    description="Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies."
-                                                    enabled={preferences.necessary}
-                                                    onToggle={() => togglePreference('necessary')}
-                                                    disabled={true}
-                                                    cookies={[
-                                                        { name: 'PHPSESSID', description: 'Preserves user session state across page requests.' },
-                                                        { name: 'gdpr[consent_types]', description: 'Used to store user consents.' },
-                                                        { name: 'gdpr[allowed_cookies]', description: 'Used to store user allowed cookies.' },
-                                                    ]}
-                                                    domains={[
-                                                        { domain: 'livechat.bobcares.com', cookies: ['PHPSESSID'] },
-                                                        { domain: 'my.bobcares.com', cookies: ['WHMCSpKDlPzh2chML'] },
-                                                    ]}
-                                                />
-
-                                                {/* Statistics */}
-                                                <CookieCategoryDetail
-                                                    id="statistics"
-                                                    label="Statistics"
-                                                    description="Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously."
-                                                    enabled={preferences.statistics}
-                                                    onToggle={() => togglePreference('statistics')}
-                                                    cookies={[
-                                                        { name: '_ga', description: 'Preserves user session state across page requests.' },
-                                                        { name: '_gat', description: 'Used by Google Analytics to throttle request rate' },
-                                                        { name: '_gid', description: 'Registers a unique ID that is used to generate statistical data on how you use the website.' },
-                                                        { name: 'smartlookCookie', description: 'Used to collect user device and location information of the site visitors to improve the websites User Experience.' },
-                                                    ]}
-                                                    domains={[
-                                                        { domain: 'google.com', cookies: ['_ga', '_gat', '_gid'] },
-                                                        { domain: 'manager.smartlook.com', cookies: ['smartlookCookie'] },
-                                                        { domain: 'clarity.microsoft.com', cookies: ['_clck', '_clsk', 'CLID', 'ANONCHK', 'MR', 'MUID', 'SM'] },
-                                                    ]}
-                                                />
-
-                                                {/* Marketing */}
-                                                <CookieCategoryDetail
-                                                    id="marketing"
-                                                    label="Marketing"
-                                                    description="Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers."
-                                                    enabled={preferences.marketing}
-                                                    onToggle={() => togglePreference('marketing')}
-                                                    cookies={[
-                                                        { name: 'IDE', description: 'Used by Google DoubleClick to register and report the website user\'s actions after viewing or clicking one of the advertiser\'s ads with the purpose of measuring the efficacy of an ad and to present targeted ads to the user.' },
-                                                        { name: 'test_cookie', description: 'Used to check if the user\'s browser supports cookies.' },
-                                                        { name: '1P_JAR', description: 'Google cookie. These cookies are used to collect website statistics and track conversion rates.' },
-                                                        { name: 'NID', description: 'Registers a unique ID that identifies a returning user\'s device. The ID is used for serving ads that are most relevant to the user.' },
-                                                        { name: 'DV', description: 'Google ad personalisation' },
-                                                    ]}
-                                                    domains={[
-                                                        { domain: 'doubleclick.net', cookies: ['IDE', 'test_cookie'] },
-                                                        { domain: 'google.co.in', cookies: ['1P_JAR', 'NID', 'DV'] },
-                                                        { domain: 'google.com', cookies: ['NID'] },
-                                                        { domain: 'olark.com', cookies: ['hblid'] },
-                                                        { domain: 'rb2b.com', cookies: ['_reb2bgeo', '_reb2bloaded', '_reb2bref', '_reb2bsessionID', '_reb2buid'] },
-                                                    ]}
-                                                />
-
-                                                {/* Security */}
-                                                <CookieCategoryDetail
-                                                    id="security"
-                                                    label="Security"
-                                                    description="These are essential site cookies, used by the google reCAPTCHA. These cookies use an unique identifier to verify if a visitor is human or a bot."
-                                                    enabled={preferences.security}
-                                                    onToggle={() => togglePreference('security')}
-                                                    cookies={[
-                                                        { name: 'SID', description: '' },
-                                                        { name: 'APISID', description: '' },
-                                                        { name: 'HSID', description: '' },
-                                                        { name: 'NID', description: '' },
-                                                        { name: 'PREF', description: '' },
-                                                    ]}
-                                                    domains={[
-                                                        { domain: 'google.com', cookies: ['SID', 'APISID', 'HSID', 'NID', 'PREF'] },
-                                                    ]}
-                                                />
-                                            </div>
-                                        </CollapsibleSection>
-
-                                        {/* Privacy Policy */}
-                                        <CollapsibleSection
-                                            title="Privacy Policy"
-                                            isExpanded={expandedCategories.has('policy')}
-                                            onToggle={() => toggleCategory('policy')}
-                                        >
-                                            <a
-                                                href="https://bobcares.com/gdpr/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
-                                            >
-                                                Privacy Policy
-                                            </a>
-                                        </CollapsibleSection>
+                                            </li>
+                                        </ul>
                                     </div>
+                                </div>
 
-                                    {/* Action Button */}
-                                    <div className="flex justify-end mt-6">
-                                        <button
-                                            onClick={handleSavePreferences}
-                                            className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-2 rounded text-[14px] md:text-[15px] font-medium transition-colors"
-                                        >
-                                            OK
-                                        </button>
+                                {/* Right Content Area */}
+                                <div className="flex-1 bg-white overflow-hidden min-h-0" data-lenis-prevent>
+                                    <div className="p-6 h-full flex flex-col min-h-0">
+                                        {/* Consent Management Content */}
+                                        {activeMainTab === 'consent-management' && (
+                                            <div className="flex-1 overflow-y-auto min-h-0">
+                                                <header className="mb-4">
+                                                    <h4 className="text-xl font-semibold text-gray-900">Consent Management</h4>
+                                                </header>
+                                                <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+                                                    <p>
+                                                        When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.
+                                                    </p>
+                                                    <p>
+                                                        Because we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
+                                                    </p>
+
+                                                    {/* Privacy Policy Section */}
+                                                    <div className="mt-6 border border-gray-200 rounded p-4">
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <p className="font-medium text-gray-900">Privacy Policy</p>
+                                                            <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">Required</span>
+                                                        </div>
+                                                        <div className="text-sm text-gray-700">
+                                                            <span>By using this site, you agree to our <a href="https://bobcares.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-[#0073ec] hover:underline">Privacy Policy</a>.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Necessary Cookies Content */}
+                                        {activeMainTab === 'cookie-settings' && activeSubTab === 'necessary' && (
+                                            <div className="flex-1 overflow-y-auto min-h-0">
+                                                <header className="mb-4">
+                                                    <h4 className="text-xl font-semibold text-gray-900">Necessary</h4>
+                                                </header>
+                                                <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+                                                    <p>
+                                                        Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.
+                                                    </p>
+                                                    <p>
+                                                        PHPSESSID - Preserves user session state across page requests.
+                                                    </p>
+                                                    <p>
+                                                        gdpr[consent_types] - Used to store user consents.
+                                                    </p>
+                                                    <p>
+                                                        gdpr[allowed_cookies] - Used to store user allowed cookies.
+                                                    </p>
+
+                                                    {/* Cookies Used Section */}
+                                                    <div className="mt-6 space-y-4">
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">Cookies Used</p>
+                                                                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">Required</span>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>PHPSESSID, gdpr[consent_types], gdpr[allowed_cookies]</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">livechat.bobcares.com</p>
+                                                                <a href="https://bobcares.com/privacy-policy/" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>PHPSESSID</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">my.bobcares.com</p>
+                                                                <a href="https://bobcares.com/privacy-policy-cookie-restriction-mode/" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>WHMCSpKDlPzh2chML</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Statistics Cookies Content */}
+                                        {activeMainTab === 'cookie-settings' && activeSubTab === 'advertising' && (
+                                            <div className="flex-1 overflow-y-auto min-h-0">
+                                                <header className="mb-4">
+                                                    <h4 className="text-xl font-semibold text-gray-900">Statistics</h4>
+                                                </header>
+                                                <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+                                                    <p>
+                                                        Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously.
+                                                    </p>
+                                                    <p>
+                                                        _ga - Preserves user session state across page requests.
+                                                    </p>
+                                                    <p>
+                                                        _gat - Used by Google Analytics to throttle request rate
+                                                    </p>
+                                                    <p>
+                                                        _gid - Registers a unique ID that is used to generate statistical data on how you use the website.
+                                                    </p>
+                                                    <p>
+                                                        smartlookCookie - Used to collect user device and location information of the site visitors to improve the websites User Experience.
+                                                    </p>
+
+                                                    {/* Cookies Used Section */}
+                                                    <div className="mt-6 space-y-4">
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">Cookies Used</p>
+                                                                <ToggleSwitch
+                                                                    enabled={preferences.statistics}
+                                                                    onToggle={() => togglePreference('statistics')}
+                                                                />
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>_ga, _gat, _gid</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">google.com</p>
+                                                                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>_ga, _gat, _gid</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">manager.smartlook.com</p>
+                                                                <a href="https://www.smartlook.com/opt-out" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>smartlookCookie</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">clarity.microsoft.com</p>
+                                                                <a href="https://learn.microsoft.com/en-us/clarity/faq#how-can-i-prevent-clarity-from-gathering-data-on-my-page-views-when-i-visit-websites-that-use-clarity-" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>_clck, _clsk, CLID, ANONCHK, MR, MUID, SM</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Marketing Cookies Content */}
+                                        {activeMainTab === 'cookie-settings' && activeSubTab === 'analytics' && (
+                                            <div className="flex-1 overflow-y-auto min-h-0">
+                                                <header className="mb-4">
+                                                    <h4 className="text-xl font-semibold text-gray-900">Marketing</h4>
+                                                </header>
+                                                <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+                                                    <p>
+                                                        Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.
+                                                    </p>
+                                                    <p>
+                                                        IDE - Used by Google DoubleClick to register and report the website user's actions after viewing or clicking one of the advertiser's ads with the purpose of measuring the efficacy of an ad and to present targeted ads to the user.
+                                                    </p>
+                                                    <p>
+                                                        test_cookie - Used to check if the user's browser supports cookies.
+                                                    </p>
+                                                    <p>
+                                                        1P_JAR - Google cookie. These cookies are used to collect website statistics and track conversion rates.
+                                                    </p>
+                                                    <p>
+                                                        NID - Registers a unique ID that identifies a returning user's device. The ID is used for serving ads that are most relevant to the user.
+                                                    </p>
+                                                    <p>
+                                                        DV - Google ad personalisation
+                                                    </p>
+                                                    <p>
+                                                        _reb2bgeo - The visitor's geographical location
+                                                    </p>
+                                                    <p>
+                                                        _reb2bloaded - Whether or not the script loaded for the visitor
+                                                    </p>
+                                                    <p>
+                                                        _reb2bref - The referring URL for the visit
+                                                    </p>
+                                                    <p>
+                                                        _reb2bsessionID - The visitor's RB2B session ID
+                                                    </p>
+                                                    <p>
+                                                        _reb2buid - The visitor's RB2B user ID
+                                                    </p>
+
+                                                    {/* Cookies Used Section */}
+                                                    <div className="mt-6 space-y-4">
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">Cookies Used</p>
+                                                                <ToggleSwitch
+                                                                    enabled={preferences.marketing}
+                                                                    onToggle={() => togglePreference('marketing')}
+                                                                />
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>IDE, test_cookie, 1P_JAR, NID, DV, NID</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">doubleclick.net</p>
+                                                                <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>IDE, test_cookie</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">google.co.in</p>
+                                                                <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>1P_JAR, NID, DV</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">google.com</p>
+                                                                <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>NID</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">olark.com</p>
+                                                                <a href="https://bobcares.com/contact-us/" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>hblid</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">rb2b.com</p>
+                                                                <a href="https://app.retention.com/optout" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>_reb2bgeo, _reb2bloaded, _reb2bref, _reb2bsessionID, _reb2buid</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Security Cookies Content */}
+                                        {activeMainTab === 'cookie-settings' && activeSubTab === 'other' && (
+                                            <div className="flex-1 overflow-y-auto min-h-0">
+                                                <header className="mb-4">
+                                                    <h4 className="text-xl font-semibold text-gray-900">Security</h4>
+                                                </header>
+                                                <div className="text-sm text-gray-700 leading-relaxed space-y-4">
+                                                    <p>
+                                                        These are essential site cookies, used by the google reCAPTCHA. These cookies use an unique identifier to verify if a visitor is human or a bot.
+                                                    </p>
+
+                                                    {/* Cookies Used Section */}
+                                                    <div className="mt-6 space-y-4">
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">Cookies Used</p>
+                                                                <ToggleSwitch
+                                                                    enabled={preferences.security}
+                                                                    onToggle={() => togglePreference('security')}
+                                                                />
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>SID, APISID, HSID, NID, PREF</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border border-gray-200 rounded p-4">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <p className="font-medium text-gray-900">google.com</p>
+                                                                <a href="https://policies.google.com/privacy?hl=en#infochoices" target="_blank" rel="noreferrer" className="text-[#0073ec] hover:underline text-sm">Opt Out</a>
+                                                            </div>
+                                                            <div className="text-sm text-gray-700 mt-2">
+                                                                <span>SID, APISID, HSID, NID, PREF</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Footer */}
+                                        <footer className="mt-6 pt-4 border-t border-gray-200 flex justify-end">
+                                            <button
+                                                type="button"
+                                                onClick={handleSavePreferences}
+                                                className="bg-[#0073aa] hover:bg-[#005a87] text-white px-6 py-2 rounded text-sm font-medium transition-colors"
+                                            >
+                                                Save Preferences
+                                            </button>
+                                        </footer>
                                     </div>
                                 </div>
                             </div>
@@ -454,119 +770,41 @@ export default function CookieConsent() {
     );
 }
 
-interface CollapsibleSectionProps {
-    title: string;
-    isExpanded: boolean;
-    onToggle: () => void;
-    children: React.ReactNode;
-}
-
-function CollapsibleSection({ title, isExpanded, onToggle, children }: CollapsibleSectionProps) {
-    return (
-        <div className="border-b border-gray-200 pb-4 mb-4">
-            <button
-                onClick={onToggle}
-                className="w-full flex items-center justify-between text-left text-[16px] md:text-[18px] font-semibold text-white py-2 hover:text-gray-700 transition-colors"
-            >
-                <span>{title}</span>
-                <span className={cn('text-xl transition-transform', isExpanded && 'rotate-180')}>
-                    ▼
-                </span>
-            </button>
-            {isExpanded && (
-                <div className="mt-3 animate-in slide-in-from-top-2 duration-200">
-                    {children}
-                </div>
-            )}
-        </div>
-    );
-}
-
-interface CookieCategoryDetailProps {
-    id: string;
-    label: string;
-    description: string;
+interface ToggleSwitchProps {
     enabled: boolean;
     onToggle: () => void;
-    disabled?: boolean;
-    cookies: Array<{ name: string; description: string }>;
-    domains: Array<{ domain: string; cookies: string[] }>;
 }
 
-function CookieCategoryDetail({
-    id,
-    label,
-    description,
-    enabled,
-    onToggle,
-    disabled = false,
-    cookies,
-    domains,
-}: CookieCategoryDetailProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
-
+function ToggleSwitch({ enabled, onToggle }: ToggleSwitchProps) {
     return (
-        <div className="border border-gray-200 rounded p-4">
-            <div className="flex items-start justify-between gap-4 mb-3">
-                <div className="flex-1">
-                    <h4 className="text-[16px] font-semibold text-white mb-2">{label}</h4>
-                    <p className="text-[14px] text-white leading-relaxed">{description}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <span className="text-[14px] text-white">
-                        {enabled ? 'ON' : 'OFF'}
-                    </span>
-                    <button
-                        type="button"
-                        role="switch"
-                        aria-checked={enabled}
-                        onClick={onToggle}
-                        disabled={disabled}
-                        className={cn(
-                            'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
-                            enabled ? 'bg-gray-700' : 'bg-gray-300',
-                            disabled && 'opacity-50 cursor-not-allowed'
-                        )}
-                    >
-                        <span
-                            className={cn(
-                                'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
-                                enabled ? 'translate-x-6' : 'translate-x-1'
-                            )}
-                        />
-                    </button>
-                </div>
+        <label className="relative inline-flex items-center cursor-pointer gap-2">
+            <input
+                type="checkbox"
+                checked={enabled}
+                onChange={onToggle}
+                className="sr-only peer"
+            />
+            <div className={cn(
+                "relative w-11 h-6 rounded-full transition-colors",
+                enabled ? "bg-[#0073aa]" : "bg-gray-300"
+            )}>
+                <span className={cn(
+                    "absolute top-1/2 -translate-y-1/2 text-xs font-medium text-white transition-opacity",
+                    enabled ? "left-2 opacity-100" : "left-2 opacity-0"
+                )}>
+                    ON
+                </span>
+                <span className={cn(
+                    "absolute top-1/2 -translate-y-1/2 text-xs font-medium text-gray-600 transition-opacity",
+                    enabled ? "right-2 opacity-0" : "right-2 opacity-100"
+                )}>
+                    OFF
+                </span>
+                <span className={cn(
+                    "absolute top-[2px] left-[2px] bg-white rounded-full h-5 w-5 transition-transform duration-200",
+                    enabled ? "translate-x-5" : "translate-x-0"
+                )} />
             </div>
-
-            <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="text-[14px] text-white hover:text-gray-800 underline mb-2"
-            >
-                Cookies Used
-            </button>
-
-            {isExpanded && (
-                <div className="mt-3 space-y-3 text-[14px]">
-                    <div>
-                        <p className="font-semibold text-white mb-1">
-                            {cookies.map((c) => c.name).join(', ')}
-                        </p>
-                    </div>
-                    {domains.map((domainInfo, idx) => (
-                        <div key={idx} className="border-t border-gray-200 pt-2">
-                            <div className="flex items-center justify-between mb-1">
-                                <span className="text-gray-700 font-medium">{domainInfo.domain}</span>
-                                <button className="text-[#0073ec] hover:text-[#005bb5] underline text-[12px]">
-                                    Opt Out
-                                </button>
-                            </div>
-                            <p className="text-white text-[12px]">
-                                {domainInfo.cookies.join(', ')}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
+        </label>
     );
 }
