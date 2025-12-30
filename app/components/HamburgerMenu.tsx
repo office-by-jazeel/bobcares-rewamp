@@ -468,7 +468,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                                                 <div className="bg-[#141414] p-[9px] rounded-[14px] shrink-0">
                                                   <Image
                                                     src={itemIcon}
-                                                    alt=""
+                                                    alt={typeof item === "string" ? `${item} icon` : `${item.label} icon`}
                                                     width={24}
                                                     height={24}
                                                     className="size-6"

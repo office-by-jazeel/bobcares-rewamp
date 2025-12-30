@@ -91,7 +91,7 @@ function MobileServiceItem({ service, isLast }: { service: Service; isLast: bool
             <div className="absolute inset-0 bg-[#f7f7f7] rounded-lg" />
             <div className="absolute inset-2 flex items-center justify-center">
               {service.icon.startsWith("/") ? (
-                <Image src={service.icon} alt="" width={20} height={20} className="w-5 h-5" />
+                <Image src={service.icon} alt={`${service.title} icon`} width={20} height={20} className="w-5 h-5" />
               ) : (
                 <span className="text-xl">{service.icon}</span>
               )}
@@ -134,7 +134,7 @@ function ServiceCard({ service }: { service: Service }) {
           <div className="absolute inset-0 bg-[#f7f7f7] rounded-[18px]" />
           <div className="absolute inset-[11px] sm:inset-[14px] flex items-center justify-center">
             {service.icon.startsWith("/") ? (
-              <Image src={service.icon} alt="" width={24} height={24} className="sm:size-7 size-6" />
+              <Image src={service.icon} alt={`${service.title} icon`} width={24} height={24} className="sm:size-7 size-6" />
             ) : (
               <span className="text-2xl sm:text-3xl">{service.icon}</span>
             )}
@@ -181,7 +181,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
       <div className="absolute w-full h-full -right-[20%] -bottom-[5%]">
         <Image
           src="/_next/icons/bob.svg"
-          alt=""
+          alt="Bobcares decorative logo"
           fill
           sizes="100vw"
           className="object-contain opacity-20"
@@ -191,7 +191,7 @@ function CTACard({ ctaCard, className }: { ctaCard: CTACard; className?: string 
       <div className="relative z-10 flex flex-col items-start gap-7 sm:gap-10">
         <Image
           src="/_next/icons/services/siren-icon.svg"
-          alt=""
+          alt="Emergency support icon"
           width={40}
           height={40}
         />
