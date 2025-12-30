@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn, outlineButtonVariants } from "@/lib/utils";
@@ -21,6 +22,28 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
   const [isMobile, setIsMobile] = useState(false);
   const prevIsMobileRef = useRef<boolean>(false);
   const selectedNavItemRef = useRef<string | null>(null);
+  const pathname = usePathname();
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If already on home page, prevent navigation and scroll to top
+    if (pathname === "/") {
+      e.preventDefault();
+
+      if (window.lenis) {
+        // Use Lenis for smooth scroll
+        window.lenis.scrollTo(0, {
+          duration: 1.2,
+        });
+      } else {
+        // Fallback: native smooth scroll
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+    // If on different page, allow normal Link navigation
+  };
 
   // Lock body scroll and stop Lenis when menu is open
   useEffect(() => {
@@ -197,7 +220,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                   <span className="text-base font-medium">Back</span>
                 </button>
               ) : (
-                <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
+                <Link href="/" onClick={handleLogoClick} className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
                   <Image
                     src="/_next/icons/logo.svg"
                     alt="Bobcares Logo"

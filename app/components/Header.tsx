@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import HamburgerMenu from "./HamburgerMenu";
 import HeaderLinks from "./header/HeaderLinks";
@@ -14,10 +15,33 @@ interface HeaderContentProps {
 }
 
 export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: HeaderContentProps) {
+  const pathname = usePathname();
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If already on home page, prevent navigation and scroll to top
+    if (pathname === "/") {
+      e.preventDefault();
+
+      if (window.lenis) {
+        // Use Lenis for smooth scroll
+        window.lenis.scrollTo(0, {
+          duration: 1.2,
+        });
+      } else {
+        // Fallback: native smooth scroll
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+    // If on different page, allow normal Link navigation
+  };
+
   if (variant === "menu") {
     return (
       <div className="flex items-center justify-between py-5">
-        <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
+        <Link href="/" onClick={handleLogoClick} className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
           <Image
             src="/_next/icons/logo.svg"
             alt="Bobcares Logo"
@@ -53,7 +77,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-start pb-1 pt-0 px-1">
-          <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
+          <Link href="/" onClick={handleLogoClick} className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
             <Image
               src={isHeaderFixed ? "/_next/icons/logo.svg" : "/_next/icons/logo-white.svg"}
               alt="Bobcares Logo"
