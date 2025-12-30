@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { executeRecaptcha } from "@/lib/recaptcha";
 import footerData from "../../data/footer.json";
 
 const socialIcons = {
@@ -35,12 +36,18 @@ export default function Footer() {
     setIsLoading(true);
 
     try {
+      // Execute reCAPTCHA v3 (optional - will be null if keys are not configured)
+      const recaptchaToken = await executeRecaptcha('newsletter');
+
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          ...(recaptchaToken && { recaptchaToken })
+        }),
       });
 
       const data = await response.json();

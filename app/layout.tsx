@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Darker_Grotesque, Geist, Geist_Mono, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
 import SupportBoard from "./components/SupportBoard";
@@ -43,11 +44,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${darkerGrotesque.variable} antialiased`}
       >
+        {recaptchaSiteKey && (
+          <Script
+            src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
+            strategy="afterInteractive"
+          />
+        )}
         <SmoothScroll />
         {children}
         <SupportBoard />

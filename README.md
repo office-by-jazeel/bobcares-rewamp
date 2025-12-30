@@ -2,6 +2,27 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+# Google reCAPTCHA v3
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key_here
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key_here
+
+# Database (if using Prisma)
+DATABASE_URL=your_database_url_here
+```
+
+To get your reCAPTCHA keys:
+1. Visit [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/create)
+2. Register your site and select reCAPTCHA v3
+3. Add your domain(s)
+4. Copy the Site Key and Secret Key to your `.env.local` file
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash

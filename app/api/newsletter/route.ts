@@ -55,10 +55,56 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email);
 }
 
+/**
+ * Verify reCAPTCHA token with Google's API
+ * @param token - The reCAPTCHA token to verify
+ * @param ip - Optional IP address of the user
+ * @returns Promise that resolves to true if verification succeeds, false otherwise
+ */
+async function verifyRecaptcha(
+  token: string,
+  ip: string | null
+): Promise<boolean> {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  if (!secretKey) {
+    console.error('RECAPTCHA_SECRET_KEY is not set');
+    return false;
+  }
+
+  try {
+    const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+    const formData = new URLSearchParams();
+    formData.append('secret', secretKey);
+    formData.append('response', token);
+    if (ip) {
+      formData.append('remoteip', ip);
+    }
+
+    const response = await fetch(verifyUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    });
+
+    const data = await response.json();
+
+    // reCAPTCHA v3 returns a score (0.0 to 1.0)
+    // Typically, scores above 0.5 are considered legitimate users
+    // You can adjust this threshold based on your needs
+    return data.success === true && (data.score ?? 0) >= 0.5;
+  } catch (error) {
+    console.error('reCAPTCHA verification error:', error);
+    return false;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email } = body;
+    const { email, recaptchaToken } = body;
 
     // Validate email is provided
     if (!email || typeof email !== 'string') {
@@ -83,6 +129,18 @@ export async function POST(request: NextRequest) {
     // Log IP extraction for debugging (remove in production if needed)
     if (process.env.NODE_ENV === 'development') {
       console.log('Extracted IP:', ip);
+    }
+
+    // Verify reCAPTCHA token only if secret key is configured and token is provided
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    if (secretKey && recaptchaToken && typeof recaptchaToken === 'string') {
+      const isRecaptchaValid = await verifyRecaptcha(recaptchaToken, ip);
+      if (!isRecaptchaValid) {
+        return NextResponse.json(
+          { success: false, message: 'Security verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
     }
 
     // Save to database
