@@ -22,6 +22,7 @@ export const config = {
   matcher: [
     '/api/assets/:path*',
     '/api/newsletter/:path*',
+    '/_next/api/newsletter',
     // Add other paths if needed
   ],
 };

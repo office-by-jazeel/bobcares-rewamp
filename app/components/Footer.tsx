@@ -75,7 +75,7 @@ export default function Footer() {
       // Execute reCAPTCHA v3 (optional - will be null if keys are not configured)
       const recaptchaToken = await executeRecaptcha('newsletter');
 
-      const response = await fetch('/api/newsletter', {
+      const response = await fetch('/_next/api/newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

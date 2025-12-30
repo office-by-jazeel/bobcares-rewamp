@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
         source: '/_next/videos/:path*',
         destination: '/videos/:path*',
       },
+      {
+        source: '/_next/api/newsletter',
+        destination: '/api/newsletter',
+      },
     ];
   },
 };
