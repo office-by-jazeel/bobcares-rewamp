@@ -7,6 +7,7 @@ import heroData from "../../data/hero.json";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import { cn } from "@/lib/utils";
 import { openSupportBoard } from "@/lib/support-board";
+import MuteButton from "@/components/MuteButton";
 
 // Type for video items to match the JSON structure
 type VideoItem = {
@@ -180,46 +181,11 @@ export default function Hero() {
               })}
 
               {/* MUTE BUTTON */}
-              <button
+              <MuteButton
+                isMuted={isMuted}
                 onClick={() => setIsMuted(!isMuted)}
-                className="backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 rounded-[45px] size-[60px] hover:bg-black/10 transition-all"
-                aria-label={isMuted ? "Unmute video" : "Mute video"}
-              >
-                {isMuted ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-[26px]"
-                  >
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-[26px]"
-                  >
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
-                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                  </svg>
-                )}
-              </button>
+                className="hidden md:flex"
+              />
             </div>
           </div>
 
@@ -235,6 +201,13 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* MUTE BUTTON */}
+      <MuteButton
+        isMuted={isMuted}
+        onClick={() => setIsMuted(!isMuted)}
+        className="md:hidden absolute top-25 right-5 z-10"
+      />
     </section>
   );
 }
