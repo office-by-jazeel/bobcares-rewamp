@@ -222,7 +222,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
                     <span className="text-base font-medium">Back</span>
                   </button>
                 ) : (
-                  <Link href="/" className="h-[28px] md:h-[46.614px] max-h-full w-[254.06px] relative">
+                  <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
                     <Image
                       src="/_next/icons/logo.svg"
                       alt="Bobcares Logo"
