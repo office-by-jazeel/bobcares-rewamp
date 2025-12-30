@@ -17,16 +17,16 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
   if (variant === "menu") {
     return (
       <div className="flex items-center justify-between py-5">
-          <Link href="/" className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
-            <Image
-              src="/_next/icons/logo.svg"
-              alt="Bobcares Logo"
-              width={254}
-              height={47}
-              className="h-full w-auto"
-              style={{ width: "auto" }}
-            />
-          </Link>
+        <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
+          <Image
+            src="/_next/icons/logo.svg"
+            alt="Bobcares Logo"
+            width={254}
+            height={47}
+            className="h-full w-auto"
+            style={{ width: "auto" }}
+          />
+        </Link>
         <div className="flex items-center gap-4 md:gap-[30px]">
           <HeaderLinks variant="menu" />
           {onClose && (
@@ -53,7 +53,7 @@ export function HeaderContent({ isHeaderFixed, variant = "default", onClose }: H
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-start pb-1 pt-0 px-1">
-          <Link href="/" className="h-[28px] md:h-[46.614px] max-h-full md:w-[254.06px] relative">
+          <Link href="/" className="h-[45px] md:h-[60px] max-h-full md:w-[254.06px] relative">
             <Image
               src={isHeaderFixed ? "/_next/icons/logo.svg" : "/_next/icons/logo-white.svg"}
               alt="Bobcares Logo"
