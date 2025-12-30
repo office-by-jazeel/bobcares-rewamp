@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    qualities: [70, 75, 90],
   },
   async rewrites() {
     return [
