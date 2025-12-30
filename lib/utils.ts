@@ -6,6 +6,46 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Cookie utility functions for reading and writing cookies
+ */
+
+/**
+ * Safely reads a cookie value from document.cookie
+ * @param name - The name of the cookie to read
+ * @returns The cookie value or null if not found
+ */
+export function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(`${name}=`)) {
+      return cookie.substring(name.length + 1);
+    }
+  }
+  return null;
+}
+
+/**
+ * Sets a cookie with the specified name, value, and max-age
+ * @param name - The name of the cookie
+ * @param value - The value of the cookie
+ * @param maxAge - The max-age in seconds (default: 31536000 = 1 year)
+ */
+export function setCookie(name: string, value: string, maxAge: number = 31536000): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  // Set cookie with path=/ and max-age
+  // Format matches WordPress Moove GDPR plugin exactly
+  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}`;
+}
+
+/**
  * Get public asset path with /_next/ prefix
  * @param path - Public asset path (e.g., "/icons/logo.svg" or "/images/hero-bg.jpg")
  * @returns Path with /_next/ prefix (e.g., "/_next/icons/logo.svg" or "/_next/images/hero-bg.jpg")

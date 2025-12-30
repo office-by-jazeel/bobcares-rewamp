@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, getCookie, setCookie } from '@/lib/utils';
 
 interface CookiePreferences {
     necessary: boolean;
@@ -11,7 +11,10 @@ interface CookiePreferences {
 }
 
 const STORAGE_KEY = 'bobcares-cookie-consent';
-const CONSENT_GIVEN_KEY = 'bobcares-consent-given';
+// Cookie name used by WordPress Moove GDPR Cookie Compliance plugin
+// This ensures Next.js homepage respects and shares consent state with WordPress
+// The cookie gdpr[privacy_bar]=1 indicates that the privacy bar has been shown/accepted
+const MOOVE_GDPR_COOKIE = 'gdpr%5Bprivacy_bar%5D';
 
 // Check if cookie consent is enabled via environment variable
 // Defaults to 'false' (disabled) if not set - only enabled when explicitly set to 'true'
@@ -35,12 +38,16 @@ export default function CookieConsent() {
     });
 
     useEffect(() => {
-        // Check if consent has already been given
+        // Check if consent has already been given via gdpr[privacy_bar] cookie
+        // This cookie is set by WordPress Moove GDPR plugin and ensures Next.js
+        // homepage respects WordPress consent state
+        // Value of "1" indicates the privacy bar has been shown/accepted
         if (typeof window !== 'undefined') {
-            const consentGiven = localStorage.getItem(CONSENT_GIVEN_KEY);
-            if (!consentGiven) {
+            const mooveConsent = getCookie(MOOVE_GDPR_COOKIE);
+            // If cookie exists with value "1", don't show banner
+            if (mooveConsent !== '1') {
                 setShouldRender(true);
-                // Load saved preferences if any
+                // Load saved preferences from localStorage if any (for preference center)
                 const savedPreferences = localStorage.getItem(STORAGE_KEY);
                 if (savedPreferences) {
                     try {
@@ -58,27 +65,31 @@ export default function CookieConsent() {
         }
     }, []);
 
-    const handleAcceptAll = () => {
+    const handleAcceptAll = async () => {
         const allAccepted: CookiePreferences = {
             necessary: true,
             statistics: true,
             marketing: true,
             security: true,
         };
-        savePreferences(allAccepted);
+        await savePreferences(allAccepted);
         setIsVisible(false);
+        // Reload page after setting cookie to ensure WordPress integration works properly
+        window.location.reload();
     };
 
     const handlePrivacyPreferences = () => {
         setShowPreferenceCenter(true);
     };
 
-    const handleSavePreferences = () => {
-        savePreferences(preferences);
+    const handleSavePreferences = async () => {
+        await savePreferences(preferences);
         setIsModalMounted(false);
         setTimeout(() => {
             setShowPreferenceCenter(false);
             setIsVisible(false);
+            // Reload page after setting cookie to ensure WordPress integration works properly
+            window.location.reload();
         }, 300);
     };
 
@@ -165,8 +176,15 @@ export default function CookieConsent() {
 
     const savePreferences = async (prefs: CookiePreferences) => {
         if (typeof window !== 'undefined') {
+            // Save preferences to localStorage for preference center functionality
             localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-            localStorage.setItem(CONSENT_GIVEN_KEY, 'true');
+
+            // Set gdpr[privacy_bar] cookie to match WordPress Moove plugin format
+            // This ensures Next.js homepage shares consent state with WordPress
+            // Format: gdpr[privacy_bar]=1; path=/; max-age=31536000
+            // Value of "1" indicates the privacy bar has been shown/accepted
+            // Max-age of 31536000 seconds = 1 year (matches Moove plugin)
+            setCookie(MOOVE_GDPR_COOKIE, '1', 31536000);
 
             // Send consent to WordPress API
             await sendConsentToWordPress(prefs);
