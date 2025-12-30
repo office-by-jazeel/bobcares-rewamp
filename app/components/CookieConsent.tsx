@@ -15,6 +15,7 @@ const CONSENT_GIVEN_KEY = 'bobcares-consent-given';
 
 export default function CookieConsent() {
     const [isVisible, setIsVisible] = useState(false);
+    const [shouldRender, setShouldRender] = useState(false);
     const [showPreferenceCenter, setShowPreferenceCenter] = useState(false);
     const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
     const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -29,6 +30,7 @@ export default function CookieConsent() {
         if (typeof window !== 'undefined') {
             const consentGiven = localStorage.getItem(CONSENT_GIVEN_KEY);
             if (!consentGiven) {
+                setShouldRender(true);
                 // Load saved preferences if any
                 const savedPreferences = localStorage.getItem(STORAGE_KEY);
                 if (savedPreferences) {
@@ -39,10 +41,10 @@ export default function CookieConsent() {
                         // Ignore parse errors
                     }
                 }
-                // Show banner after a short delay for animation
+                // Show banner after 2 seconds delay for animation
                 setTimeout(() => {
                     setIsVisible(true);
-                }, 500);
+                }, 2000);
             }
         }
     }, []);
@@ -99,7 +101,7 @@ export default function CookieConsent() {
         });
     };
 
-    if (!isVisible) return null;
+    if (!shouldRender) return null;
 
     return (
         <>
@@ -115,10 +117,9 @@ export default function CookieConsent() {
             <div
                 className={cn(
                     'gdpr-wrapper fixed bottom-0 left-1/2 -translate-x-1/2 right-0 z-[101] transition-all duration-300 ease-out w-fit',
-                    isVisible && !showPreferenceCenter
+                    (isVisible || showPreferenceCenter)
                         ? 'translate-y-0 opacity-100'
-                        : 'translate-y-full opacity-0',
-                    showPreferenceCenter && 'translate-y-0 opacity-100'
+                        : 'translate-y-full opacity-0'
                 )}
             >
                 {!showPreferenceCenter ? (
