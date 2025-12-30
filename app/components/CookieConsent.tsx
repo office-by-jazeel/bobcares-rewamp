@@ -13,7 +13,15 @@ interface CookiePreferences {
 const STORAGE_KEY = 'bobcares-cookie-consent';
 const CONSENT_GIVEN_KEY = 'bobcares-consent-given';
 
+// Check if cookie consent is enabled via environment variable
+// Defaults to 'false' (disabled) if not set - only enabled when explicitly set to 'true'
+const isCookieConsentEnabled = process.env.NEXT_PUBLIC_ENABLE_COOKIE_CONSENT === 'true';
+
 export default function CookieConsent() {
+    // Early return if cookie consent is disabled
+    if (!isCookieConsentEnabled) {
+        return null;
+    }
     const [isVisible, setIsVisible] = useState(false);
     const [shouldRender, setShouldRender] = useState(false);
     const [showPreferenceCenter, setShowPreferenceCenter] = useState(false);
@@ -92,10 +100,76 @@ export default function CookieConsent() {
         }
     }, [showPreferenceCenter]);
 
-    const savePreferences = (prefs: CookiePreferences) => {
+    const sendConsentToWordPress = async (prefs: CookiePreferences) => {
+        try {
+            // Define cookie arrays for each category
+            const necessaryCookies = ['PHPSESSID', 'gdpr[consent_types]', 'gdpr[allowed_cookies]'];
+            const statisticsCookies = ['_ga', '_gat', '_gid'];
+            const marketingCookies = ['IDE', 'test_cookie', '1P_JAR', 'NID', 'DV', 'NID'];
+            const securityCookies = ['SID', 'APISID', 'HSID', 'NID', 'PREF'];
+
+            // Build approved cookies array based on preferences
+            const approvedCookies: string[][] = [];
+
+            // Always include necessary cookies
+            approvedCookies.push(necessaryCookies);
+
+            if (prefs.statistics) {
+                approvedCookies.push(statisticsCookies);
+            }
+
+            if (prefs.marketing) {
+                approvedCookies.push(marketingCookies);
+            }
+
+            if (prefs.security) {
+                approvedCookies.push(securityCookies);
+            }
+
+            // Build all cookies array (union of all approved cookies)
+            const allCookiesSet = new Set<string>();
+            approvedCookies.forEach(cookieArray => {
+                cookieArray.forEach(cookie => allCookiesSet.add(cookie));
+            });
+            const allCookies = Array.from(allCookiesSet);
+
+            // Build form data
+            const formData = new URLSearchParams();
+            formData.append('action', 'gdpr_update_privacy_preferences');
+            formData.append('update-privacy-preferences-nonce', 'e5e36c2134');
+            formData.append('_wp_http_referer', '/');
+            formData.append('user_consents[]', 'privacy-policy');
+
+            // Add approved cookies arrays
+            approvedCookies.forEach(cookieArray => {
+                formData.append('approved_cookies[]', JSON.stringify(cookieArray));
+            });
+
+            // Add all cookies array
+            formData.append('all_cookies', JSON.stringify(allCookies));
+
+            // Make the API call
+            await fetch('https://bobcares.com/wp-admin/admin-ajax.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData.toString(),
+            });
+        } catch (error) {
+            // Silently fail - don't break the UI if the API call fails
+            console.error('Failed to send consent to WordPress:', error);
+        }
+    };
+
+    const savePreferences = async (prefs: CookiePreferences) => {
         if (typeof window !== 'undefined') {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
             localStorage.setItem(CONSENT_GIVEN_KEY, 'true');
+
+            // Send consent to WordPress API
+            await sendConsentToWordPress(prefs);
         }
     };
 
