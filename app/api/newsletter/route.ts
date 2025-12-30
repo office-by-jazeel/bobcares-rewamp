@@ -92,9 +92,13 @@ async function verifyRecaptcha(
     const data = await response.json();
 
     // reCAPTCHA v3 returns a score (0.0 to 1.0)
-    // Typically, scores above 0.5 are considered legitimate users
-    // You can adjust this threshold based on your needs
-    return data.success === true && (data.score ?? 0) >= 0.5;
+    // Get threshold from environment variable, default to 0.5
+    const threshold = parseFloat(process.env.RECAPTCHA_SCORE_THRESHOLD || '0.5');
+    
+    // Ensure threshold is between 0.0 and 1.0
+    const validThreshold = Math.max(0.0, Math.min(1.0, threshold));
+    
+    return data.success === true && (data.score ?? 0) >= validThreshold;
   } catch (error) {
     console.error('reCAPTCHA verification error:', error);
     return false;

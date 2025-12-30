@@ -10,6 +10,7 @@ Create a `.env.local` file in the root directory with the following variables:
 # Google reCAPTCHA v3
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key_here
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key_here
+RECAPTCHA_SCORE_THRESHOLD=0.5  # Optional: Score threshold (0.0 to 1.0), default is 0.5
 
 # Database (if using Prisma)
 DATABASE_URL=your_database_url_here
