@@ -94,10 +94,10 @@ async function verifyRecaptcha(
     // reCAPTCHA v3 returns a score (0.0 to 1.0)
     // Get threshold from environment variable, default to 0.5
     const threshold = parseFloat(process.env.RECAPTCHA_SCORE_THRESHOLD || '0.5');
-    
+
     // Ensure threshold is between 0.0 and 1.0
     const validThreshold = Math.max(0.0, Math.min(1.0, threshold));
-    
+
     return data.success === true && (data.score ?? 0) >= validThreshold;
   } catch (error) {
     console.error('reCAPTCHA verification error:', error);

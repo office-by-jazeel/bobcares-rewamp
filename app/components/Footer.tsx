@@ -28,11 +28,47 @@ export default function Footer() {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const { newsletter, contact, links, copyright, services } = footerData;
 
+  /**
+   * Validate email format
+   */
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  /**
+   * Validate email input
+   * Returns error message if invalid, null if valid
+   */
+  const validateEmail = (emailValue: string): string | null => {
+    const trimmedEmail = emailValue.trim();
+
+    if (!trimmedEmail) {
+      return 'Email is required';
+    }
+
+    if (!isValidEmail(trimmedEmail)) {
+      return 'Invalid email format';
+    }
+
+    return null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Reset message
     setMessage(null);
+
+    // Client-side validation
+    const trimmedEmail = email.trim();
+    const validationError = validateEmail(trimmedEmail);
+
+    if (validationError) {
+      setMessage({ type: 'error', text: validationError });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -44,8 +80,8 @@ export default function Footer() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          email,
+        body: JSON.stringify({
+          email: trimmedEmail,
           ...(recaptchaToken && { recaptchaToken })
         }),
       });
@@ -89,7 +125,7 @@ export default function Footer() {
                 <h2 className="font-grotesque font-semibold leading-[1.05] text-[48px] md:text-[72px] xl:text-[96px] text-white tracking-[-1px]">
                   {newsletter.title}
                 </h2>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
+                <form onSubmit={handleSubmit} className="flex flex-col w-full">
                   <div className="relative w-full flex-1">
                     <input
                       type="email"
@@ -102,28 +138,29 @@ export default function Footer() {
                       placeholder={newsletter.placeholder}
                       disabled={isLoading}
                       className="w-full bg-[#1a1a1a] border border-white/10 rounded-full px-6 sm:px-8 lg:px-10 py-4 sm:py-5 text-white text-[15px] sm:text-[18px] lg:text-[20px] placeholder:text-gray-500 focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      required
                     />
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0073ec] flex items-center justify-center px-7 sm:px-10 lg:px-[38px] py-3 rounded-full hover:bg-[#005bb5] transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0073ec] flex items-center justify-center px-7 sm:px-10 lg:px-[38px] py-3 rounded-full hover:bg-[#005bb5] transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed z-10"
                     >
                       <span className="font-medium text-[15px] sm:text-[18px] lg:text-[20px] text-white tracking-[-1px]">
                         {isLoading ? '...' : newsletter.buttonText}
                       </span>
                     </button>
+                    {message && (
+                      <div
+                        className={cn(
+                          "absolute top-full left-5 mt-2 z-20 px-4 py-2 rounded-lg text-[14px] sm:text-[16px] transition-all duration-200",
+                          message.type === 'success'
+                            ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                            : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                        )}
+                      >
+                        {message.text}
+                      </div>
+                    )}
                   </div>
-                  {message && (
-                    <p
-                      className={cn(
-                        "text-[14px] sm:text-[16px] px-6 sm:px-8 lg:px-10",
-                        message.type === 'success' ? 'text-green-400' : 'text-red-400'
-                      )}
-                    >
-                      {message.text}
-                    </p>
-                  )}
                 </form>
               </div>
 
