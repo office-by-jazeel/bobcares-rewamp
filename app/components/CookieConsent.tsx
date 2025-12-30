@@ -17,6 +17,7 @@ export default function CookieConsent() {
     const [isVisible, setIsVisible] = useState(false);
     const [shouldRender, setShouldRender] = useState(false);
     const [showPreferenceCenter, setShowPreferenceCenter] = useState(false);
+    const [isModalMounted, setIsModalMounted] = useState(false);
     const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
     const [preferences, setPreferences] = useState<CookiePreferences>({
         necessary: true, // Always enabled
@@ -66,13 +67,30 @@ export default function CookieConsent() {
 
     const handleSavePreferences = () => {
         savePreferences(preferences);
-        setShowPreferenceCenter(false);
-        setIsVisible(false);
+        setIsModalMounted(false);
+        setTimeout(() => {
+            setShowPreferenceCenter(false);
+            setIsVisible(false);
+        }, 300);
     };
 
     const handleClosePreferenceCenter = () => {
-        setShowPreferenceCenter(false);
+        setIsModalMounted(false);
+        setTimeout(() => {
+            setShowPreferenceCenter(false);
+        }, 300);
     };
+
+    useEffect(() => {
+        if (showPreferenceCenter) {
+            // Trigger fade-in animation after mount
+            requestAnimationFrame(() => {
+                setIsModalMounted(true);
+            });
+        } else {
+            setIsModalMounted(false);
+        }
+    }, [showPreferenceCenter]);
 
     const savePreferences = (prefs: CookiePreferences) => {
         if (typeof window !== 'undefined') {
@@ -105,25 +123,16 @@ export default function CookieConsent() {
 
     return (
         <>
-            {/* Backdrop overlay when preference center is open */}
-            {showPreferenceCenter && (
+            {/* Cookie Consent Banner - stays at bottom */}
+            {!showPreferenceCenter && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-[100] transition-opacity duration-300"
-                    onClick={handleClosePreferenceCenter}
-                />
-            )}
-
-            {/* Cookie Consent Banner/Preference Center */}
-            <div
-                className={cn(
-                    'gdpr-wrapper fixed bottom-0 left-1/2 -translate-x-1/2 right-0 z-[101] transition-all duration-300 ease-out w-fit',
-                    (isVisible || showPreferenceCenter)
-                        ? 'translate-y-0 opacity-100'
-                        : 'translate-y-full opacity-0'
-                )}
-            >
-                {!showPreferenceCenter ? (
-                    // Simple Banner View - matching exact design
+                    className={cn(
+                        'fixed bottom-0 left-1/2 -translate-x-1/2 z-[101] transition-all duration-300 ease-out w-fit',
+                        isVisible
+                            ? 'translate-y-0 opacity-100'
+                            : 'translate-y-full opacity-0'
+                    )}
+                >
                     <div className="bg-[#CCCCCC] rounded-t-[5px] px-[18px] py-[5px]">
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-[13px] text-[#444444] text-center sm:text-left">
@@ -143,182 +152,212 @@ export default function CookieConsent() {
                             </button>
                         </div>
                     </div>
-                ) : (
-                    // Privacy Preference Center - matching exact structure
-                    <div className="gdpr-wrapper bg-white border-t border-gray-300 shadow-lg max-h-[90vh] overflow-y-auto">
-                        <div className="container mx-auto px-5 md:px-10 py-6 md:py-8">
-                            {/* Header */}
-                            <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-[22px] md:text-[26px] font-bold text-gray-900">
-                                    Privacy Preference Center
-                                </h2>
-                                <button
-                                    onClick={handleClosePreferenceCenter}
-                                    className="text-gray-500 hover:text-gray-700 transition-colors p-2 text-2xl leading-none"
-                                    aria-label="Close preference center"
-                                >
-                                    ×
-                                </button>
-                            </div>
+                </div>
+            )}
 
-                            {/* Options Section */}
-                            <div className="mb-6">
-                                <h3 className="text-[16px] md:text-[18px] font-semibold text-gray-900 mb-4">
-                                    Options
-                                </h3>
-
-                                {/* Consent Management */}
-                                <CollapsibleSection
-                                    title="Consent Management"
-                                    isExpanded={expandedCategories.has('consent')}
-                                    onToggle={() => toggleCategory('consent')}
-                                >
-                                    <p className="text-[14px] text-gray-600 mb-4 leading-relaxed">
-                                        When you visit any website, it may store or retrieve information on your browser,
-                                        mostly in the form of cookies. This information might be about you, your preferences
-                                        or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.
-                                    </p>
-                                    <p className="text-[14px] text-gray-600 mb-4 leading-relaxed">
-                                        Because we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
-                                    </p>
-                                    <div className="mb-4">
-                                        <a
-                                            href="https://bobcares.com/gdpr/"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
-                                        >
-                                            Privacy Policy
-                                        </a>
+            {/* Privacy Preference Center Modal - centered */}
+            {showPreferenceCenter && (
+                <>
+                    {/* Backdrop overlay */}
+                    <div
+                        className={cn(
+                            'fixed inset-0 bg-black/80 z-[100] transition-opacity duration-300',
+                            isModalMounted ? 'opacity-100' : 'opacity-0'
+                        )}
+                        onClick={handleClosePreferenceCenter}
+                    />
+                    {/* Modal Content */}
+                    <div
+                        className={cn(
+                            'fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none'
+                        )}
+                    >
+                        <div
+                            className={cn(
+                                'relative w-full max-w-4xl max-h-[calc(100vh-2rem)] bg-[#23282d] overflow-hidden flex flex-col transition-all duration-300 pointer-events-auto',
+                                isModalMounted ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                            )}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="overflow-y-auto scrollbar-hide">
+                                <div className="container mx-auto px-5 md:px-10 py-6 md:py-8 relative">
+                                    {/* Header */}
+                                    <div className="flex items-center justify-center mb-6">
+                                        <h2 className="text-[22px] font-bold text-white">
+                                            Privacy Preference Center
+                                        </h2>
                                     </div>
-                                    <p className="text-[14px] text-gray-600">
-                                        <strong>Required</strong>
-                                    </p>
-                                    <p className="text-[14px] text-gray-600">
-                                        By using this site, you agree to our Privacy Policy.
-                                    </p>
-                                </CollapsibleSection>
 
-                                {/* Cookie Settings */}
-                                <CollapsibleSection
-                                    title="Cookie Settings"
-                                    isExpanded={expandedCategories.has('settings')}
-                                    onToggle={() => toggleCategory('settings')}
-                                >
-                                    <div className="space-y-6">
-                                        {/* Necessary */}
-                                        <CookieCategoryDetail
-                                            id="necessary"
-                                            label="Necessary"
-                                            description="Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies."
-                                            enabled={preferences.necessary}
-                                            onToggle={() => togglePreference('necessary')}
-                                            disabled={true}
-                                            cookies={[
-                                                { name: 'PHPSESSID', description: 'Preserves user session state across page requests.' },
-                                                { name: 'gdpr[consent_types]', description: 'Used to store user consents.' },
-                                                { name: 'gdpr[allowed_cookies]', description: 'Used to store user allowed cookies.' },
-                                            ]}
-                                            domains={[
-                                                { domain: 'livechat.bobcares.com', cookies: ['PHPSESSID'] },
-                                                { domain: 'my.bobcares.com', cookies: ['WHMCSpKDlPzh2chML'] },
-                                            ]}
-                                        />
-
-                                        {/* Statistics */}
-                                        <CookieCategoryDetail
-                                            id="statistics"
-                                            label="Statistics"
-                                            description="Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously."
-                                            enabled={preferences.statistics}
-                                            onToggle={() => togglePreference('statistics')}
-                                            cookies={[
-                                                { name: '_ga', description: 'Preserves user session state across page requests.' },
-                                                { name: '_gat', description: 'Used by Google Analytics to throttle request rate' },
-                                                { name: '_gid', description: 'Registers a unique ID that is used to generate statistical data on how you use the website.' },
-                                                { name: 'smartlookCookie', description: 'Used to collect user device and location information of the site visitors to improve the websites User Experience.' },
-                                            ]}
-                                            domains={[
-                                                { domain: 'google.com', cookies: ['_ga', '_gat', '_gid'] },
-                                                { domain: 'manager.smartlook.com', cookies: ['smartlookCookie'] },
-                                                { domain: 'clarity.microsoft.com', cookies: ['_clck', '_clsk', 'CLID', 'ANONCHK', 'MR', 'MUID', 'SM'] },
-                                            ]}
-                                        />
-
-                                        {/* Marketing */}
-                                        <CookieCategoryDetail
-                                            id="marketing"
-                                            label="Marketing"
-                                            description="Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers."
-                                            enabled={preferences.marketing}
-                                            onToggle={() => togglePreference('marketing')}
-                                            cookies={[
-                                                { name: 'IDE', description: 'Used by Google DoubleClick to register and report the website user\'s actions after viewing or clicking one of the advertiser\'s ads with the purpose of measuring the efficacy of an ad and to present targeted ads to the user.' },
-                                                { name: 'test_cookie', description: 'Used to check if the user\'s browser supports cookies.' },
-                                                { name: '1P_JAR', description: 'Google cookie. These cookies are used to collect website statistics and track conversion rates.' },
-                                                { name: 'NID', description: 'Registers a unique ID that identifies a returning user\'s device. The ID is used for serving ads that are most relevant to the user.' },
-                                                { name: 'DV', description: 'Google ad personalisation' },
-                                            ]}
-                                            domains={[
-                                                { domain: 'doubleclick.net', cookies: ['IDE', 'test_cookie'] },
-                                                { domain: 'google.co.in', cookies: ['1P_JAR', 'NID', 'DV'] },
-                                                { domain: 'google.com', cookies: ['NID'] },
-                                                { domain: 'olark.com', cookies: ['hblid'] },
-                                                { domain: 'rb2b.com', cookies: ['_reb2bgeo', '_reb2bloaded', '_reb2bref', '_reb2bsessionID', '_reb2buid'] },
-                                            ]}
-                                        />
-
-                                        {/* Security */}
-                                        <CookieCategoryDetail
-                                            id="security"
-                                            label="Security"
-                                            description="These are essential site cookies, used by the google reCAPTCHA. These cookies use an unique identifier to verify if a visitor is human or a bot."
-                                            enabled={preferences.security}
-                                            onToggle={() => togglePreference('security')}
-                                            cookies={[
-                                                { name: 'SID', description: '' },
-                                                { name: 'APISID', description: '' },
-                                                { name: 'HSID', description: '' },
-                                                { name: 'NID', description: '' },
-                                                { name: 'PREF', description: '' },
-                                            ]}
-                                            domains={[
-                                                { domain: 'google.com', cookies: ['SID', 'APISID', 'HSID', 'NID', 'PREF'] },
-                                            ]}
-                                        />
-                                    </div>
-                                </CollapsibleSection>
-
-                                {/* Privacy Policy */}
-                                <CollapsibleSection
-                                    title="Privacy Policy"
-                                    isExpanded={expandedCategories.has('policy')}
-                                    onToggle={() => toggleCategory('policy')}
-                                >
-                                    <a
-                                        href="https://bobcares.com/gdpr/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
+                                    <button
+                                        onClick={handleClosePreferenceCenter}
+                                        className="absolute top-4 right-4 z-10 p-2 transition-all duration-300 hover:scale-130"
+                                        aria-label="Close preference center"
                                     >
-                                        Privacy Policy
-                                    </a>
-                                </CollapsibleSection>
-                            </div>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                                        </svg>
+                                    </button>
 
-                            {/* Action Button */}
-                            <div className="flex justify-end mt-6">
-                                <button
-                                    onClick={handleSavePreferences}
-                                    className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-2 rounded text-[14px] md:text-[15px] font-medium transition-colors"
-                                >
-                                    OK
-                                </button>
+                                    {/* Options Section */}
+                                    <div className="mb-6">
+                                        <h3 className="text-[16px] md:text-[18px] font-semibold text-white mb-4">
+                                            Options
+                                        </h3>
+
+                                        {/* Consent Management */}
+                                        <CollapsibleSection
+                                            title="Consent Management"
+                                            isExpanded={expandedCategories.has('consent')}
+                                            onToggle={() => toggleCategory('consent')}
+                                        >
+                                            <p className="text-[14px] text-white mb-4 leading-relaxed">
+                                                When you visit any website, it may store or retrieve information on your browser,
+                                                mostly in the form of cookies. This information might be about you, your preferences
+                                                or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.
+                                            </p>
+                                            <p className="text-[14px] text-white mb-4 leading-relaxed">
+                                                Because we respect your right to privacy, you can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
+                                            </p>
+                                            <div className="mb-4">
+                                                <a
+                                                    href="https://bobcares.com/gdpr/"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
+                                                >
+                                                    Privacy Policy
+                                                </a>
+                                            </div>
+                                            <p className="text-[14px] text-white">
+                                                <strong>Required</strong>
+                                            </p>
+                                            <p className="text-[14px] text-white">
+                                                By using this site, you agree to our Privacy Policy.
+                                            </p>
+                                        </CollapsibleSection>
+
+                                        {/* Cookie Settings */}
+                                        <CollapsibleSection
+                                            title="Cookie Settings"
+                                            isExpanded={expandedCategories.has('settings')}
+                                            onToggle={() => toggleCategory('settings')}
+                                        >
+                                            <div className="space-y-6">
+                                                {/* Necessary */}
+                                                <CookieCategoryDetail
+                                                    id="necessary"
+                                                    label="Necessary"
+                                                    description="Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies."
+                                                    enabled={preferences.necessary}
+                                                    onToggle={() => togglePreference('necessary')}
+                                                    disabled={true}
+                                                    cookies={[
+                                                        { name: 'PHPSESSID', description: 'Preserves user session state across page requests.' },
+                                                        { name: 'gdpr[consent_types]', description: 'Used to store user consents.' },
+                                                        { name: 'gdpr[allowed_cookies]', description: 'Used to store user allowed cookies.' },
+                                                    ]}
+                                                    domains={[
+                                                        { domain: 'livechat.bobcares.com', cookies: ['PHPSESSID'] },
+                                                        { domain: 'my.bobcares.com', cookies: ['WHMCSpKDlPzh2chML'] },
+                                                    ]}
+                                                />
+
+                                                {/* Statistics */}
+                                                <CookieCategoryDetail
+                                                    id="statistics"
+                                                    label="Statistics"
+                                                    description="Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously."
+                                                    enabled={preferences.statistics}
+                                                    onToggle={() => togglePreference('statistics')}
+                                                    cookies={[
+                                                        { name: '_ga', description: 'Preserves user session state across page requests.' },
+                                                        { name: '_gat', description: 'Used by Google Analytics to throttle request rate' },
+                                                        { name: '_gid', description: 'Registers a unique ID that is used to generate statistical data on how you use the website.' },
+                                                        { name: 'smartlookCookie', description: 'Used to collect user device and location information of the site visitors to improve the websites User Experience.' },
+                                                    ]}
+                                                    domains={[
+                                                        { domain: 'google.com', cookies: ['_ga', '_gat', '_gid'] },
+                                                        { domain: 'manager.smartlook.com', cookies: ['smartlookCookie'] },
+                                                        { domain: 'clarity.microsoft.com', cookies: ['_clck', '_clsk', 'CLID', 'ANONCHK', 'MR', 'MUID', 'SM'] },
+                                                    ]}
+                                                />
+
+                                                {/* Marketing */}
+                                                <CookieCategoryDetail
+                                                    id="marketing"
+                                                    label="Marketing"
+                                                    description="Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers."
+                                                    enabled={preferences.marketing}
+                                                    onToggle={() => togglePreference('marketing')}
+                                                    cookies={[
+                                                        { name: 'IDE', description: 'Used by Google DoubleClick to register and report the website user\'s actions after viewing or clicking one of the advertiser\'s ads with the purpose of measuring the efficacy of an ad and to present targeted ads to the user.' },
+                                                        { name: 'test_cookie', description: 'Used to check if the user\'s browser supports cookies.' },
+                                                        { name: '1P_JAR', description: 'Google cookie. These cookies are used to collect website statistics and track conversion rates.' },
+                                                        { name: 'NID', description: 'Registers a unique ID that identifies a returning user\'s device. The ID is used for serving ads that are most relevant to the user.' },
+                                                        { name: 'DV', description: 'Google ad personalisation' },
+                                                    ]}
+                                                    domains={[
+                                                        { domain: 'doubleclick.net', cookies: ['IDE', 'test_cookie'] },
+                                                        { domain: 'google.co.in', cookies: ['1P_JAR', 'NID', 'DV'] },
+                                                        { domain: 'google.com', cookies: ['NID'] },
+                                                        { domain: 'olark.com', cookies: ['hblid'] },
+                                                        { domain: 'rb2b.com', cookies: ['_reb2bgeo', '_reb2bloaded', '_reb2bref', '_reb2bsessionID', '_reb2buid'] },
+                                                    ]}
+                                                />
+
+                                                {/* Security */}
+                                                <CookieCategoryDetail
+                                                    id="security"
+                                                    label="Security"
+                                                    description="These are essential site cookies, used by the google reCAPTCHA. These cookies use an unique identifier to verify if a visitor is human or a bot."
+                                                    enabled={preferences.security}
+                                                    onToggle={() => togglePreference('security')}
+                                                    cookies={[
+                                                        { name: 'SID', description: '' },
+                                                        { name: 'APISID', description: '' },
+                                                        { name: 'HSID', description: '' },
+                                                        { name: 'NID', description: '' },
+                                                        { name: 'PREF', description: '' },
+                                                    ]}
+                                                    domains={[
+                                                        { domain: 'google.com', cookies: ['SID', 'APISID', 'HSID', 'NID', 'PREF'] },
+                                                    ]}
+                                                />
+                                            </div>
+                                        </CollapsibleSection>
+
+                                        {/* Privacy Policy */}
+                                        <CollapsibleSection
+                                            title="Privacy Policy"
+                                            isExpanded={expandedCategories.has('policy')}
+                                            onToggle={() => toggleCategory('policy')}
+                                        >
+                                            <a
+                                                href="https://bobcares.com/gdpr/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[#0073ec] hover:text-[#005bb5] underline underline-offset-2 text-[14px] font-medium transition-colors"
+                                            >
+                                                Privacy Policy
+                                            </a>
+                                        </CollapsibleSection>
+                                    </div>
+
+                                    {/* Action Button */}
+                                    <div className="flex justify-end mt-6">
+                                        <button
+                                            onClick={handleSavePreferences}
+                                            className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-2 rounded text-[14px] md:text-[15px] font-medium transition-colors"
+                                        >
+                                            OK
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
+                </>
+            )}
         </>
     );
 }
@@ -335,7 +374,7 @@ function CollapsibleSection({ title, isExpanded, onToggle, children }: Collapsib
         <div className="border-b border-gray-200 pb-4 mb-4">
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between text-left text-[16px] md:text-[18px] font-semibold text-gray-900 py-2 hover:text-gray-700 transition-colors"
+                className="w-full flex items-center justify-between text-left text-[16px] md:text-[18px] font-semibold text-white py-2 hover:text-gray-700 transition-colors"
             >
                 <span>{title}</span>
                 <span className={cn('text-xl transition-transform', isExpanded && 'rotate-180')}>
@@ -378,11 +417,11 @@ function CookieCategoryDetail({
         <div className="border border-gray-200 rounded p-4">
             <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1">
-                    <h4 className="text-[16px] font-semibold text-gray-900 mb-2">{label}</h4>
-                    <p className="text-[14px] text-gray-600 leading-relaxed">{description}</p>
+                    <h4 className="text-[16px] font-semibold text-white mb-2">{label}</h4>
+                    <p className="text-[14px] text-white leading-relaxed">{description}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className="text-[14px] text-gray-600">
+                    <span className="text-[14px] text-white">
                         {enabled ? 'ON' : 'OFF'}
                     </span>
                     <button
@@ -409,7 +448,7 @@ function CookieCategoryDetail({
 
             <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="text-[14px] text-gray-600 hover:text-gray-800 underline mb-2"
+                className="text-[14px] text-white hover:text-gray-800 underline mb-2"
             >
                 Cookies Used
             </button>
@@ -417,7 +456,7 @@ function CookieCategoryDetail({
             {isExpanded && (
                 <div className="mt-3 space-y-3 text-[14px]">
                     <div>
-                        <p className="font-semibold text-gray-900 mb-1">
+                        <p className="font-semibold text-white mb-1">
                             {cookies.map((c) => c.name).join(', ')}
                         </p>
                     </div>
@@ -429,7 +468,7 @@ function CookieCategoryDetail({
                                     Opt Out
                                 </button>
                             </div>
-                            <p className="text-gray-600 text-[12px]">
+                            <p className="text-white text-[12px]">
                                 {domainInfo.cookies.join(', ')}
                             </p>
                         </div>
