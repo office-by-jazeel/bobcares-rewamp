@@ -167,7 +167,10 @@ export default function Footer() {
               {/* Contact Information */}
               <div className="flex flex-row flex-wrap md:gap-8 lg:gap-10 items-start sm:items-center max-md:w-full">
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
-                  <div className="relative shrink-0 size-12 sm:size-16">
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="relative shrink-0 size-12 sm:size-16 transition-opacity hover:opacity-70"
+                  >
                     <Image
                       src="/_next/icons/navigation/mail.svg"
                       alt="Email"
@@ -175,7 +178,7 @@ export default function Footer() {
                       height={32}
                       className="w-full h-full"
                     />
-                  </div>
+                  </a>
                   <a
                     href={`mailto:${contact.email}`}
                     className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] transition-colors"
@@ -185,7 +188,10 @@ export default function Footer() {
                 </div>
                 <div className="h-[68px] md:h-10 w-px bg-[#FFFFFF40] shrink-0 mx-8"></div>
                 <div className="flex gap-4 sm:gap-6 items-start md:items-center max-md:flex-col max-md:flex-1">
-                  <div className="relative shrink-0 size-12 sm:size-16">
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="relative shrink-0 size-12 sm:size-16 transition-opacity hover:opacity-70"
+                  >
                     <Image
                       src="/_next/icons/navigation/call.svg"
                       alt="Phone"
@@ -193,7 +199,7 @@ export default function Footer() {
                       height={32}
                       className="w-full h-full"
                     />
-                  </div>
+                  </a>
                   <a
                     href={`tel:${contact.phone}`}
                     className="font-normal text-[16px] sm:text-[20px] lg:text-[24px] text-white tracking-[-1px] transition-colors"
@@ -246,7 +252,7 @@ export default function Footer() {
                     >
                       <button
                         onClick={() => toggleSection(service.title)}
-                        className="w-full flex items-center justify-between"
+                        className="w-full flex items-center gap-5 justify-between"
                         aria-label={isExpanded ? `Collapse ${service.title}` : `Expand ${service.title}`}
                       >
                         {service.href ? (
@@ -254,7 +260,7 @@ export default function Footer() {
                             href={service.href}
                             onClick={(e) => e.stopPropagation()}
                             className={cn(
-                              "font-medium text-[16px] uppercase leading-[1.1] tracking-normal text-left hover:text-[#0073ec] transition-colors",
+                              "font-medium text-[16px] uppercase leading-[1.2] tracking-normal text-left hover:text-[#0073ec] transition-colors",
                               isExpanded ? "text-[#e6e6e6]" : "text-[#8a8a8a]"
                             )}
                           >

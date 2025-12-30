@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import CloudinaryImage from "@/components/CloudinaryImage";
 import testimonialsData from "../../data/testimonials.json";
+import { cn } from '@/lib/utils';
 
 interface Testimonial {
   id: number;
@@ -428,7 +429,7 @@ export default function Testimonials() {
       }
     };
 
-    startScroll();
+    // startScroll();
 
     return () => {
       if (animationFrameId) {
@@ -578,9 +579,9 @@ function TestimonialCard({
 
   return (
     <div className="bg-[#1A173A] p-[2px] rounded-3xl shrink-0 w-[320px] sm:w-[500px] lg:w-[728px]">
-      <div className="bg-white flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-12 items-start px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 rounded-[22px] min-h-[550px] md:h-auto md:min-h-[375px]">
+      <div className="bg-white flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-12 items-start px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 rounded-[22px] max-md:h-[550px] min-h-[550px] md:h-auto md:min-h-[375px]">
         {/* Left Content */}
-        <div className="flex flex-1 flex-col gap-6 items-start w-full">
+        <div className="flex flex-1 flex-col gap-6 items-start w-full h-full">
           {/* Category Tag */}
           <p className="font-medium leading-normal text-[12px] sm:text-[14px] text-black uppercase">
             {testimonial.category}
@@ -594,8 +595,8 @@ function TestimonialCard({
           )}
 
           {/* Quote with gradient fade */}
-          <div className="min-h-[104px] relative overflow-hidden">
-            <p className="font-grotesque font-semibold leading-none text-[26px] lg:text-[40px] text-black w-full line-clamp-4">
+          <div className="flex-1 relative overflow-hidden">
+            <p className={cn("font-grotesque font-semibold leading-[1.1]! md:leading-none! text-[25px] lg:text-[40px] text-black w-full md:line-clamp-4")}>
               {testimonial.quote}
             </p>
             {/* Gradient fade overlay - fades text from black to transparent */}
