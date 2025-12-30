@@ -234,36 +234,34 @@ export default function CookieConsent() {
     return (
         <>
             {/* Cookie Consent Banner - stays at bottom */}
-            {!showPreferenceCenter && (
-                <div
-                    className={cn(
-                        'fixed bottom-0 left-1/2 -translate-x-1/2 z-[101] transition-all duration-300 ease-out w-full md:w-fit',
-                        isVisible
-                            ? 'translate-y-0 opacity-100'
-                            : 'translate-y-full opacity-0'
-                    )}
-                >
-                    <div className="bg-[#CCCCCC] md:rounded-t-[5px] px-[18px] py-[5px]">
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-1 md:gap-4">
-                            <p className="text-[13px] text-[#444444] text-center sm:text-left">
-                                Bobcares uses cookies.
-                            </p>
-                            <button
-                                onClick={handlePrivacyPreferences}
-                                className="text-[13px] font-light underline underline-offset-2 transition-colors"
-                            >
-                                Privacy Preferences
-                            </button>
-                            <button
-                                onClick={handleAcceptAll}
-                                className="bg-[#666666] leading-[20px] text-[13px] px-1.5 shadow-[0_1px_0_#111111] text-white"
-                            >
-                                I Agree
-                            </button>
-                        </div>
+            <div
+                className={cn(
+                    'fixed bottom-0 left-1/2 -translate-x-1/2 z-[101] transition-all duration-300 ease-out w-full md:w-fit',
+                    isVisible
+                        ? 'translate-y-0 opacity-100'
+                        : 'translate-y-full opacity-0'
+                )}
+            >
+                <div className="bg-[#CCCCCC] md:rounded-t-[5px] px-[18px] py-[5px]">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-1 md:gap-4">
+                        <p className="text-[13px] text-[#444444] text-center sm:text-left">
+                            Bobcares uses cookies.
+                        </p>
+                        <button
+                            onClick={handlePrivacyPreferences}
+                            className="text-[13px] font-light underline underline-offset-2 transition-colors"
+                        >
+                            Privacy Preferences
+                        </button>
+                        <button
+                            onClick={handleAcceptAll}
+                            className="bg-[#666666] leading-[20px] text-[13px] px-1.5 shadow-[0_1px_0_#111111] text-white"
+                        >
+                            I Agree
+                        </button>
                     </div>
                 </div>
-            )}
+            </div>
 
             {/* Privacy Preference Center Modal */}
             {showPreferenceCenter && (
