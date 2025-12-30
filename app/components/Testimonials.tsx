@@ -429,7 +429,7 @@ export default function Testimonials() {
       }
     };
 
-    // startScroll();
+    startScroll();
 
     return () => {
       if (animationFrameId) {
