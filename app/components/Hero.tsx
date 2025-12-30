@@ -51,50 +51,6 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-b from-black/80 to-transparent z-3" />
       <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[260px] bg-linear-to-t from-black/80 to-transparent z-3" />
 
-      {/* Mute/Unmute Toggle Button */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 container">
-        <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all"
-          aria-label={isMuted ? "Unmute video" : "Mute video"}
-        >
-          {isMuted ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="size-[26px]"
-            >
-              <path d="M11 5L6 9H2v6h4l5 4V5z" />
-              <line x1="23" y1="9" x2="17" y2="15" />
-              <line x1="17" y1="9" x2="23" y2="15" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="size-[26px]"
-            >
-              <path d="M11 5L6 9H2v6h4l5 4V5z" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-            </svg>
-          )}
-        </button>
-      </div>
-
       {/* ================= CONTENT ================= */}
       <div className="absolute left-0 bottom-0 w-full z-3">
         <div className="container mx-auto flex md:flex-row flex-col justify-between md:items-end mb-16 sm:mb-24 lg:mb-[118px] max-md:gap-8">
@@ -222,6 +178,48 @@ export default function Hero() {
                   </button>
                 );
               })}
+
+              {/* MUTE BUTTON */}
+              <button
+                onClick={() => setIsMuted(!isMuted)}
+                className="backdrop-blur-md border border-white/20 border-solid flex items-center justify-center p-3 rounded-[45px] md:size-[60px] hover:bg-black/10 transition-all"
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-[26px]"
+                  >
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-[26px]"
+                  >
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
 
