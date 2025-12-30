@@ -35,8 +35,8 @@ export default function Services() {
 
               <div className="flex flex-col gap-6 max-w-[900px]">
                 <h2 className="font-grotesque font-semibold text-[48px] md:text-[96px] leading-[1.05] tracking-[-0.5px]">
-                  Choose how you want to make{" "}
-                  <span className="text-[#0073ec]">an impact</span>
+                  Solutions Built for{" "}
+                  <span className="text-[#0073ec]">Your Business</span>
                 </h2>
 
                 <p className="text-[#4D4D4D] text-[16px] sm:text-[18px] lg:text-[24px] leading-[1.6] max-w-[800px]">
