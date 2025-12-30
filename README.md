@@ -4,23 +4,25 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory with the following variables:
+This project requires several environment variables to be configured. For detailed documentation on all environment variables, including setup instructions, examples, and troubleshooting, see [ENV.md](./ENV.md).
+
+**Quick Start**: Create a `.env.local` file in the root directory. At minimum, you'll need:
 
 ```env
-# Google reCAPTCHA v3
+# Database (required for newsletter functionality)
+DATABASE_URL=mysql://user:password@localhost:3306/bobcares
+
+# Google reCAPTCHA v3 (required for newsletter functionality)
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key_here
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key_here
-RECAPTCHA_SCORE_THRESHOLD=0.5  # Optional: Score threshold (0.0 to 1.0), default is 0.5
-
-# Database (if using Prisma)
-DATABASE_URL=your_database_url_here
 ```
 
-To get your reCAPTCHA keys:
-1. Visit [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/create)
-2. Register your site and select reCAPTCHA v3
-3. Add your domain(s)
-4. Copy the Site Key and Secret Key to your `.env.local` file
+See [ENV.md](./ENV.md) for:
+- Complete list of all environment variables
+- Detailed descriptions and usage
+- Setup instructions for each service
+- Example `.env.local` template
+- Security best practices
 
 ### Running the Development Server
 
