@@ -219,14 +219,14 @@ export default function CookieConsent() {
             {!showPreferenceCenter && (
                 <div
                     className={cn(
-                        'fixed bottom-0 left-1/2 -translate-x-1/2 z-[101] transition-all duration-300 ease-out w-fit',
+                        'fixed bottom-0 left-1/2 -translate-x-1/2 z-[101] transition-all duration-300 ease-out w-full md:w-fit',
                         isVisible
                             ? 'translate-y-0 opacity-100'
                             : 'translate-y-full opacity-0'
                     )}
                 >
-                    <div className="bg-[#CCCCCC] rounded-t-[5px] px-[18px] py-[5px]">
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="bg-[#CCCCCC] md:rounded-t-[5px] px-[18px] py-[5px]">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-1 md:gap-4">
                             <p className="text-[13px] text-[#444444] text-center sm:text-left">
                                 Bobcares uses cookies.
                             </p>
