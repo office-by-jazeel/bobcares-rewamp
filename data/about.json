@@ -1,0 +1,26 @@
+{
+  "stats": [
+    {
+      "id": 1,
+      "value": "25+",
+      "label": "Years"
+    },
+    {
+      "id": 2,
+      "value": "350+",
+      "label": "Engineers"
+    },
+    {
+      "id": 3,
+      "value": "2500+",
+      "label": "Clients"
+    },
+    {
+      "id": 4,
+      "value": "4500+",
+      "label": "Projects Handled"
+    }
+  ],
+  "teamImage": "/_next/images/about/technology-image.png",
+  "teamImageCloudinaryId": "bobcares/about-team"
+}

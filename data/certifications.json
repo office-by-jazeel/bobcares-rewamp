@@ -1,0 +1,92 @@
+{
+  "certifications": [
+    {
+      "id": 1,
+      "provider": "Google Cloud Certified",
+      "title": "Data Engineer",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/_next/images/certificates/Data-Engineer.png"
+    },
+    {
+      "id": 2,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Network Engineer",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/Cloud-Architect.png",
+      "logoIcon": "/_next/images/certificates/Cloud-Network-Engineer.png"
+    },
+    {
+      "id": 3,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Architect",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/_next/images/certificates/Cloud-Architect.png"
+    },
+    {
+      "id": 4,
+      "provider": "Google Cloud Certified",
+      "title": "Cloud Security Engineer",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/Cloud-Security-Engineer.png",
+      "logoIcon": "/_next/images/certificates/Cloud-Security-Engineer.png"
+    },
+    {
+      "id": 5,
+      "provider": "AWS Certified",
+      "title": "Solutions Architect",
+      "level": "Associate",
+      "icon": "/_next/images/certificates/AWS-Security.png",
+      "logoIcon": "/_next/images/certificates/aws-Solutions.png"
+    },
+    {
+      "id": 6,
+      "provider": "AWS Certified",
+      "title": "Database",
+      "level": "Specialty",
+      "icon": "/_next/images/certificates/AWS-Security.png",
+      "logoIcon": "/_next/images/certificates/AWS-Database.png"
+    },
+    {
+      "id": 7,
+      "provider": "AWS Certified",
+      "title": "Security",
+      "level": "Specialty",
+      "icon": "/_next/images/certificates/AWS-Security.png",
+      "logoIcon": "/_next/images/certificates/AWS-Security.png"
+    },
+    {
+      "id": 8,
+      "provider": "Microsoft",
+      "title": "Certified Professional",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/Microsoft-Certified.png",
+      "logoIcon": "/_next/images/certificates/Microsoft-Certified.png"
+    },
+    {
+      "id": 9,
+      "provider": "ISO",
+      "title": "27001",
+      "level": "Certified",
+      "icon": "/_next/images/certificates/ISO-27001.png",
+      "logoIcon": "/_next/images/certificates/ISO-27001.png"
+    },
+    {
+      "id": 10,
+      "provider": "cPanel",
+      "title": "Certified",
+      "level": "Professional",
+      "icon": "/_next/images/certificates/C-Panel.png",
+      "logoIcon": "/_next/images/certificates/C-Panel.png"
+    },
+    {
+      "id": 11,
+      "provider": "Top Web Design Companies",
+      "title": "Award Winner",
+      "level": "Recognition",
+      "icon": "/_next/images/certificates/top-web-design-companies-1.png",
+      "logoIcon": "/_next/images/certificates/top-web-design-companies-1.png"
+    }
+  ]
+}

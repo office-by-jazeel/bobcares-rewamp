@@ -1,0 +1,48 @@
+'use client';
+
+import { openSupportBoard } from '@/lib/support-board';
+
+export default function Collaborate() {
+  const handleConsultationClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    await openSupportBoard();
+  };
+
+  return (
+    <section className="bg-black overflow-hidden relative">
+      {/* Background graphic */}
+      <div className="absolute left-1/2 w-full h-full top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <video
+          src="/_next/videos/cta.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-70"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative container mx-auto py-36 lg:py-52 flex flex-col gap-10 items-center text-center text-white z-10">
+        <div className="flex flex-col gap-6 sm:gap-10 items-center text-center text-white w-full">
+          <h2 className="font-grotesque font-semibold leading-[1.02] text-[48px] lg:text-[96px] tracking-[-0.96px] max-w-[680px]">
+            <span className="text-white">Collaborate with </span>
+            <span className="text-[#0073ec]">Bobcares</span>
+          </h2>
+          <p className="font-normal leading-[1.6] w-full text-[18px] sm:text-[20px] lg:text-[24px] tracking-[-0.12px] max-w-[520px]">
+            Get actionable solutions for your business
+          </p>
+        </div>
+        <div className="flex items-start">
+          <button
+            onClick={handleConsultationClick}
+            className="border border-solid border-white flex items-center justify-center px-7 sm:px-[38px] py-4 rounded-[45px] hover:bg-white text-white hover:text-[#0073EC] transition-colors"
+          >
+            <span className="font-medium text-[18px] sm:text-[20px] tracking-[-1px]">Book My Free Consultation</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+

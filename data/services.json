@@ -1,0 +1,64 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "icon": "/_next/icons/services/endtoend.png",
+      "title": "End-to-End product Engineering",
+      "description": "We design, build, and scale complete digital products with full-cycle engineering that covers architecture, development, testing, deployment, and optimization.",
+      "href": "https://bobcares.com/product-engineering/"
+    },
+    {
+      "id": 2,
+      "icon": "/_next/icons/services/digitaltr.png",
+      "title": "Digital transformation",
+      "description": "We modernize your business systems with streamlined processes, upgraded technology, and smarter digital workflows that improve efficiency and performance.",
+      "href": "https://bobcares.com/digital-transformation/"
+    },
+    {
+      "id": 3,
+      "icon": "/_next/icons/services/artificial.png",
+      "title": "Artificial intelligence services",
+      "description": "We develop intelligent AI solutions that improve decision-making, automate operations, and create new opportunities across your organization.",
+      "href": "https://bobcares.com/ai-services/"
+    },
+    {
+      "id": 4,
+      "icon": "/_next/icons/services/infra.png",
+      "title": "Infrastructure optimization",
+      "description": "We optimize your IT infrastructure for reliability, speed, and scalability through continuous monitoring, performance tuning, and proactive upkeep.",
+      "href": "https://bobcares.com/infrastructure-management/"
+    },
+    {
+      "id": 5,
+      "icon": "/_next/icons/services/devops.png",
+      "title": "DevOps & automation services",
+      "description": "We accelerate delivery with automated pipelines, improved deployment workflows, and DevOps practices that enhance stability and operational efficiency.",
+      "href": "https://bobcares.com/devops-services/"
+    },
+    {
+      "id": 6,
+      "icon": "/_next/icons/services/cyber.png",
+      "title": "Cybersecurity & compliance services",
+      "description": "We strengthen your security posture with continuous monitoring, risk assessments, threat prevention, and compliance support tailored to industry standards.",
+      "href": "https://bobcares.com/cybersecurity-services/"
+    },
+    {
+      "id": 7,
+      "icon": "/_next/icons/services/qa.png",
+      "title": "QA and test automation",
+      "description": "We ensure product quality with comprehensive testing, automated validation, and performance checks that maintain reliability across every release cycle.",
+      "href": "https://bobcares.com/software-testing-qa-services/"
+    },
+    {
+      "id": 8,
+      "icon": "/_next/icons/services/outsourced.png",
+      "title": "Outsourced support services",
+      "description": "We provide round-the-clock technical and customer support that keeps your operations running smoothly and ensures a great experience for your users.",
+      "href": "https://bobcares.com/outsourced-support/"
+    }
+  ],
+  "ctaCard": {
+    "title": "Ready to Transform Your Digital Future?",
+    "buttonText": "Free Consultation"
+  }
+}

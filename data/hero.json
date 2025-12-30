@@ -1,0 +1,37 @@
+{
+  "title": "Get Pro-Level Help From Certified Experts",
+  "description": "Bobcares fuels your digital success with Product Engineering, Digital Transformation, AI, DevOps, Infrastructure Management, Cybersecurity, and Outsourced Support",
+  "ratings": [
+    {
+      "platform": "Google",
+      "rating": "4.5",
+      "icon": "/_next/images/hero/google-icon.png"
+    },
+    {
+      "platform": "Clutch",
+      "rating": "5.0",
+      "icon": "/_next/images/hero/clutch-icon.png"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "View Our Portfolio",
+      "variant": "primary",
+      "href": "#portfolio"
+    },
+    {
+      "text": "Free Consultation",
+      "variant": "secondary",
+      "href": "#contact"
+    }
+  ],
+  "backgroundImage": "/_next/images/hero/hero-bg.jpg",
+  "backgroundImageCloudinaryId": "bobcares/hero-bg",
+  "backgroundVideos": [
+    {
+      "src": "/_next/videos/bobcares-homepage-video.mp4",
+      "cloudinaryId": "https://customer-qqgmrmdfh9zedh1k.cloudflarestream.com/4bf87772a169d477d5f87a931e3bdb28/manifest/video.m3u8",
+      "thumbnail": "/_next/images/hero/thumbnail-image.jpg"
+    }
+  ]
+}

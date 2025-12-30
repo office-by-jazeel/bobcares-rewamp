@@ -1,0 +1,76 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Riscosity Deployment Securing API Data Flows Across Complex Ecosystems",
+      "category": "Digital Transformation",
+      "image": "/_next/images/portfolio/1.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/riscosity-secure-and-manage-api-data-flows-effortlessly/"
+    },
+    {
+      "id": 2,
+      "title": "The Reform RX Turnaround: A Complete Platform and Engineering Renewal",
+      "category": "Product Management",
+      "image": "/_next/images/portfolio/2.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/reform-rx-complete-platform-support-engineering-renewal"
+    },
+    {
+      "id": 3,
+      "title": "End-to-End Digital Transformation for Paykini Strong Security Performance and Mobile UX",
+      "category": "Mobile App Development",
+      "image": "/_next/images/portfolio/3.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/paykini-end-to-end-digital-transformation-security-performance-mobile-accessibility/"
+    },
+    {
+      "id": 4,
+      "title": "Transforming Customer Loyalty With Predictive Intelligence Driving Scalable Growth AI Data",
+      "category": "AI Services",
+      "image": "/_next/images/portfolio/4.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/transforming-customer-loyalty-with-predictive-intelligence/"
+    },
+    {
+      "id": 5,
+      "title": "Fixing Fragmented CI/CD Pipelines That Caused Slow, and Risky Deployments",
+      "category": "CI/CD Transformation",
+      "image": "/_next/images/portfolio/5.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/unifying-ci-cd-pipelines-for-zero-downtime-deployments-in-fitness-tech/"
+    },
+    {
+      "id": 6,
+      "title": "Performance-Focused Cloud Hosting Infrastructure Upgrade for Appraise",
+      "category": "Web Development",
+      "image": "/_next/images/portfolio/6.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/appraise-ensuring-reliability-and-performance-for-cloud-hosting/"
+    },
+    {
+      "id": 7,
+      "title": "Optimizing Cloud Operations With Intelligent Automation and Predictive Insights",
+      "category": "AIOps Services",
+      "image": "/_next/images/portfolio/7.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/aiops-ecosystem-transformation-success-story/"
+    },
+    {
+      "id": 8,
+      "title": "How We Blocked Vulnerable Docker Images Before Production With Trivy and OWASP",
+      "category": "DevOps Management",
+      "image": "/_next/images/portfolio/8.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/securing-docker-deployments-on-azure-with-trivy-and-owasp-dependency-check/"
+    },
+    {
+      "id": 9,
+      "title": "Optimizing Nexnova’s Server Performance and Security to Achieve 99% Uptime",
+      "category": "Server Management",
+      "image": "/_next/images/portfolio/9.png",
+      "imageCloudinaryId": "bobcares/portfolio/portfolio-1",
+      "link": "https://bobcares.com/case-study/enhancing-server-performance-and-security-for-nexnova-s-n-c/"
+    }
+  ]
+}

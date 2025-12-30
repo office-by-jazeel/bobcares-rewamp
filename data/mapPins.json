@@ -1,0 +1,509 @@
+{
+  "mapPins": [
+    {
+      "id": 1,
+      "top": "43%",
+      "left": "14.5%",
+      "clients": [
+        {
+          "label": "Gullo's Hosting",
+          "logo": "/_next/images/clients/gullos-hosting.png"
+        },
+        {
+          "label": "Hostirian",
+          "logo": "/_next/images/clients/hostirian.png"
+        },
+        {
+          "label": "Riscosity",
+          "logo": "/_next/images/clients/Riscosity.png"
+        },
+        {
+          "label": "IMC Digital Universe, Inc",
+          "logo": "/_next/images/clients/imc-digital.png"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "top": "45%",
+      "left": "18.2%",
+      "clients": [
+        {
+          "label": "Besttech Computing",
+          "logo": "/_next/images/clients/besttech.png"
+        },
+        {
+          "label": "Rand4Dollar",
+          "logo": "/_next/images/clients/rand4dollar.png"
+        },
+        {
+          "label": "Code of Grace, LLC.",
+          "logo": "/_next/images/clients/code-of-grace.png"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "top": "43%",
+      "left": "25%",
+      "clients": [
+        {
+          "label": "Matthew Owen LLC",
+          "logo": "/_next/images/clients/VP Startup.png"
+        },
+        {
+          "label": "Freshpage Media",
+          "logo": "/_next/images/clients/Freshpage Media.png"
+        },
+        {
+          "label": "Creating Digital",
+          "logo": "/_next/images/clients/Creating Digital.png"
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "top": "37%",
+      "left": "17%",
+      "clients": [
+        {
+          "label": "Otherworlds Inc",
+          "logo": "/_next/images/clients/other-worlds.png"
+        },
+        {
+          "label": "Luxury Realty Group LLC",
+          "logo": "/_next/images/clients/talega-systems-ai.png"
+        },
+        {
+          "label": "Four Star Host",
+          "logo": "/_next/images/clients/four-star-host.webp"
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "top": "39%",
+      "left": "21%",
+      "clients": [
+        {
+          "label": "USHost247",
+          "logo": "/_next/images/clients/us-host.png"
+        },
+        {
+          "label": "SCANNING REVOLUTION",
+          "logo": "/_next/images/clients/scan-rev.png"
+        },
+        {
+          "label": "FH Packaging LLC",
+          "logo": "/_next/images/clients/fh-packaging.svg"
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "top": "45.2%",
+      "left": "22%",
+      "clients": [
+        {
+          "label": "Freedom Footbags",
+          "logo": "/_next/images/clients/freedom-footbags.png"
+        },
+        {
+          "label": "Dragon Digital",
+          "logo": "/_next/images/clients/dragon-digital.png"
+        },
+        {
+          "label": "IS&T Consulting Group, LLC",
+          "logo": "/_next/images/clients/is_t-consulting-group.svg"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "top": "29%",
+      "left": "46%",
+      "clients": [
+        {
+          "label": "Information Management Ltd.",
+          "logo": "/_next/images/clients/Information Management.png"
+        },
+        {
+          "label": "BoothBook",
+          "logo": "/_next/images/clients/boothbook.png"
+        },
+        {
+          "label": "ReformRx",
+          "logo": "/_next/images/clients/reformrx.png"
+        },
+        {
+          "label": "Zut Media",
+          "logo": "/_next/images/clients/Zut Media.png"
+        },
+        {
+          "label": "Toucan Graphics",
+          "logo": "/_next/images/clients/Toucan Graphics.png"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "top": "75%",
+      "left": "85%",
+      "clients": [
+        {
+          "label": "Appraise",
+          "logo": "/_next/images/clients/HAWK.png"
+        },
+        {
+          "label": "Brad Slater IT",
+          "logo": "/_next/images/clients/Brasd Slater IT.png"
+        },
+        {
+          "label": "Barn Light Australia Pty Ltd",
+          "logo": "/_next/images/clients/Barn Light Australia Pty Ltd.png"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "top": "76.5%",
+      "left": "81%",
+      "clients": [
+        {
+          "label": "Crawl Media",
+          "logo": "/_next/images/clients/Crawl Media.png"
+        },
+        {
+          "label": "Project 3 IT",
+          "logo": "/_next/images/clients/project it.png"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "top": "54%",
+      "left": "60.5%",
+      "clients": [
+        {
+          "label": "Chrysalis Digital",
+          "logo": "/_next/images/clients/chrysalis-digital.png"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "top": "64%",
+      "left": "76%",
+      "clients": [
+        {
+          "label": "Paykini",
+          "logo": "/_next/images/clients/EasyPay.png"
+        },
+        {
+          "label": "Feynman Technology Sn Bhd",
+          "logo": "/_next/images/clients/feymen.png"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "top": "57%",
+      "left": "80%",
+      "clients": [
+        {
+          "label": "Tuyo Tienda",
+          "logo": "/_next/images/clients/tuyo-tienda.png"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "top": "83%",
+      "left": "53%",
+      "clients": [
+        {
+          "label": "eGGSA",
+          "logo": "/_next/images/clients/EGGSSA - Pro Familia -.png"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "top": "73%",
+      "left": "67%",
+      "clients": [
+        {
+          "label": "HLSCC",
+          "logo": "/_next/images/clients/hlscc.png"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "top": "35%",
+      "left": "49%",
+      "clients": [
+        {
+          "label": "Horecavoordeel",
+          "logo": "/_next/images/clients/Horeca Voordeel.png"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "top": "24%",
+      "left": "16%",
+      "clients": [
+        {
+          "label": "Oliver Marketing",
+          "logo": "/_next/images/clients/olive-mar.png"
+        },
+        {
+          "label": "IPIS IT Consulting",
+          "logo": "/_next/images/clients/ipconsulting.png"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "top": "37%",
+      "left": "52%",
+      "clients": [
+        {
+          "label": "PC Patrol",
+          "logo": "/_next/images/clients/pc-patrol.png"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "top": "65%",
+      "left": "27%",
+      "clients": [
+        {
+          "label": "PROLEGO S.A.S",
+          "logo": "/_next/images/clients/prolego.png"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "top": "44%",
+      "left": "55%",
+      "clients": [
+        {
+          "label": "Smilii",
+          "logo": "/_next/images/clients/smilii.png"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "top": "50%",
+      "left": "57%",
+      "clients": [
+        {
+          "label": "Toucan Graphics",
+          "logo": "/_next/images/clients/Toucan Graphics.png"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "top": "44%",
+      "left": "45%",
+      "clients": [
+        {
+          "label": "Ferretería Murgui, S.L",
+          "logo": "/_next/images/clients/Ferretería.png"
+        },
+        {
+          "label": "J&S Multi Systems S.L.",
+          "logo": "/_next/images/clients/nivelz.png"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "top": "83%",
+      "left": "81%",
+      "clients": [
+        {
+          "label": "Super Domains",
+          "logo": "/_next/images/clients/super-domains.png"
+        },
+        {
+          "label": "Audience Ware",
+          "logo": "/_next/images/clients/Audienceware_Logo4_horizontal_blue_01.png"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "top": "74%",
+      "left": "33%",
+      "clients": [
+        {
+          "label": "LucaNet Sistemas Ltda.",
+          "logo": "/_next/images/clients/lucanet.png"
+        },
+        {
+          "label": "Rubfy Serviços de Internet",
+          "logo": "/_next/images/clients/Rubfyf6.png"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "top": "58%",
+      "left": "69%",
+      "clients": [
+        {
+          "label": "Infobahn Technologies",
+          "logo": "/_next/images/clients/infobun.png"
+        },
+        {
+          "label": "Serverspa",
+          "logo": "/_next/images/clients/serverspa-1.png"
+        },
+        {
+          "label": "Techlightz Infosystems",
+          "logo": "/_next/images/clients/gurusoft.png"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "top": "35%",
+      "left": "44%",
+      "clients": [
+        {
+          "label": "Limerick City College",
+          "logo": "/_next/images/clients/limerick-1.png"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "top": "86%",
+      "left": "29%",
+      "clients": [
+        {
+          "label": "Duplika",
+          "logo": "/_next/images/clients/duplika-1.png"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "top": "65%",
+      "left": "79%",
+      "clients": [
+        {
+          "label": "TITB",
+          "logo": "/_next/images/clients/titb.png"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "top": "30%",
+      "left": "16%",
+      "clients": [
+        {
+          "label": "One Motion Technologies Inc.",
+          "logo": "/_next/images/clients/1motion.png"
+        },
+        {
+          "label": "AlSalwa Publishers",
+          "logo": "/_next/images/clients/alsalwa.png"
+        },
+        {
+          "label": "MIHKL",
+          "logo": "/_next/images/clients/MIHKL.png"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "top": "28%",
+      "left": "50%",
+      "clients": [
+        {
+          "label": "Energiakademiet",
+          "logo": "/_next/images/clients/energika.png"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "top": "35%",
+      "left": "57%",
+      "clients": [
+        {
+          "label": "Creative Management Kft",
+          "logo": "/_next/images/clients/cm-designs.png"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "top": "61%",
+      "left": "22%",
+      "clients": [
+        {
+          "label": "Proton Mail",
+          "logo": "/_next/images/clients/proton.png"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "top": "63%",
+      "left": "82%",
+      "clients": [
+        {
+          "label": "Lattice Systems, Inc",
+          "logo": "/_next/images/clients/latticesystmes.png"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "top": "48%",
+      "left": "61%",
+      "clients": [
+        {
+          "label": "Burgerizzr",
+          "logo": "/_next/images/clients/burgerrizr.png"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "top": "65%",
+      "left": "70%",
+      "clients": [
+        {
+          "label": "SL Web Creations",
+          "logo": "/_next/images/clients/slweb.png"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "top": "38%",
+      "left": "47%",
+      "clients": [
+        {
+          "label": "SINSPEED AUTO SUPPLIES LIMITED",
+          "logo": "/_next/images/clients/sinspeed-1.png"
+        },
+        {
+          "label": "Mindbodism",
+          "logo": "/_next/images/clients/mind.png"
+        }
+      ]
+    }
+  ]
+}
