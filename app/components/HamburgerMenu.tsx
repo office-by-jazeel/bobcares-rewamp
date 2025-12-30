@@ -178,7 +178,7 @@ export default function HamburgerMenu({ isHeaderFixed = false }: HamburgerMenuPr
             }
           }}
         >
-          <div className="container mx-auto h-full flex flex-col gap-10 lg:gap-[72px]">
+          <div className="container mx-auto h-full flex flex-col lg:gap-[72px]">
             {/* Header within menu */}
             <div className="flex items-center justify-between py-5">
               {/* Mobile: Show back button when submenu is selected, otherwise show logo */}
