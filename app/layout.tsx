@@ -26,8 +26,16 @@ const darkerGrotesque = Darker_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Bobcares - Get pro-level help from certified server experts",
-  description: "Bobcares is a leading provider of server management, cloud solutions, and IT services. Trusted by 2.5k+ clients worldwide with 4.9/5 ratings.",
+  title: "Outsourced Support, Web Hosting Support, Server Management - Bobcares",
+  description: "Bobcares helps businesses build, secure, and scale with product engineering, digital transformation, AI, DevOps, cloud optimization, cybersecurity, and support.",
+  openGraph: {
+    title: "Bobcares – Product Engineering, AI, and IT Services",
+    description: "Bobcares helps businesses build, secure, and scale with product engineering, digital transformation, AI, DevOps, cloud optimization, cybersecurity, and support.",
+  },
+  twitter: {
+    title: "Bobcares – Product Engineering, AI, and IT Services",
+    description: "Bobcares helps businesses build, secure, and scale with product engineering, digital transformation, AI, DevOps, cloud optimization, cybersecurity, and support.",
+  },
 };
 
 export default function RootLayout({
